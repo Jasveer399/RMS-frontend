@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
+import Form from "../../components/Form";
 
 function Students() {
   const dispatch = useDispatch();
@@ -113,18 +114,23 @@ function Students() {
   ];
   return (
     <div>
-      <PageTitle title="Students" />
-      <div className="d-flex justify-content-end align-items-center my-3">
-        <button
-          className="primary text-white px-3"
-          onClick={() => {
-            navigate("/employee/students/add");
-          }}
-        >
-          Add Student
-        </button>
-      </div>
-
+      <PageTitle title="Add Students" />
+      <h6 className='text-center text-xl pb-3 underline'>Student Details</h6>
+      <form>
+        <div className="flex justify-center gap-4">
+          <Form title="Name" name="stuname" />
+          <Form title="Class" name="stuclass" />
+          <Form title="Rollno" name="sturollno" />
+        </div>
+        <div className="flex justify-center gap-4 mt-5">
+          <Form title="Email" name="stuemail" />
+          <Form title="Phone" name="stuphone" />
+          <Form title="Password" name="stupassword" />
+        </div>
+        <div className="flex items-center justify-center my-4">
+          <button className="bg-blue-950 text-white px-4 font-bold">Add Student</button>
+        </div>
+      </form>
       <Table columns={columns} dataSource={students} />
     </div>
   );

@@ -1,24 +1,83 @@
-import { Col, Row } from "antd";
+// import { Col, Row } from "antd";
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import SideNavBar from "./SideNavBar";
+import { MdDashboard, MdClass } from "react-icons/md";
+import { FaBook } from "react-icons/fa";
+import { SiBookstack } from "react-icons/si";
+import { PiStudentFill } from "react-icons/pi";
+import { GiArchiveResearch } from "react-icons/gi";
+import { RiLockPasswordFill } from "react-icons/ri";
 
 function EmployeeHome() {
   const navigate = useNavigate();
+  const nav = [
+    {
+        icon: <MdDashboard className="text-red-950"/>,
+        name: "Dashboard",
+        link: "/"
+    },
+    {
+        icon: <MdClass />,
+        name: "Classes",
+        link: "/"
+    },
+    {
+        icon: <FaBook />,
+        name: "Subjects",
+        link: "/"
+    },
+    {
+        icon: <SiBookstack />,
+        name: "Subjects Combination",
+        link: "/"
+    },
+    {
+        icon: <PiStudentFill />,
+        name: "Students",
+        link: "/"
+    },
+    {
+        icon: <GiArchiveResearch/>,
+        name: "Result",
+        link: "/"
+    },
+    {
+        icon: <RiLockPasswordFill />,
+        name: "Change Password",
+        link: "/"
+    },
+]
   return (
-    <div className="admin d-flex flex-row">
-    <SideNavBar className='d-flex flex-grow-1'></SideNavBar>
-    <div className="h-100 d-flex justify-content-center align-items-center">
-      <Row gutter={[20, 20]}>
-          <div
-            className="p-5  card w-300 cursor-pointer align-items-center justify-content-center gap-3"
-          >
-            <h1>Dashboard Content</h1>
+    <>
+    {/* <Navbar/> */}
+    <div className="flex">
+      <SideNavBar />
+      <div className="w-full border-l-2 border-blue-950 h-full">
+        <h1 className="text-5xl uppercase text-center mt-4">Quick Links</h1>
+        <div className="flex flex-wrap">
+        {nav.map((navigate) => (
+        <div class="flex flex-col md:w-1/3 bg-white rounded-3xl">
+          <div class="px-6 py-8 sm:p-10 sm:pb-6">
+            <div class="grid items-center justify-center w-full grid-cols-1">
+              <div className="mx-auto text-9xl ">
+                {navigate.icon}
+              </div>
+            </div>
           </div>
-        
-      </Row>
+          <div class="flex px-6 pb-8 sm:px-8">
+            <Link
+              class="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-[#333] rounded-full nline-flex text-base font-bold"
+            >
+              {navigate.name}
+            </Link>
+          </div>
+        </div>
+        ))}
+        </div>
+      </div>
     </div>
-    </div>
+    </>
   );
 }
 

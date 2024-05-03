@@ -4,7 +4,7 @@ import PageTitle from '../../components/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
 
-const Classes = () => {
+const Subjects = () => {
     const [classes, setClasses] = React.useState([]);
     const navigate= useNavigate();
     const columns = [
@@ -40,16 +40,16 @@ const Classes = () => {
     ]
   return (
     <div>
-      <PageTitle title="Manage Classes" />
-      <h6 className='text-center text-xl pb-3 underline'>Add New Class</h6>
+      <PageTitle title="Manage Subjects" />
+      <h6 className='text-center text-xl pb-3 underline'>Add New Subject</h6>
       <form>
         <div className='flex justify-center gap-4'>
-          <Form title="Class Name" name="classname" />
-          <Form title="Class Code" name="classcode" />
+          <Form title="Subject Name" name="subname" />
+          <Form title="Subject Code" name="subcode" />
         </div>
 
         <div className="flex items-center justify-center my-3">
-          <button className="bg-blue-950 text-white px-4 font-bold">Add Class</button>
+          <button className="bg-blue-950 text-white px-4 font-bold">Add Subject</button>
         </div>
       </form>
     <Table columns={columns} dataSource={classes} />
@@ -57,4 +57,4 @@ const Classes = () => {
   );
 }
 
-export default Classes
+export default Subjects

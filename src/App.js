@@ -22,6 +22,8 @@ import AddClass from './pages/employees/AddClass';
 import Examination from "./pages/employees/Examination";
 import StudentLogin from './pages/StudentLogin';
 import StudentHome from './pages/StudentHome';
+import Subjects from "./pages/employees/Subjects";
+import ChangePassword from "./pages/employees/ChangePassword";
 import ProtectedRoute from './components/ProtectedRoute';
 
 
@@ -105,6 +107,22 @@ function App() {
             element={
               <PublicRoute>
                 <AddClass/>
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/employee/subjects"
+            element={
+              <PublicRoute>
+                <Subjects />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/employee/changepassword"
+            element={
+              <PublicRoute>
+                <ChangePassword />
               </PublicRoute>
             }
           />

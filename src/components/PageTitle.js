@@ -11,7 +11,7 @@ function PageTitle({ title }) {
           navigate(-1);
         }}
       ></i>
-      <h1 className="text-large">{title}</h1>
+      <h1 className="text-4xl py-3 font-bold uppercase">{title}</h1>
       <hr />
     </div>
   );
