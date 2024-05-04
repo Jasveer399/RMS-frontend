@@ -53,7 +53,9 @@ const Classes = () => {
         <div className="d-flex gap-3">
           <i
             className="ri-delete-bin-line"
-            onClick={() => {deleteClass(record._id)}}
+            onClick={() => {
+              deleteClass(record._id);
+            }}
           ></i>
           <i className="ri-pencil-line"></i>
         </div>
