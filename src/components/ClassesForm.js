@@ -35,15 +35,16 @@ const ClassesForm = () => {
     }
   };
   return (
-    <div>
+    <div className="flex justify-center">
       <Form layout="vertical">
-        <Row gutter={[10, 10]}>
+       <div className="flex gap-4">
+       <Row gutter={[10, 10]}>
           <Form.Item
             label="Class Code"
             name="classCode"
             rules={[{ required: true, message: "Please enter the Class Code" }]}
           >
-            <input onChange={(e) => setclassCode(e.target.value)} type="text" />
+            <input onChange={(e) => setclassCode(e.target.value)} type="text" className="rounded-2xl w-60" />
           </Form.Item>
         </Row>
         <div className="d-flex flex-grow-1 align-items-center justify-content-space-around"></div>
@@ -56,11 +57,14 @@ const ClassesForm = () => {
             <input
               onChange={(e) => setclassTitle(e.target.value)}
               type="text"
+              className="rounded-2xl w-60"
             />
           </Form.Item>
         </Row>
+       </div>
         <div className="d-flex flex-grow-1 align-items-center justify-content-space-around"></div>
-        <Row gutter={[10, 10]}>
+       <div className="flex gap-4">
+       <Row gutter={[10, 10]}>
           <Form.Item
             label="SubjectName"
             name="subjectName"
@@ -69,6 +73,7 @@ const ClassesForm = () => {
             <input
               onChange={(e) => (subjects.subjectName = e.target.value)}
               type="text"
+              className="rounded-2xl w-60"
             />
           </Form.Item>
         </Row>
@@ -82,13 +87,16 @@ const ClassesForm = () => {
             <input
               type="text"
               onChange={(e) => (subjects.subjectCode = e.target.value)}
+              className="rounded-2xl w-60"
             />
           </Form.Item>
         </Row>
-        <div className="d-flex justify-content-end mt-2">
-          <button onClick={addclasses} className="primary text-white px-5">
-            Save
+       </div>
+        <div className="d-flex mt-2 mb-4">
+          <button onClick={addclasses} className="primary text-white px-5 mr-5">
+            Add Class/Subject
           </button>
+          
         </div>
       </Form>
     </div>
