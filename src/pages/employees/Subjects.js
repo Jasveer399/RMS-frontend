@@ -3,6 +3,7 @@ import React from 'react'
 import PageTitle from '../../components/PageTitle';
 import { useNavigate } from 'react-router-dom';
 import Form from '../../components/Form';
+import SideNavBar from './SideNavBar';
 
 const Subjects = () => {
     const [classes, setClasses] = React.useState([]);
@@ -39,7 +40,10 @@ const Subjects = () => {
         }
     ]
   return (
-    <div>
+    <>
+    <div className='flex'>
+    <SideNavBar />
+    <div className="w-full h-full">
       <PageTitle title="Manage Subjects" />
       <h6 className='text-center text-xl pb-3 underline'>Add New Subject</h6>
       <form>
@@ -54,6 +58,8 @@ const Subjects = () => {
       </form>
     <Table columns={columns} dataSource={classes} />
     </div>
+    </div>
+    </>
   );
 }
 

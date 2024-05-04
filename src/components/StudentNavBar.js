@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/sidebar.css'
 import { Link } from 'react-router-dom'
-const SideNavBar = () => {
+const StuNavBar = () => {
   return (
 <nav class="menu">
     <ol>
@@ -14,4 +14,4 @@ const SideNavBar = () => {
   )
 }
 
-export default SideNavBar
+export default StuNavBar

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Form from "../../components/Form";
 import axios from "axios";
 import ClassesForm from "../../components/ClassesForm";
+import SideNavBar from "./SideNavBar";
 import toast from "react-hot-toast";
 
 const Classes = () => {
@@ -75,12 +76,32 @@ const Classes = () => {
     const response = await axios.post("/api/classes/add-class");
   };
   return (
-    <div>
-      <PageTitle title="Manage Classes" />
-      <h6 className="text-center text-xl pb-3 underline">Add New Class</h6>
-      <ClassesForm />
-      <Table className="px-20" columns={columns} dataSource={classes} />
+    // <div>
+    //   <PageTitle title="Manage Classes" />
+    //   <h6 className="text-center text-xl pb-3 underline">Add New Class</h6>
+    //   <ClassesForm />
+    //   <Table className="px-20" columns={columns} dataSource={classes} />
+    // </div>
+    <>
+    <div className='flex'>
+    <SideNavBar />
+    <div className="w-full h-full">
+      <PageTitle title="Manage Subjects" />
+      <h6 className='text-center text-xl pb-3 underline'>Add New Class</h6>
+      <form>
+        <div className='flex justify-center gap-4'>
+          <Form title="Class Name" name="classname" />
+          <Form title="Class Code" name="classcode" />
+        </div>
+
+        <div className="flex items-center justify-center my-3">
+          <button className="bg-blue-950 text-white px-4 font-bold">Add Class</button>
+        </div>
+      </form>
+    <Table columns={columns} dataSource={classes} />
     </div>
+    </div>
+    </>
   );
 };
 

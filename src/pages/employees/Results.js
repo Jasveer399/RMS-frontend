@@ -3,9 +3,11 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
+import Form from '../../components/Form'
+import SideNavBar from './SideNavBar'
 
 function Results(){
   const dispatch = useDispatch();
@@ -98,9 +100,64 @@ function Results(){
     },
   ];
   return (
-    <div>
+    <div className="flex">
+      <SideNavBar/>
+    <div className="w-full h-full">
       <PageTitle title="Results" />
-      <div className="d-flex justify-content-end align-items-center my-3">
+      <h6 className='text-center text-xl pb-3 underline'>Add Result</h6>
+        <form >
+          <div className="flex items-center justify-center gap-4">
+              <div class='flex justify-center items-center pt-3'>
+                <select
+                    class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                    >
+                        <option value="" disabled selected>
+                            Select Class 
+                        </option>
+                        <option value="">
+                            Class 1
+                        </option>
+                        <option value="">
+                            Class 2
+                        </option>
+                        <option value="">
+                            Class 3
+                        </option>
+                        <option value="">
+                            Class 4
+                        </option>
+                </select>
+              </div>
+              <div class='flex justify-center items-center pt-3'>
+                <select
+                    class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                    >
+                        <option value="" disabled selected>
+                            Select Subject 
+                        </option>
+                        <option value="">
+                            Class 1
+                        </option>
+                        <option value="">
+                            Class 2
+                        </option>
+                        <option value="">
+                            Class 3
+                        </option>
+                        <option value="">
+                            Class 4
+                        </option>
+                </select>
+              </div>
+          </div>
+          <div className="flex items-center justify-center gap-4 mt-3">
+            <Form title="Rollno" name="resultrollno" />
+            <Form title="Marks" name="resultmarks" />
+          </div>
+          <div className="flex items-center justify-center my-3">
+              <button className="bg-blue-950 text-white px-4 font-bold">Add Result</button>
+            </div>
+        </form>
         {/* <button
           className="primary text-white px-3"
           onClick={() => {
@@ -109,8 +166,9 @@ function Results(){
         >
           Add Result
         </button> */}
-      </div>
+      
       <Table columns={columns} dataSource={results} />
+    </div>
     </div>
   );
 }

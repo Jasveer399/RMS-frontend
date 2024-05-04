@@ -25,6 +25,7 @@ import StudentHome from './pages/StudentHome';
 import Subjects from "./pages/employees/Subjects";
 import ChangePassword from "./pages/employees/ChangePassword";
 import ProtectedRoute from './components/ProtectedRoute';
+import SubjectCombinations from "./pages/employees/SubjectCombinations";
 
 
 function App() {
@@ -123,6 +124,14 @@ function App() {
             element={
               <PublicRoute>
                 <ChangePassword />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/employee/subjectscombination"
+            element={
+              <PublicRoute>
+                <SubjectCombinations />
               </PublicRoute>
             }
           />

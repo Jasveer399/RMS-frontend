@@ -28,7 +28,7 @@ const SideNavBar = () => {
         {
             icon: <SiBookstack className='text-2xl'/>,
             name: "Subjects Combination",
-            link: "/"
+            link: "/employee/subjectscombination"
         },
         {
             icon: <PiStudentFill className='text-2xl'/>,
@@ -38,7 +38,7 @@ const SideNavBar = () => {
         {
             icon: <GiArchiveResearch className='text-2xl'/>,
             name: "Result",
-            link: "/"
+            link: "/employee/results"
         },
         {
             icon: <RiLockPasswordFill className='text-2xl'/>,
@@ -48,7 +48,7 @@ const SideNavBar = () => {
     ]
   return (
         <>
-        <div className='w-[35%] py-3 h-screen'>
+        <div className='w-[35%] py-3 border-r-2 border-blue-950 h-screen'>
             <div className='fixed top-0'>
             <ul className=''>
                 <li className='justify-center text-center text-3xl pl-14 py-4 font-bold'>Result Management <br/> System</li>
