@@ -61,9 +61,9 @@ function Students() {
     }
   };
 
-  useEffect(() => {
-    getStudents();
-  }, []);
+  // useEffect(() => {
+  //   getStudents();
+  // }, []);
 
   const columns = [
     {
@@ -123,8 +123,11 @@ function Students() {
           <Form title="Rollno" name="sturollno" />
         </div>
         <div className="flex justify-center gap-4 mt-5">
+          <Form title="Gender" name="stugender" />
           <Form title="Email" name="stuemail" />
           <Form title="Phone" name="stuphone" />
+        </div>
+        <div className="flex justify-center gap-4 mt-5">
           <Form title="Password" name="stupassword" />
         </div>
         <div className="flex items-center justify-center my-4">
