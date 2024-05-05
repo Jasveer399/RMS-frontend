@@ -1,23 +1,30 @@
-import React from 'react'
+import React, {  useRef } from 'react'
 
-function Form({title, name}) {
+function Form(props) {
+  const inputRef = useRef()
+  const handleChange = () => {
+    props.onChange(props.name, inputRef.current.value);
+  };
+
   return (
     <>
           <div class="input flex flex-col w-fit static">
             <label
-              for={name}
+              for={props.name}
               class="text-blue-950 text-xs font-semibold relative top-2 ml-[7px] px-[3px] bg-white w-fit"
-              >{title}</label>
+              >{props.title}</label>
             <input
-              id={name}
+              ref={inputRef}
+              id={props.name}
               type="text"
-              placeholder={`${title} Here...`}
-              name={name}
+              placeholder={`${props.title} Here...`}
+              name={props.name}
               class="border-blue-950 input px-[10px] py-[11px] text-xs bg-transparent border-2 rounded-[5px] w-[210px] focus:outline-none placeholder:text-black/25"
+              onChange={handleChange}
             />
           </div>
     </>
   )
 }
 
-export default Form
+export default Form
