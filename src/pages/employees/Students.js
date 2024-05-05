@@ -16,6 +16,9 @@ const Students = () => {
   const [name, setName] = useState("");
   const [rollNo, setRollNo] = useState("");
   const [email, setEmail] = useState("");
+  const [className, setClassName] = useState("");
+  const [gender, setGender] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
   const [studentId, setStudentId] = useState("");
@@ -29,6 +32,15 @@ const Students = () => {
   const onChangeEmail = (name, value) => {
     setEmail(value);
   };
+  const onChangeClassName = (name, value) => {
+    setClassName(value);
+  };
+  const onChangeGender = (name, value) => {
+    setGender(value);
+  };
+  const onChangePhone = (name, value) => {
+    setPhone(value);
+  };
   const onChangePassword = (name, value) => {
     setPassword(value);
   };
@@ -41,11 +53,17 @@ const Students = () => {
         name: name,
         rollNo: rollNo,
         email: email,
+        className: className,
+        gender: gender,
+        phone: phone,
         password: password,
       });
       setName("");
       setRollNo("");
       setEmail("");
+      setClassName("");
+      setGender("");
+      setPhone("");
       setPassword("");
       dispatch(HideLoading());
       if (response.data.success) {
@@ -61,6 +79,9 @@ const Students = () => {
       setName("");
       setRollNo("");
       setEmail("");
+      setClassName("");
+      setGender("");
+      setPhone("");
       setPassword("");
       setIsUpdate(false);
     }
@@ -90,6 +111,9 @@ const Students = () => {
           name: name,
           rollNo: rollNo,
           email: email,
+          className: className,
+          gender: gender,
+          phone: phone,
           password: password,
         }
       );
@@ -108,6 +132,9 @@ const Students = () => {
       setName("");
       setRollNo("");
       setEmail("");
+      setClassName("");
+      setGender("");
+      setPhone("");
       setPassword("");
       setStudentId("");
     }
@@ -125,8 +152,8 @@ const Students = () => {
   const columns = [
     {
       title: "Class",
-      dataIndex: "class",
-      key: "class",
+      dataIndex: "className",
+      key: "className",
     },
     {
       title: "Roll No",
@@ -165,6 +192,9 @@ const Students = () => {
               setName(record.name);
               setRollNo(record.rollNo);
               setEmail(record.email);
+              setClassName(record.className);
+              setGender(record.gender);
+              setPhone(record.phone);
               setPassword(record.password);
               setIsUpdate(true);
               setStudentId(record.rollNo);
@@ -193,7 +223,12 @@ const Students = () => {
                 name="stuname"
               />
 
-              <Form title="Class" name="stuclass" />
+              <Form
+                value={className}
+                onChange={onChangeClassName}
+                title="Class"
+                name="stuclass"
+              />
 
               <Form
                 value={rollNo}
@@ -204,7 +239,12 @@ const Students = () => {
             </div>
 
             <div className="flex justify-center gap-4 mt-5">
-              <Form title="Gender" name="stugender" />
+              <Form
+                value={gender}
+                onChange={onChangeGender}
+                title="Gender"
+                name="stugender"
+              />
 
               <Form
                 title="Email"
@@ -213,7 +253,12 @@ const Students = () => {
                 name="stuemail"
               />
 
-              <Form title="Phone" name="stuphone" />
+              <Form
+                value={phone}
+                onChange={onChangePhone}
+                title="Phone"
+                name="stuphone"
+              />
             </div>
 
             <div className="flex justify-center gap-4 mt-5">
@@ -228,6 +273,7 @@ const Students = () => {
             <div className="flex items-center justify-center my-4">
               <button
                 onClick={addStudent}
+                type="submit"
                 className="bg-blue-950 text-white px-4 font-bold"
               >
                 Add Student
