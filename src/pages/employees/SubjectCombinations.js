@@ -8,6 +8,10 @@ import toast from "react-hot-toast";
 import { Table } from "antd";
 
 function SubjectCombinations() {
+  const [dataAdd, setDataAdd ] = useState(true)
+  const [shownData, setShownData] = useState(false)
+  const [isValueExist, setIsValueExist] = useState(false)
+  const [removeBtn, setRemoveBtn] = useState(false)
   const [classes, setClasses] = useState([]);
   const [subjectes, setSubjectes] = useState([]);
   const [classSubject, setClassSubject] = useState([]);
@@ -37,7 +41,11 @@ function SubjectCombinations() {
   }, []);
 
   const handleAddMore = () => {
-    setSelectCount(selectCount + 1);
+    if(isValueExist){
+      setSelectCount(selectCount + 1);
+      setRemoveBtn(true)
+    }
+    setIsValueExist(false)
   };
   const removesubject = () => {
     if (selectCount > 1) {
@@ -45,6 +53,7 @@ function SubjectCombinations() {
     }
   };
   const handleSubjectChange = (index, value) => {
+    setIsValueExist(true)
     const updatedArray = [...selectedSubjectsArray];
     const [subjectName, subjectCode] = value.split("|"); // Splitting the value
     updatedArray[index] = {
@@ -177,15 +186,36 @@ function SubjectCombinations() {
       ),
     },
   ];
+
+  const showHideHandler = () => {
+    setDataAdd(!dataAdd)
+    setShownData(!shownData)
+
+  }
   return (
     <>
       <div className="flex">
         <SideNavBar />
         <div className="w-full">
+          <div>
           <PageTitle title="Subjects Combination" />
-          <h6 className="text-center text-xl pb-3 underline">
-            Subject Combinations
-          </h6>
+          <div className="flex w-full">
+            <div className="w-[50%] pr-10">
+              <h6 className=" text-right text-xl pb-3 underline">
+                Subject Combinations
+              </h6>
+            </div>
+            <div className="w-[50%] text-right pr-6"> 
+                <button
+                  onClick={showHideHandler}
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  {dataAdd && `Show Data`}
+                  {shownData && `Add Data`}
+                </button>
+              </div>
+          </div>
+          {dataAdd && 
           <div className="flex justify-center gap-5 max-h-10">
             <div className="flex justify-center">
               <select
@@ -242,16 +272,22 @@ function SubjectCombinations() {
               >
                 Add More...
               </button>
+              {removeBtn &&
               <button
                 onClick={removesubject}
                 className="bg-blue-950 text-white px-4 ml-2 font-bold"
               >
                 Remove
               </button>
+              }
             </div>
           </div>
+          }
+          </div>
+        {shownData && 
+          <Table columns={columns} dataSource={classSubject} />
+        }
         </div>
-        <Table columns={columns} dataSource={classSubject} />
       </div>
     </>
   );
