@@ -2,74 +2,256 @@ import React, { useState, useEffect } from "react";
 import SideNavBar from "./SideNavBar";
 import PageTitle from "../../components/PageTitle";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../../redux/alerts";
+import toast from "react-hot-toast";
+import { Table } from "antd";
 
 function SubjectCombinations() {
   const [classes, setClasses] = useState([]);
   const [subjectes, setSubjectes] = useState([]);
+  const [classSubject, setClassSubject] = useState([]);
+  const [selectCount, setSelectCount] = useState(1);
+  const [selectedSubjectsArray, setSelectedSubjectsArray] = useState([
+    // Initial state with an empty object
+    { subjectName: "", subjectCode: "" },
+  ]);
+  const [selectedClassObject, setSelectedClassObject] = useState(
+    // Initial state with an empty object
+    { className: "", classCode: "" }
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
     const getallclasses = async () => {
       const response = await axios.post("/api/classes/get-all-classes");
       const data = response.data.data;
-      setClasses(data); // Update state with the entire data array
+      setClasses(data);
     };
     const getallSubjects = async () => {
       const response = await axios.post("/api/subjectes/get-all-subject");
       const data = response.data.data;
-      setSubjectes(data); // Update state with the entire data array
+      setSubjectes(data);
     };
     getallSubjects();
     getallclasses();
   }, []);
-  console.log(classes);
+
+  const handleAddMore = () => {
+    setSelectCount(selectCount + 1);
+  };
+  const removesubject = () => {
+    if (selectCount > 1) {
+      setSelectCount(selectCount - 1);
+    }
+  };
+  const handleSubjectChange = (index, value) => {
+    const updatedArray = [...selectedSubjectsArray];
+    const [subjectName, subjectCode] = value.split("|"); // Splitting the value
+    updatedArray[index] = {
+      subjectName: subjectName.trim(),
+      subjectCode: subjectCode.trim(),
+    };
+    setSelectedSubjectsArray(updatedArray);
+  };
+
+  const handleClassChange = (value) => {
+    const [className, classCode] = value.split("|");
+    // console.log("CLassName:" + className);
+    // console.log("ClassCode:" + classCode);
+    setSelectedClassObject({
+      className: className,
+      classCode: classCode,
+    });
+  };
+  //Add Class With Subject
+  const addClassesAndSunject = async () => {
+    try {
+      const validSubjects = selectedSubjectsArray.filter(
+        (subject) => subject.subjectName && subject.subjectCode
+      );
+      //   console.log("Request Payload:", {
+      //     classCode: selectedClassObject.classCode,
+      //     className: selectedClassObject.className,
+      //     subjects: validSubjects,
+      //   });
+      if (validSubjects.length === 0) {
+        toast.error("Please select at least one subject");
+        return;
+      }
+      dispatch(ShowLoading());
+      const response = await axios.post("/api/classSubject/add-classSubject", {
+        classCode: selectedClassObject.classCode,
+        className: selectedClassObject.className,
+        subjects: validSubjects,
+      });
+      console.log(response.data);
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      console.log("Error Ocuring during add New Class With Subject");
+      toast.error(error.message);
+    }
+  };
+  const deleteClassAndSubjects = async (classandsubjectsId) => {
+    try {
+        console.log(classandsubjectsId);
+      const response = await axios.post(
+        `/api/classSubject/delete-class-subjects/${classandsubjectsId}`
+      );
+      if (!response.data.success) {
+        toast.error(response.data.message);
+        return;
+      }
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  useEffect(() => {
+    // console.log(selectedSubjectsArray);
+    // console.log(selectedClassObject);
+    const getAllClassAndSubject = async () => {
+      const response = await axios.get(
+        "/api/classSubject/get-all-class-subject"
+      );
+      const data = response.data.data;
+      setClassSubject(data);
+    };
+    getAllClassAndSubject();
+  }, [classSubject]);
+
+  const columns = [
+    {
+      title: "Class Code",
+      dataIndex: "classCode",
+      key: "classCode",
+    },
+    {
+      title: "Class Name",
+      dataIndex: "className",
+      key: "className",
+    },
+    {
+      title: "Subjects Name",
+      dataIndex: "subjects",
+      key: "subjects",
+      render: (subjects) => (
+        <>
+          {subjects.map((subject) => (
+            <div key={subject._id}>{subject.subjectName}</div>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: "Subjects Code",
+      dataIndex: "subjects",
+      key: "subjects",
+      render: (subjects) => (
+        <>
+          {subjects.map((subject) => (
+            <div key={subject._id}>{subject.subjectCode}</div>
+          ))}
+        </>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <div className="d-flex gap-3">
+          <i
+            className="ri-delete-bin-line"
+            onClick={() => {
+              deleteClassAndSubjects(record._id);
+            }}
+          ></i>
+          <i className="ri-pencil-line"></i>
+        </div>
+      ),
+    },
+  ];
   return (
     <>
       <div className="flex">
         <SideNavBar />
-        <div className=" w-full">
+        <div className="w-full">
           <PageTitle title="Subjects Combination" />
           <h6 className="text-center text-xl pb-3 underline">
             Subject Combinations
           </h6>
-          <div className="flex justify-center gap-5">
-            <div class="flex justify-center">
-              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+          <div className="flex justify-center gap-5 max-h-10">
+            <div className="flex justify-center">
+              <select
+                className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                onChange={(e) => handleClassChange(e.target.value)}
+              >
                 <option value="" disabled selected>
                   Select Class
                 </option>
                 {classes.map((classItem, index) => (
-                  <option key={index} value={classItem._id}>
+                  <option
+                    key={index}
+                    value={`${classItem.className}|${classItem.classCode}`}
+                  >
                     {classItem.className}
                   </option>
                 ))}
               </select>
             </div>
-
-            <div class="flex justify-center">
-              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
-                <option value="" disabled selected>
-                  Select Subject
-                </option>
-                {subjectes.map((subjecteitem, index) => (
-                  <option key={index} value={subjecteitem._id}>
-                    {subjecteitem.subjectName}
-                  </option>
-                ))}
-              </select>
-            </div>
-
             <div>
-              <button className="bg-blue-950 text-white px-4 font-bold">
+              {Array.from({ length: selectCount }).map((_, index) => (
+                <div key={index} className="flex justify-center mb-3">
+                  <select
+                    className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                    onChange={(e) => handleSubjectChange(index, e.target.value)}
+                  >
+                    <option value="" disabled selected>
+                      Select Subject
+                    </option>
+                    {subjectes.map((subjecteitem, index) => (
+                      <option
+                        key={index}
+                        value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
+                      >
+                        {subjecteitem.subjectName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              ))}
+              <div className="flex items-center justify-center my-4">
+                <button
+                  onClick={addClassesAndSunject}
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Add Subjects
+                </button>
+              </div>
+            </div>
+            <div>
+              <button
+                onClick={handleAddMore}
+                className="bg-blue-950 text-white px-4 font-bold"
+              >
                 Add More...
+              </button>
+              <button
+                onClick={removesubject}
+                className="bg-blue-950 text-white px-4 ml-2 font-bold"
+              >
+                Remove
               </button>
             </div>
           </div>
-
-          <div className="flex items-center justify-center my-4">
-            <button className="bg-blue-950 text-white px-4 font-bold">
-              Add Subjects
-            </button>
-          </div>
         </div>
+        <Table columns={columns} dataSource={classSubject} />
       </div>
     </>
   );
