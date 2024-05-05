@@ -151,9 +151,9 @@ const Students = () => {
 
   const columns = [
     {
-      title: "Class",
-      dataIndex: "className",
-      key: "className",
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
       title: "Roll No",
@@ -161,9 +161,9 @@ const Students = () => {
       key: "rollNo",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Class",
+      dataIndex: "className",
+      key: "className",
     },
     {
       title: "Email",
@@ -176,6 +176,16 @@ const Students = () => {
       key: "password",
     },
     {
+      title: "Gender",
+      dataIndex: "gender",
+      key: "gender",
+    },
+    {
+      title: "Phone No",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
       title: "Action",
       key: "action",
       render: (text, record) => (
@@ -183,7 +193,7 @@ const Students = () => {
           <i
             className="ri-delete-bin-line"
             onClick={() => {
-              deleteStudent(record.rollNo);
+              deleteStudent(record._id);
             }}
           ></i>
           <i
