@@ -22,6 +22,7 @@ const Subjects = () => {
   const onChangeClassCode = (name, value) => {
     setSubjectCode(value);
   };
+
   const addSubject = async (e) => {
     e.preventDefault();
     console.log("1");
@@ -90,7 +91,7 @@ const Subjects = () => {
       }
     } catch (error) {
       dispatch(HideLoading());
-      console.log("Error Ocuring during add Updateing Subject");
+      console.log("Error Ocuring during add Updating Subject");
       toast.error(error.message);
     } finally {
       setIsUpdate(false);
@@ -169,15 +170,7 @@ const Subjects = () => {
               />
             </div>
 
-            <div className="flex items-center justify-center my-3">
-              <button
-                onClick={addSubject}
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                Add Subject
-              </button>
-            </div>
-            {isupdate && (
+            {isupdate ? (
               <div className="flex items-center justify-center my-3">
                 <button
                   onClick={() => {
@@ -186,6 +179,15 @@ const Subjects = () => {
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
                   Update Subject
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center my-3">
+                <button
+                  onClick={addSubject}
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Add Subject
                 </button>
               </div>
             )}

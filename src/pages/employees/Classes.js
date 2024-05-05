@@ -161,16 +161,7 @@ const Classes = () => {
               />
             </div>
 
-            <div className="flex items-center justify-center my-3">
-              <button
-                onClick={addclasses}
-                type="submit"
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                Add Class
-              </button>
-            </div>
-            {isupdate && (
+            {isupdate ? (
               <div className="flex items-center justify-center my-3">
                 <button
                   onClick={() => {
@@ -179,6 +170,16 @@ const Classes = () => {
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
                   Update Subject
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center my-3">
+                <button
+                  onClick={addclasses}
+                  type="submit"
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Add Class
                 </button>
               </div>
             )}
