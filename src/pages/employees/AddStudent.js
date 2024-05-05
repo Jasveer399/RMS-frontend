@@ -8,7 +8,9 @@ function AddStudent() {
   return (
     <div>
       <PageTitle title="Add Student" />
-      <StudentForm />
+      <div className="d-flex flex-grow-1 align-items-center justify-content-left p-4">
+        <StudentForm />
+      </div>
     </div>
   );
 }

@@ -22,6 +22,7 @@ const Subjects = () => {
   const onChangeClassCode = (name, value) => {
     setSubjectCode(value);
   };
+
   const addSubject = async (e) => {
     e.preventDefault();
     console.log("1");
@@ -90,7 +91,7 @@ const Subjects = () => {
       }
     } catch (error) {
       dispatch(HideLoading());
-      console.log("Error Ocuring during add Updateing Subject");
+      console.log("Error Ocuring during add Updating Subject");
       toast.error(error.message);
     } finally {
       setIsUpdate(false);
