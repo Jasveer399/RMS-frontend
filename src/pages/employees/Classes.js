@@ -1,14 +1,50 @@
 import { Table } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PageTitle from "../../components/PageTitle";
 import axios from "axios";
 import SideNavBar from "./SideNavBar";
 import toast from "react-hot-toast";
-import ClassesForm from "../../components/ClassesForm";
+import Form from "../../components/Form";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../../redux/alerts";
 
 const Classes = () => {
-  const [classes, setClasses] = React.useState([]);
-  
+  const [classes, setClasses] = useState([]);
+  const [classCode, setClassCode] = useState("");
+  const [className, setClassName] = useState();
+  const [classId, setClassId] = useState("");
+  const [isupdate, setIsUpdate] = useState(false);
+  const dispatch = useDispatch();
+  const onChangeClassName = (name, value) => {
+    setClassName(value);
+  };
+  const onChangeClassCode = (name, value) => {
+    setClassCode(value);
+  };
+  const addclasses = async () => {
+    try {
+      dispatch(ShowLoading());
+      console.log("one");
+      const response = await axios.post("/api/classes/add-class", {
+        classCode: classCode,
+        className: className,
+      });
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      console.log("Error Ocuring during add New Class");
+      toast.error(error.message);
+    } finally {
+      setClassCode("");
+      setClassName("");
+    }
+  };
+
   const deleteClass = async (classId) => {
     try {
       const response = await axios.post(`/api/classes/delete-class/${classId}`);
@@ -19,6 +55,36 @@ const Classes = () => {
       toast.success(response.data.message);
     } catch (error) {
       toast.error(error.message);
+    }
+  };
+
+  const updateClass = async (classID) => {
+    try {
+      dispatch(ShowLoading());
+      console.log("2");
+      const response = await axios.post(
+        `/api/classes/update-class/${classID}`,
+        {
+          classCode: classCode,
+          className: className,
+        }
+      );
+      // console.log("2");
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      console.log("Error Ocuring during add Updateing Class");
+      toast.error(error.message);
+    } finally {
+      setClassCode("");
+      setClassName("");
+      setClassId("");
+      setIsUpdate(false);
     }
   };
   const columns = [
@@ -43,7 +109,15 @@ const Classes = () => {
               deleteClass(record._id);
             }}
           ></i>
-          <i className="ri-pencil-line"></i>
+          <i
+            className="ri-pencil-line"
+            onClick={() => {
+              setClassName(record.className); // Set the subjectName when edit is clicked
+              setClassCode(record.classCode); // Set the subjectCode when edit is clicked
+              setIsUpdate(true);
+              setClassId(record._id);
+            }}
+          ></i>
         </div>
       ),
     },
@@ -56,7 +130,6 @@ const Classes = () => {
     };
     getallclasses();
   }, [classes]);
-
 
   return (
     // <div>
@@ -71,16 +144,18 @@ const Classes = () => {
         <div className="w-full h-full">
           <PageTitle title="Manage Subjects" />
           <h6 className="text-center text-xl pb-3 underline">Add New Class</h6>
-         <ClassesForm/>
-          {/* <form onSubmit={add}>
+          {/* <ClassesForm/> */}
+          <form>
             <div className="flex justify-center gap-4">
               <Form
-                onChange={(e) => setclassName(e.target.value)}
+                value={className}
+                onChange={onChangeClassName}
                 title="Class Name"
                 name="classname"
               />
               <Form
-                onChange={(e) => setclassCode(e.target.value)}
+                value={classCode}
+                onChange={onChangeClassCode}
                 title="Class Code"
                 name="classcode"
               />
@@ -88,13 +163,26 @@ const Classes = () => {
 
             <div className="flex items-center justify-center my-3">
               <button
+                onClick={addclasses}
                 type="submit"
                 className="bg-blue-950 text-white px-4 font-bold"
               >
                 Add Class
               </button>
             </div>
-          </form> */}
+            {isupdate && (
+              <div className="flex items-center justify-center my-3">
+                <button
+                  onClick={() => {
+                    updateClass(classId);
+                  }}
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Update Subject
+                </button>
+              </div>
+            )}
+          </form>
           <Table columns={columns} dataSource={classes} />
         </div>
       </div>

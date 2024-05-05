@@ -8,10 +8,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
 import toast from "react-hot-toast";
+
 const Subjects = () => {
   const [subjectes, setSubjectes] = useState([]);
   const [subjectName, setSubjectName] = useState("");
   const [subjectCode, setSubjectCode] = useState("");
+  const [isupdate, setIsUpdate] = useState(false);
+  const [subjectId, setSubjectId] = useState("");
   const dispatch = useDispatch();
   const onChangeClassName = (name, value) => {
     setSubjectName(value);
@@ -42,6 +45,10 @@ const Subjects = () => {
       dispatch(HideLoading());
       console.log("Error Ocuring during add New Subject");
       toast.error(error.message);
+    } finally {
+      setSubjectName("");
+      setSubjectCode("");
+      setIsUpdate(false);
     }
     // console.log("Submit handler");
     // console.log("sunjectName : " + subjectName);
@@ -62,6 +69,37 @@ const Subjects = () => {
       toast.error(error.message);
     }
   };
+
+  const updateSubject = async (subjectID) => {
+    try {
+      dispatch(ShowLoading());
+      console.log("2");
+      const response = await axios.post(
+        `/api/subjectes/update-subject/${subjectID}`,
+        {
+          subjectName: subjectName,
+          subjectCode: subjectCode,
+        }
+      );
+      // console.log("2");;
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      console.log("Error Ocuring during add Updateing Subject");
+      toast.error(error.message);
+    } finally {
+      setIsUpdate(false);
+      setSubjectName("");
+      setSubjectCode("");
+      setSubjectId("");
+    }
+  };
+
   useEffect(() => {
     const getallSubjects = async () => {
       const response = await axios.post("/api/subjectes/get-all-subject");
@@ -78,10 +116,9 @@ const Subjects = () => {
       key: "subjectCode",
     },
     {
-      title: "subject Name",
+      title: "Subject Name",
       dataIndex: "subjectName",
       key: "subjectName",
-      // render: (subjects) => (
     },
     {
       title: "Action",
@@ -94,7 +131,15 @@ const Subjects = () => {
               deleteSubject(record._id);
             }}
           ></i>
-          <i className="ri-pencil-line"></i>
+          <i
+            onClick={() => {
+              setSubjectName(record.subjectName); // Set the subjectName when edit is clicked
+              setSubjectCode(record.subjectCode); // Set the subjectCode when edit is clicked
+              setIsUpdate(true);
+              setSubjectId(record._id);
+            }}
+            className="ri-pencil-line"
+          ></i>
         </div>
       ),
     },
@@ -132,6 +177,18 @@ const Subjects = () => {
                 Add Subject
               </button>
             </div>
+            {isupdate && (
+              <div className="flex items-center justify-center my-3">
+                <button
+                  onClick={() => {
+                    updateSubject(subjectId);
+                  }}
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Update Subject
+                </button>
+              </div>
+            )}
           </form>
           <Table columns={columns} dataSource={subjectes} />
         </div>

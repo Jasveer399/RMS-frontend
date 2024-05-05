@@ -19,6 +19,7 @@ function Form(props) {
               type="text"
               placeholder={`${props.title} Here...`}
               name={props.name}
+              value={props.value} // Set value prop
               class="border-blue-950 input px-[10px] py-[11px] text-xs bg-transparent border-2 rounded-[5px] w-[210px] focus:outline-none placeholder:text-black/25"
               onChange={handleChange}
             />
