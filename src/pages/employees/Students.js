@@ -20,7 +20,7 @@ const Students = () => {
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
-  const [password, setPassword] = useState("");
+  const [semester, setSemester] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
   const [studentId, setStudentId] = useState("");
   const dispatch = useDispatch();
@@ -42,8 +42,8 @@ const Students = () => {
   const onChangePhone = (name, value) => {
     setPhone(value);
   };
-  const onChangePassword = (name, value) => {
-    setPassword(value);
+  const onChangeSemester = (name, value) => {
+    setSemester(value);
   };
   const onChangeDob = (name, value) => {
     setDob(value);
@@ -51,8 +51,8 @@ const Students = () => {
 
   const checkHandler = (e) => {
     e.preventDefault();
-    console.log("dob");
-    console.log(dob);
+    console.log(typeof phone);
+    console.log(dob, name, rollNo, email, className, gender, phone, semester);
   };
 
   const addStudent = async (e) => {
@@ -64,17 +64,11 @@ const Students = () => {
         rollNo: rollNo,
         email: email,
         className: className,
+        dob: dob,
         gender: gender,
         phone: phone,
-        password: password,
+        semester: semester,
       });
-      // setName("");
-      // setRollNo("");
-      // setEmail("");
-      // setClassName("");
-      // setGender("");
-      // setPhone("");
-      // setPassword("");
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -92,7 +86,7 @@ const Students = () => {
       setClassName("");
       setGender("");
       setPhone("");
-      setPassword("");
+      setSemester("");
       setIsUpdate(false);
     }
   };
@@ -124,7 +118,7 @@ const Students = () => {
           className: className,
           gender: gender,
           phone: phone,
-          password: password,
+          semester: semester,
         }
       );
       dispatch(HideLoading());
@@ -144,7 +138,7 @@ const Students = () => {
       setClassName("");
       setGender("");
       setPhone("");
-      setPassword("");
+      setSemester("");
       setStudentId("");
       setIsUpdate(false);
     }
@@ -172,9 +166,9 @@ const Students = () => {
       key: "email",
     },
     {
-      title: "Student Password",
-      dataIndex: "password",
-      key: "password",
+      title: "Student Semester",
+      dataIndex: "semester",
+      key: "semester",
     },
     {
       title: "Gender",
@@ -206,7 +200,7 @@ const Students = () => {
               setClassName(record.className);
               setGender(record.gender);
               setPhone(record.phone);
-              setPassword(record.password);
+              setSemester(record.password);
               setIsUpdate(true);
               setStudentId(record.rollNo);
               // navigate(/employee/students/edit/${record.rollNo});
@@ -253,18 +247,21 @@ const Students = () => {
               />
 
               <div class="flex justify-center items-center pt-3">
-                <select class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52">
+                <select
+                  class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
+                  onChange={(e) => setSemester(e.target.value)}
+                >
                   <option value="" disabled selected>
                     Select Semester
                   </option>
-                  <option value="">Sem 1st</option>
-                  <option value="">Sem 2nd</option>
-                  <option value="">Sem 3rd</option>
-                  <option value="">Sem 4th</option>
-                  <option value="">Sem 5th</option>
-                  <option value="">Sem 6th</option>
-                  <option value="">Sem 7th</option>
-                  <option value="">Sem 8th</option>
+                  <option value="Sem 1st">Sem 1st</option>
+                  <option value="Sem 2nd">Sem 2nd</option>
+                  <option value="Sem 3nd">Sem 3rd</option>
+                  <option value="Sem 4nd">Sem 4th</option>
+                  <option value="Sem 5nd">Sem 5th</option>
+                  <option value="Sem 6nd">Sem 6th</option>
+                  <option value="Sem 7nd">Sem 7th</option>
+                  <option value="Sem 8nd">Sem 8th</option>
                 </select>
               </div>
 
@@ -287,13 +284,16 @@ const Students = () => {
               />
 
               <div class="flex justify-center items-center pt-3">
-                <select class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52">
+                <select
+                  class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
+                  onChange={(e) => setGender(e.target.value)}
+                >
                   <option value="" disabled selected>
                     Gender
                   </option>
-                  <option value="">Male</option>
-                  <option value="">Female</option>
-                  <option value="">Others</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
                 </select>
               </div>
 
