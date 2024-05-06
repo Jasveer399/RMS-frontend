@@ -19,7 +19,8 @@ const Students = () => {
   const [className, setClassName] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [dob, setDob] = useState("")
+  const [dob, setDob] = useState("");
+  const [semester, setSemester] = useState("");
   const [password, setPassword] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
   const [studentId, setStudentId] = useState("");
@@ -46,8 +47,11 @@ const Students = () => {
     setPassword(value);
   };
   const onChangeDob = (name, value) => {
-    setDob(value)
-  }
+    setDob(value);
+  };
+  const onChangeSemester = (name, value) => {
+    setSemester(value);
+  };
 
   const addStudent = async (e) => {
     e.preventDefault();
@@ -59,6 +63,8 @@ const Students = () => {
         email: email,
         className: className,
         gender: gender,
+        dob: dob,
+        semester: semester,
         phone: phone,
         password: password,
       });
@@ -85,6 +91,8 @@ const Students = () => {
       setEmail("");
       setClassName("");
       setGender("");
+      setDob("");
+      setSemester("");
       setPhone("");
       setPassword("");
       setIsUpdate(false);
@@ -117,6 +125,8 @@ const Students = () => {
           email: email,
           className: className,
           gender: gender,
+          dob: dob,
+          semester: semester,
           phone: phone,
           password: password,
         }
@@ -137,6 +147,8 @@ const Students = () => {
       setEmail("");
       setClassName("");
       setGender("");
+      setDob("");
+      setSemester("");
       setPhone("");
       setPassword("");
       setStudentId("");
@@ -176,6 +188,16 @@ const Students = () => {
       key: "gender",
     },
     {
+      title: "Dob",
+      dataIndex: "dob",
+      key: "dob",
+    },
+    {
+      title: "Semester",
+      dataIndex: "semester",
+      key: "semester",
+    },
+    {
       title: "Phone No",
       dataIndex: "phone",
       key: "phone",
@@ -199,6 +221,8 @@ const Students = () => {
               setEmail(record.email);
               setClassName(record.className);
               setGender(record.gender);
+              setDob(record.dob);
+              setSemester(record.semester);
               setPhone(record.phone);
               setPassword(record.password);
               setIsUpdate(true);
@@ -246,37 +270,22 @@ const Students = () => {
                 type="text"
               />
 
-              <div class='flex justify-center items-center pt-3'>
+              <div class="flex justify-center items-center pt-3">
                 <select
-                    class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Select Semester 
-                        </option>
-                        <option value="">
-                            Sem 1st
-                        </option>
-                        <option value="">
-                            Sem 2nd
-                        </option>
-                        <option value="">
-                            Sem 3rd
-                        </option>
-                        <option value="">
-                            Sem 4th
-                        </option>
-                        <option value="">
-                            Sem 5th
-                        </option>
-                        <option value="">
-                            Sem 6th
-                        </option>
-                        <option value="">
-                            Sem 7th
-                        </option>
-                        <option value="">
-                            Sem 8th
-                        </option>
+                  class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
+                  onChange={(e) => setSemester(e.target.value)}
+                >
+                  <option value="" disabled selected>
+                    Select Semester
+                  </option>
+                  <option value="">Sem 1st</option>
+                  <option value="">Sem 2nd</option>
+                  <option value="">Sem 3rd</option>
+                  <option value="">Sem 4th</option>
+                  <option value="">Sem 5th</option>
+                  <option value="">Sem 6th</option>
+                  <option value="">Sem 7th</option>
+                  <option value="">Sem 8th</option>
                 </select>
               </div>
 
@@ -298,22 +307,17 @@ const Students = () => {
                 type="number"
               />
 
-              <div class='flex justify-center items-center pt-3'>
+              <div class="flex justify-center items-center pt-3">
                 <select
-                    class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Gender 
-                        </option>
-                        <option value="">
-                            Male
-                        </option>
-                        <option value="">
-                            Female
-                        </option>
-                        <option value="">
-                            Others
-                        </option>
+                  class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="" disabled selected>
+                    Gender
+                  </option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Others">Others</option>
                 </select>
               </div>
 
@@ -324,19 +328,18 @@ const Students = () => {
                 name="stugender"
               /> */}
 
-            {/* New DOB FIELD ..... the function is defined check the value is passing or not */}
+              {/* New DOB FIELD ..... the function is defined check the value is passing or not */}
               <Form
-                value={dob} 
+                value={dob}
                 onChange={onChangeDob}
                 title="Date of Birth"
                 name="studob"
                 type="date"
-              />    
-              
+              />
             </div>
 
             <div className="flex justify-center gap-4 mt-5">
-            <Form
+              <Form
                 title="Email"
                 value={email}
                 onChange={onChangeEmail}

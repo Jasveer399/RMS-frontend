@@ -8,10 +8,10 @@ import toast from "react-hot-toast";
 import { Table } from "antd";
 
 function SubjectCombinations() {
-  const [dataAdd, setDataAdd ] = useState(true)
-  const [shownData, setShownData] = useState(false)
-  const [isValueExist, setIsValueExist] = useState(false)
-  const [removeBtn, setRemoveBtn] = useState(false)
+  const [dataAdd, setDataAdd] = useState(true);
+  const [shownData, setShownData] = useState(false);
+  const [isValueExist, setIsValueExist] = useState(false);
+  const [removeBtn, setRemoveBtn] = useState(false);
   const [classes, setClasses] = useState([]);
   const [subjectes, setSubjectes] = useState([]);
   const [classSubject, setClassSubject] = useState([]);
@@ -41,11 +41,11 @@ function SubjectCombinations() {
   }, []);
 
   const handleAddMore = () => {
-    if(isValueExist){
+    if (isValueExist) {
       setSelectCount(selectCount + 1);
-      setRemoveBtn(true)
+      setRemoveBtn(true);
     }
-    setIsValueExist(false)
+    setIsValueExist(false);
   };
   const removesubject = () => {
     if (selectCount > 1) {
@@ -53,7 +53,7 @@ function SubjectCombinations() {
     }
   };
   const handleSubjectChange = (index, value) => {
-    setIsValueExist(true)
+    setIsValueExist(true);
     const updatedArray = [...selectedSubjectsArray];
     const [subjectName, subjectCode] = value.split("|"); // Splitting the value
     updatedArray[index] = {
@@ -108,7 +108,7 @@ function SubjectCombinations() {
   };
   const deleteClassAndSubjects = async (classandsubjectsId) => {
     try {
-        console.log(classandsubjectsId);
+      console.log(classandsubjectsId);
       const response = await axios.post(
         `/api/classSubject/delete-class-subjects/${classandsubjectsId}`
       );
@@ -188,24 +188,23 @@ function SubjectCombinations() {
   ];
 
   const showHideHandler = () => {
-    setDataAdd(!dataAdd)
-    setShownData(!shownData)
-
-  }
+    setDataAdd(!dataAdd);
+    setShownData(!shownData);
+  };
   return (
     <>
       <div className="flex">
         <SideNavBar />
         <div className="w-full">
           <div>
-          <PageTitle title="Subjects Combination" />
-          <div className="flex w-full">
-            <div className="w-[50%] pr-10">
-              <h6 className=" text-right text-xl pb-3 underline">
-                Subject Combinations
-              </h6>
-            </div>
-            <div className="w-[50%] text-right pr-6"> 
+            <PageTitle title="Subjects Combination" />
+            <div className="flex w-full">
+              <div className="w-[50%] pr-10">
+                <h6 className=" text-right text-xl pb-3 underline">
+                  Subject Combinations
+                </h6>
+              </div>
+              <div className="w-[50%] text-right pr-6">
                 <button
                   onClick={showHideHandler}
                   className="bg-blue-950 text-white px-4 font-bold"
@@ -214,79 +213,79 @@ function SubjectCombinations() {
                   {shownData && `Add Data`}
                 </button>
               </div>
-          </div>
-          {dataAdd && 
-          <div className="flex justify-center gap-5 max-h-10">
-            <div className="flex justify-center">
-              <select
-                className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
-                onChange={(e) => handleClassChange(e.target.value)}
-              >
-                <option value="" disabled selected>
-                  Select Class
-                </option>
-                {classes.map((classItem, index) => (
-                  <option
-                    key={index}
-                    value={`${classItem.className}|${classItem.classCode}`}
-                  >
-                    {classItem.className}
-                  </option>
-                ))}
-              </select>
             </div>
-            <div>
-              {Array.from({ length: selectCount }).map((_, index) => (
-                <div key={index} className="flex justify-center mb-3">
+            {dataAdd && (
+              <div className="flex justify-center gap-5 max-h-10">
+                <div className="flex justify-center">
                   <select
                     className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
-                    onChange={(e) => handleSubjectChange(index, e.target.value)}
+                    onChange={(e) => handleClassChange(e.target.value)}
                   >
                     <option value="" disabled selected>
-                      Select Subject
+                      Select Class
                     </option>
-                    {subjectes.map((subjecteitem, index) => (
+                    {classes.map((classItem, index) => (
                       <option
                         key={index}
-                        value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
+                        value={`${classItem.className}|${classItem.classCode}`}
                       >
-                        {subjecteitem.subjectName}
+                        {classItem.className}
                       </option>
                     ))}
                   </select>
                 </div>
-              ))}
-              <div className="flex items-center justify-center my-4">
-                <button
-                  onClick={addClassesAndSunject}
-                  className="bg-blue-950 text-white px-4 font-bold"
-                >
-                  Add Subjects
-                </button>
+                <div>
+                  {Array.from({ length: selectCount }).map((_, index) => (
+                    <div key={index} className="flex justify-center mb-3">
+                      <select
+                        className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                        onChange={(e) =>
+                          handleSubjectChange(index, e.target.value)
+                        }
+                      >
+                        <option value="" disabled selected>
+                          Select Subject
+                        </option>
+                        {subjectes.map((subjecteitem, index) => (
+                          <option
+                            key={index}
+                            value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
+                          >
+                            {subjecteitem.subjectName}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+                  <div className="flex items-center justify-center my-4">
+                    <button
+                      onClick={addClassesAndSunject}
+                      className="bg-blue-950 text-white px-4 font-bold"
+                    >
+                      Add Subjects
+                    </button>
+                  </div>
+                </div>
+                <div>
+                  <button
+                    onClick={handleAddMore}
+                    className="bg-blue-950 text-white px-4 font-bold"
+                  >
+                    Add More...
+                  </button>
+                  {removeBtn && (
+                    <button
+                      onClick={removesubject}
+                      className="bg-blue-950 text-white px-4 ml-2 font-bold"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-            <div>
-              <button
-                onClick={handleAddMore}
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                Add More...
-              </button>
-              {removeBtn &&
-              <button
-                onClick={removesubject}
-                className="bg-blue-950 text-white px-4 ml-2 font-bold"
-              >
-                Remove
-              </button>
-              }
-            </div>
+            )}
           </div>
-          }
-          </div>
-        {shownData && 
-          <Table columns={columns} dataSource={classSubject} />
-        }
+          {shownData && <Table columns={columns} dataSource={classSubject} />}
         </div>
       </div>
     </>
