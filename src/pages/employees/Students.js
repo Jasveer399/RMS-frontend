@@ -109,7 +109,7 @@ const Students = () => {
         `/api/student/update-student/${studentId}`,
         {
           name: name,
-          // rollNo: rollNo,
+          rollNo: rollNo,
           email: email,
           className: className,
           gender: gender,
@@ -129,7 +129,7 @@ const Students = () => {
       toast.error(error.message);
     } finally {
       setName("");
-      // setRollNo("");
+      setRollNo("");
       setEmail("");
       setClassName("");
       setGender("");
@@ -191,7 +191,7 @@ const Students = () => {
             className="ri-pencil-line"
             onClick={() => {
               setName(record.name);
-              // setRollNo(record.rollNo);
+              setRollNo(record.rollNo);
               setEmail(record.email);
               setClassName(record.className);
               setGender(record.gender);
@@ -280,17 +280,8 @@ const Students = () => {
               />
             </div>
 
-            <div className="flex items-center justify-center my-4">
-              <button
-                onClick={addStudent}
-                type="submit"
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                Add Student
-              </button>
-            </div>
-            {isupdate && (
-              <div className="flex items-center justify-center my-3">
+            {isupdate ? (
+              <div className="flex items-center justify-center my-4">
                 <button
                   onClick={() => {
                     updateStudent(studentId);
@@ -298,6 +289,16 @@ const Students = () => {
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
                   Update Student
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center justify-center my-4">
+                <button
+                  onClick={addStudent}
+                  type="submit"
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Add Student
                 </button>
               </div>
             )}

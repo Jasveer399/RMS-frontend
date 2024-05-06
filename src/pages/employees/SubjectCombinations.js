@@ -183,7 +183,7 @@ function SubjectCombinations() {
               deleteClassAndSubjects(record._id);
             }}
           ></i>
-          <i className="ri-pencil-line"></i>
+          <i  className="ri-pencil-line"></i>
         </div>
       ),
     },
