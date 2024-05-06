@@ -19,8 +19,11 @@ const Students = () => {
   const [className, setClassName] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
+<<<<<<< HEAD
   const [dob, setDob] = useState("");
   const [semester, setSemester] = useState("");
+=======
+>>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
   const [password, setPassword] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
   const [studentId, setStudentId] = useState("");
@@ -46,12 +49,15 @@ const Students = () => {
   const onChangePassword = (name, value) => {
     setPassword(value);
   };
+<<<<<<< HEAD
   const onChangeDob = (name, value) => {
     setDob(value);
   };
   const onChangeSemester = (name, value) => {
     setSemester(value);
   };
+=======
+>>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
 
   const addStudent = async (e) => {
     e.preventDefault();
@@ -121,7 +127,7 @@ const Students = () => {
         `/api/student/update-student/${studentId}`,
         {
           name: name,
-          // rollNo: rollNo,
+          rollNo: rollNo,
           email: email,
           className: className,
           gender: gender,
@@ -143,7 +149,7 @@ const Students = () => {
       toast.error(error.message);
     } finally {
       setName("");
-      // setRollNo("");
+      setRollNo("");
       setEmail("");
       setClassName("");
       setGender("");
@@ -217,7 +223,7 @@ const Students = () => {
             className="ri-pencil-line"
             onClick={() => {
               setName(record.name);
-              // setRollNo(record.rollNo);
+              setRollNo(record.rollNo);
               setEmail(record.email);
               setClassName(record.className);
               setGender(record.gender);
@@ -259,7 +265,6 @@ const Students = () => {
                 onChange={onChangeName}
                 title="Name"
                 name="stuname"
-                type="text"
               />
 
               <Form
@@ -267,9 +272,9 @@ const Students = () => {
                 onChange={onChangeClassName}
                 title="Class"
                 name="stuclass"
-                type="text"
               />
 
+<<<<<<< HEAD
               <div class="flex justify-center items-center pt-3">
                 <select
                   class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
@@ -299,14 +304,17 @@ const Students = () => {
             </div>
 
             <div className="flex justify-center gap-4 mt-5">
+=======
+>>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
               <Form
                 value={rollNo}
                 onChange={onChangeRollNo}
                 title="Rollno"
                 name="sturollno"
-                type="number"
               />
+            </div>
 
+<<<<<<< HEAD
               <div class="flex justify-center items-center pt-3">
                 <select
                   class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
@@ -322,12 +330,17 @@ const Students = () => {
               </div>
 
               {/* <Form
+=======
+            <div className="flex justify-center gap-4 mt-5">
+              <Form
+>>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
                 value={gender}
                 onChange={onChangeGender}
                 title="Gender"
                 name="stugender"
-              /> */}
+              />
 
+<<<<<<< HEAD
               {/* New DOB FIELD ..... the function is defined check the value is passing or not */}
               <Form
                 value={dob}
@@ -340,11 +353,13 @@ const Students = () => {
 
             <div className="flex justify-center gap-4 mt-5">
               <Form
+=======
+              <Form
+>>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
                 title="Email"
                 value={email}
                 onChange={onChangeEmail}
                 name="stuemail"
-                type="email"
               />
 
               <Form
@@ -352,27 +367,20 @@ const Students = () => {
                 onChange={onChangePhone}
                 title="Phone"
                 name="stuphone"
-                type="number"
               />
+            </div>
 
-              {/* <Form
+            <div className="flex justify-center gap-4 mt-5">
+              <Form
                 value={password}
                 onChange={onChangePassword}
                 title="Password"
                 name="stupassword"
-              /> */}
+              />
             </div>
 
-            <div className="flex items-center justify-center my-4">
-              <button
-                onClick={addStudent}
-                type="submit"
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                Add Student
-              </button>
-            </div>
-            {isupdate && (
+           
+            {isupdate ? (
               <div className="flex items-center justify-center my-3">
                 <button
                   onClick={() => {
@@ -383,7 +391,15 @@ const Students = () => {
                   Update Student
                 </button>
               </div>
-            )}
+            ): <div className="flex items-center justify-center my-4">
+              <button
+                onClick={addStudent}
+                type="submit"
+                className="bg-blue-950 text-white px-4 font-bold"
+              >
+                Add Student
+              </button>
+            </div>}
           </form>
           <Table columns={columns} dataSource={students} />
         </div>
