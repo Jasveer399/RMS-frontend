@@ -1,17 +1,19 @@
 import { Table } from "antd";
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
-import Form from '../../components/Form'
-import SideNavBar from './SideNavBar'
+import Form from "../../components/Form";
+import SideNavBar from "./SideNavBar";
 
-function Results(){
+function Results() {
   const dispatch = useDispatch();
-  const [results, setResults] = React.useState([]);
+  const [results, setResults] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [subjectes, setSubjectes] = useState([]);
   const navigate = useNavigate();
   const getResults = async (values) => {
     try {
@@ -61,9 +63,21 @@ function Results(){
   //     toast.error(error.message);
   //   }
   // };
-  
-  
 
+  useEffect(() => {
+    const getallclasses = async () => {
+      const response = await axios.post("/api/classes/get-all-classes");
+      const data = response.data.data;
+      setClasses(data);
+    };
+    const getallSubjects = async () => {
+      const response = await axios.post("/api/subjectes/get-all-subject");
+      const data = response.data.data;
+      setSubjectes(data);
+    };
+    getallSubjects();
+    getallclasses();
+  }, []);
   useEffect(() => {
     getResults();
   }, []);
@@ -101,91 +115,63 @@ function Results(){
   ];
   return (
     <div className="flex">
-      <SideNavBar/>
-    <div className="w-full h-full">
-      <PageTitle title="Results" />
-      <h6 className='text-center text-xl pb-3 underline'>Add Result</h6>
-        <form >
+      <SideNavBar />
+      <div className="w-full h-full">
+        <PageTitle title="Results" />
+        <h6 className="text-center text-xl pb-3 underline">Add Result</h6>
+        <form>
           <div className="flex items-center justify-center gap-4">
-              <div class='flex justify-center items-center pt-3'>
-                <select
-                    class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Select Class 
-                        </option>
-                        <option value="">
-                            Class 1
-                        </option>
-                        <option value="">
-                            Class 2
-                        </option>
-                        <option value="">
-                            Class 3
-                        </option>
-                        <option value="">
-                            Class 4
-                        </option>
-                </select>
-              </div>
-              <div class='flex justify-center items-center pt-3'>
-                <select
-                    class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Select Semester 
-                        </option>
-                        <option value="">
-                            Sem 1st
-                        </option>
-                        <option value="">
-                            Sem 2nd
-                        </option>
-                        <option value="">
-                            Sem 3rd
-                        </option>
-                        <option value="">
-                            Sem 4th
-                        </option>
-                        <option value="">
-                            Sem 5th
-                        </option>
-                        <option value="">
-                            Sem 6th
-                        </option>
-                        <option value="">
-                            Sem 7th
-                        </option>
-                        <option value="">
-                            Sem 8th
-                        </option>
-                </select>
-              </div>
-              <div class='flex justify-center items-center pt-3'>
-                <select
-                    class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Select Subject 
-                        </option>
-                        <option value="">
-                            sub 1
-                        </option>
-                        <option value="">
-                            sub 2
-                        </option>
-                        <option value="">
-                            sub 3
-                        </option>
-                        <option value="">
-                            sub 4
-                        </option>
-                </select>
-              </div>
+            <div class="flex justify-center items-center pt-3">
+              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+                <option value="" disabled selected>
+                  Select Class
+                </option>
+                {classes.map((classItem, index) => (
+                      <option
+                        key={index}
+                        value={`${classItem.className}|${classItem.classCode}`}
+                      >
+                        {classItem.className}
+                      </option>
+                    ))}
+              </select>
+            </div>
+            <div class="flex justify-center items-center pt-3">
+              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+                <option value="" disabled selected>
+                  Select Semester
+                </option>
+                <option value="">Sem 1st</option>
+                <option value="">Sem 2nd</option>
+                <option value="">Sem 3rd</option>
+                <option value="">Sem 4th</option>
+                <option value="">Sem 5th</option>
+                <option value="">Sem 6th</option>
+                <option value="">Sem 7th</option>
+                <option value="">Sem 8th</option>
+              </select>
+            </div>
+            <div class="flex justify-center items-center pt-3">
+              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+                <option value="" disabled selected>
+                  Select Subject
+                </option>
+                {subjectes.map((subjecteitem, index) => (
+                          <option
+                            key={index}
+                            value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
+                          >
+                            {subjecteitem.subjectName}
+                          </option>
+                        ))}
+              </select>
+            </div>
           </div>
           <div className="flex items-center justify-center my-3">
-              <button className="bg-blue-950 text-white px-4 font-bold">Confirm</button>
-            </div>
+            <button className="bg-blue-950 text-white px-4 font-bold">
+              Confirm
+            </button>
+          </div>
         </form>
         {/* <button
           className="primary text-white px-3"
@@ -195,9 +181,9 @@ function Results(){
         >
           Add Result
         </button> */}
-      
-      <Table columns={columns} dataSource={results} />
-    </div>
+
+        <Table columns={columns} dataSource={results} />
+      </div>
     </div>
   );
 }

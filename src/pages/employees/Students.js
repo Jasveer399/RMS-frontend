@@ -19,7 +19,6 @@ const Students = () => {
   const [className, setClassName] = useState("");
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
-  const [dob, setDob] = useState("")
   const [password, setPassword] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
   const [studentId, setStudentId] = useState("");
@@ -45,9 +44,6 @@ const Students = () => {
   const onChangePassword = (name, value) => {
     setPassword(value);
   };
-  const onChangeDob = (name, value) => {
-    setDob(value)
-  }
 
   const addStudent = async (e) => {
     e.preventDefault();
@@ -235,7 +231,6 @@ const Students = () => {
                 onChange={onChangeName}
                 title="Name"
                 name="stuname"
-                type="text"
               />
 
               <Form
@@ -243,105 +238,29 @@ const Students = () => {
                 onChange={onChangeClassName}
                 title="Class"
                 name="stuclass"
-                type="text"
               />
 
-              <div class='flex justify-center items-center pt-3'>
-                <select
-                    class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Select Semester 
-                        </option>
-                        <option value="">
-                            Sem 1st
-                        </option>
-                        <option value="">
-                            Sem 2nd
-                        </option>
-                        <option value="">
-                            Sem 3rd
-                        </option>
-                        <option value="">
-                            Sem 4th
-                        </option>
-                        <option value="">
-                            Sem 5th
-                        </option>
-                        <option value="">
-                            Sem 6th
-                        </option>
-                        <option value="">
-                            Sem 7th
-                        </option>
-                        <option value="">
-                            Sem 8th
-                        </option>
-                </select>
-              </div>
-
-              {/* <Form
-                value={rollNo}
-                onChange={onChangeRollNo}
-                title="Rollno"
-                name="sturollno"
-                type="number"
-              /> */}
-            </div>
-
-            <div className="flex justify-center gap-4 mt-5">
               <Form
                 value={rollNo}
                 onChange={onChangeRollNo}
                 title="Rollno"
                 name="sturollno"
-                type="number"
               />
+            </div>
 
-              <div class='flex justify-center items-center pt-3'>
-                <select
-                    class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
-                    >
-                        <option value="" disabled selected>
-                            Gender 
-                        </option>
-                        <option value="">
-                            Male
-                        </option>
-                        <option value="">
-                            Female
-                        </option>
-                        <option value="">
-                            Others
-                        </option>
-                </select>
-              </div>
-
-              {/* <Form
+            <div className="flex justify-center gap-4 mt-5">
+              <Form
                 value={gender}
                 onChange={onChangeGender}
                 title="Gender"
                 name="stugender"
-              /> */}
+              />
 
-            {/* New DOB FIELD ..... the function is defined check the value is passing or not */}
               <Form
-                value={dob} 
-                onChange={onChangeDob}
-                title="Date of Birth"
-                name="studob"
-                type="date"
-              />    
-              
-            </div>
-
-            <div className="flex justify-center gap-4 mt-5">
-            <Form
                 title="Email"
                 value={email}
                 onChange={onChangeEmail}
                 name="stuemail"
-                type="email"
               />
 
               <Form
@@ -349,19 +268,21 @@ const Students = () => {
                 onChange={onChangePhone}
                 title="Phone"
                 name="stuphone"
-                type="number"
               />
+            </div>
 
-              {/* <Form
+            <div className="flex justify-center gap-4 mt-5">
+              <Form
                 value={password}
                 onChange={onChangePassword}
                 title="Password"
                 name="stupassword"
-              /> */}
+              />
             </div>
 
+           
             {isupdate ? (
-              <div className="flex items-center justify-center my-4">
+              <div className="flex items-center justify-center my-3">
                 <button
                   onClick={() => {
                     updateStudent(studentId);
@@ -371,17 +292,15 @@ const Students = () => {
                   Update Student
                 </button>
               </div>
-            ) : (
-              <div className="flex items-center justify-center my-4">
-                <button
-                  onClick={addStudent}
-                  type="submit"
-                  className="bg-blue-950 text-white px-4 font-bold"
-                >
-                  Add Student
-                </button>
-              </div>
-            )}
+            ): <div className="flex items-center justify-center my-4">
+              <button
+                onClick={addStudent}
+                type="submit"
+                className="bg-blue-950 text-white px-4 font-bold"
+              >
+                Add Student
+              </button>
+            </div>}
           </form>
           <Table columns={columns} dataSource={students} />
         </div>
