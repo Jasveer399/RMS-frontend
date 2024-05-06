@@ -152,12 +152,14 @@ const Classes = () => {
                 onChange={onChangeClassName}
                 title="Class Name"
                 name="classname"
+                type="text"
               />
               <Form
                 value={classCode}
                 onChange={onChangeClassCode}
                 title="Class Code"
                 name="classcode"
+                type="text"
               />
             </div>
 
