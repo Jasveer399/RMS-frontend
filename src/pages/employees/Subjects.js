@@ -161,12 +161,14 @@ const Subjects = () => {
                 onChange={onChangeClassName}
                 title="Subject Name"
                 name="subname"
+                type="text"
               />
               <Form
                 value={subjectCode}
                 onChange={onChangeClassCode}
                 title="Subject Code"
                 name="subcode"
+                type="text"
               />
             </div>
 

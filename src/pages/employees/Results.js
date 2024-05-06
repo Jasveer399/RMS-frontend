@@ -133,29 +133,58 @@ function Results(){
                     class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
                     >
                         <option value="" disabled selected>
+                            Select Semester 
+                        </option>
+                        <option value="">
+                            Sem 1st
+                        </option>
+                        <option value="">
+                            Sem 2nd
+                        </option>
+                        <option value="">
+                            Sem 3rd
+                        </option>
+                        <option value="">
+                            Sem 4th
+                        </option>
+                        <option value="">
+                            Sem 5th
+                        </option>
+                        <option value="">
+                            Sem 6th
+                        </option>
+                        <option value="">
+                            Sem 7th
+                        </option>
+                        <option value="">
+                            Sem 8th
+                        </option>
+                </select>
+              </div>
+              <div class='flex justify-center items-center pt-3'>
+                <select
+                    class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                    >
+                        <option value="" disabled selected>
                             Select Subject 
                         </option>
                         <option value="">
-                            Class 1
+                            sub 1
                         </option>
                         <option value="">
-                            Class 2
+                            sub 2
                         </option>
                         <option value="">
-                            Class 3
+                            sub 3
                         </option>
                         <option value="">
-                            Class 4
+                            sub 4
                         </option>
                 </select>
               </div>
           </div>
-          <div className="flex items-center justify-center gap-4 mt-3">
-            <Form title="Rollno" name="resultrollno" />
-            <Form title="Marks" name="resultmarks" />
-          </div>
           <div className="flex items-center justify-center my-3">
-              <button className="bg-blue-950 text-white px-4 font-bold">Add Result</button>
+              <button className="bg-blue-950 text-white px-4 font-bold">Confirm</button>
             </div>
         </form>
         {/* <button
