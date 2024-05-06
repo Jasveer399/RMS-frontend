@@ -1,6 +1,6 @@
 import { Table } from "antd";
 import axios from "axios";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -127,13 +127,13 @@ function Results() {
                   Select Class
                 </option>
                 {classes.map((classItem, index) => (
-                      <option
-                        key={index}
-                        value={`${classItem.className}|${classItem.classCode}`}
-                      >
-                        {classItem.className}
-                      </option>
-                    ))}
+                  <option
+                    key={index}
+                    value={`${classItem.className}|${classItem.classCode}`}
+                  >
+                    {classItem.className}
+                  </option>
+                ))}
               </select>
             </div>
             <div class="flex justify-center items-center pt-3">
@@ -157,24 +157,24 @@ function Results() {
                   Select Subject
                 </option>
                 {subjectes.map((subjecteitem, index) => (
-                          <option
-                            key={index}
-                            value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
-                          >
-                            {subjecteitem.subjectName}
-                          </option>
-                        ))}
+                  <option
+                    key={index}
+                    value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
+                  >
+                    {subjecteitem.subjectName}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
           <div className="flex items-center justify-center my-3">
-<<<<<<< HEAD
-            <button className="bg-blue-950 text-white px-4 font-bold">Confirm</button>
-=======
             <button className="bg-blue-950 text-white px-4 font-bold">
               Confirm
             </button>
->>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
+
+            <button className="bg-blue-950 text-white px-4 font-bold">
+              Confirm
+            </button>
           </div>
         </form>
         {/* <button

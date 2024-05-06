@@ -41,13 +41,9 @@ function SubjectCombinations() {
   }, []);
 
   const handleAddMore = () => {
-<<<<<<< HEAD
-    if (isValueExist) {
-=======
     if (!isValueExist) {
       toast.error("Select First Any Value");
     } else {
->>>>>>> 457f589669c8c44dd3b029cf488db77c39a3b84c
       setSelectCount(selectCount + 1);
       setRemoveBtn(true);
     }
