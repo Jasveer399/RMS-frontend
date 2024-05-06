@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import { PiPasswordThin } from "react-icons/pi";
 
 const Students = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [students, setStudents] = useState([]);
   const [name, setName] = useState("");
   const [rollNo, setRollNo] = useState("");
@@ -58,13 +58,13 @@ const Students = () => {
         phone: phone,
         password: password,
       });
-      setName("");
-      setRollNo("");
-      setEmail("");
-      setClassName("");
-      setGender("");
-      setPhone("");
-      setPassword("");
+      // setName("");
+      // setRollNo("");
+      // setEmail("");
+      // setClassName("");
+      // setGender("");
+      // setPhone("");
+      // setPassword("");
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -109,7 +109,7 @@ const Students = () => {
         `/api/student/update-student/${studentId}`,
         {
           name: name,
-          rollNo: rollNo,
+          // rollNo: rollNo,
           email: email,
           className: className,
           gender: gender,
@@ -128,26 +128,17 @@ const Students = () => {
       console.log("Error Occuring during Updating Student");
       toast.error(error.message);
     } finally {
-      setIsUpdate(false);
       setName("");
-      setRollNo("");
+      // setRollNo("");
       setEmail("");
       setClassName("");
       setGender("");
       setPhone("");
       setPassword("");
       setStudentId("");
+      setIsUpdate(false);
     }
   };
-
-  useEffect(() => {
-    const getallStudents = async () => {
-      const response = await axios.post("/api/student/get-all-students");
-      const data = response.data.data;
-      setStudents(data);
-    };
-    getallStudents();
-  }, [students]);
 
   const columns = [
     {
@@ -200,7 +191,7 @@ const Students = () => {
             className="ri-pencil-line"
             onClick={() => {
               setName(record.name);
-              setRollNo(record.rollNo);
+              // setRollNo(record.rollNo);
               setEmail(record.email);
               setClassName(record.className);
               setGender(record.gender);
@@ -208,13 +199,22 @@ const Students = () => {
               setPassword(record.password);
               setIsUpdate(true);
               setStudentId(record.rollNo);
-              navigate(`/employee/students/edit/${record.rollNo}`);
+              // navigate(`/employee/students/edit/${record.rollNo}`);
             }}
           ></i>
         </div>
       ),
     },
   ];
+  useEffect(() => {
+    const getallStudents = async () => {
+      const response = await axios.post("/api/student/get-all-students");
+      const data = response.data.data;
+      setStudents(data);
+    };
+    getallStudents();
+  }, [students]);
+
   return (
     <>
       <div className="flex">
@@ -310,153 +310,3 @@ const Students = () => {
 };
 
 export default Students;
-
-// import { Table } from "antd";
-// import axios from "axios";
-// import React, { useEffect } from "react";
-// import toast from "react-hot-toast";
-// import { useDispatch } from "react-redux";
-// import { useNavigate } from "react-router-dom";
-// import PageTitle from "../../components/PageTitle";
-// import { HideLoading, ShowLoading } from "../../redux/alerts";
-// import Form from "../../components/Form";
-// import SideNavBar from "./SideNavBar";
-
-// function Students() {
-//   const dispatch = useDispatch();
-//   const [students, setStudents] = React.useState([]);
-//   const navigate = useNavigate();
-
-//   const getStudents = async (values) => {
-//     try {
-//       dispatch(ShowLoading());
-//       const response = await axios.post(
-//         "/api/student/get-all-students",
-//         {},
-//         {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("token")}`,
-//           },
-//         }
-//       );
-//       dispatch(HideLoading());
-//       if (response.data.success) {
-//         setStudents(response.data.data);
-//       } else {
-//         toast.error(response.data.message);
-//       }
-//     } catch (error) {
-//       dispatch(HideLoading());
-//       toast.error(error.message);
-//     }
-//   };
-
-//   const deleteStudent = async (rolNo) => {
-//     try {
-//       dispatch(ShowLoading());
-//       const response = await axios.post(
-//         `/api/student/delete-student/${rolNo}`,
-//         {},
-//         {
-//           headers: {
-//             Authorization: `Bearer ${localStorage.getItem("token")}`,
-//           },
-//         }
-//       );
-//       dispatch(HideLoading());
-//       if (response.data.success) {
-//         getStudents();
-//         toast.success(response.data.message);
-//       } else {
-//         toast.error(response.data.message);
-//       }
-//     } catch (error) {
-//       dispatch(HideLoading());
-//       toast.error(error.message);
-//     }
-//   };
-
-//   // useEffect(() => {
-//   //   getStudents();
-//   // }, []);
-
-//   const columns = [
-//     {
-//       title: "Class",
-//       dataIndex: "class",
-//       key: "class",
-//     },
-//     {
-//       title: "Roll No",
-//       dataIndex: "rollNo",
-//       key: "rollNo",
-//     },
-//     {
-//       title: "Name",
-//       dataIndex: "name",
-//       key: "name",
-//     },
-//     {
-//       title: "Email",
-//       dataIndex: "email",
-//       key: "email",
-//     },
-//     {
-//       title: "Student Password",
-//       dataIndex: "studentpass",
-//       key: "studentpass",
-//     },
-//     {
-//       title: "Action",
-//       key: "action",
-//       render: (text, record) => (
-//         <div className="d-flex gap-3">
-//           <i
-//             className="ri-delete-bin-line"
-//             onClick={() => {
-//               deleteStudent(record.rollNo);
-//             }}
-//           ></i>
-//           <i
-//             className="ri-pencil-line"
-//             onClick={() => {
-//               navigate(`/employee/students/edit/${record.rollNo}`);
-//             }}
-//           ></i>
-//         </div>
-//       ),
-//     },
-//   ];
-//   return (
-//     <>
-//     <div className="flex">
-//       <SideNavBar />
-//       <div className="w-full h-full">
-//         <PageTitle title="Add Students" />
-//         <h6 className='text-center text-xl pb-3 underline'>Student Details</h6>
-//         <form>
-//           <div className="flex justify-center gap-4">
-//             <Form title="Name" name="stuname" />
-//             <Form title="Class" name="stuclass" />
-//             <Form title="Rollno" name="sturollno" />
-//           </div>
-//           <div className="flex justify-center gap-4 mt-5">
-//             <Form title="Gender" name="stugender" />
-//             <Form title="Email" name="stuemail" />
-//             <Form title="Phone" name="stuphone" />
-//           </div>
-//           <div className="flex justify-center gap-4 mt-5">
-//             <Form title="Password" name="stupassword" />
-//           </div>
-//           <div className="flex items-center justify-center my-4">
-//             <button className="bg-blue-950 text-white px-4 font-bold">Add Student</button>
-//           </div>
-//         </form>
-//         <Table columns={columns} dataSource={students} />
-//       </div>
-//     </div>
-//     </>
-//   );
-// }
-
-// export default Students;
