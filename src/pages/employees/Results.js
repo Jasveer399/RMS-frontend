@@ -184,8 +184,8 @@ function Results(){
               </div>
           </div>
           <div className="flex items-center justify-center my-3">
-              <button className="bg-blue-950 text-white px-4 font-bold">Confirm</button>
-            </div>
+            <button className="bg-blue-950 text-white px-4 font-bold">Confirm</button>
+          </div>
         </form>
         {/* <button
           className="primary text-white px-3"

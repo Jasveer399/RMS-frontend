@@ -26,6 +26,7 @@ import Subjects from "./pages/employees/Subjects";
 import ChangePassword from "./pages/employees/ChangePassword";
 import ProtectedRoute from './components/ProtectedRoute';
 import SubjectCombinations from "./pages/employees/SubjectCombinations";
+import StudentResult from "./pages/StudentResult";
 
 
 function App() {
@@ -60,6 +61,14 @@ function App() {
             element={
               <PublicRoute>
                 <StudentHome/>
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/students/studentresult"
+            element={
+              <PublicRoute>
+                <StudentResult/>
               </PublicRoute>
             }
           />

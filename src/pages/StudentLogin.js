@@ -49,29 +49,30 @@ function StudentLogin() {
                   },
                 ]}
               >
-                <Input type="text" placeholder="Roll No"/>
+                <Input type="number" placeholder="Roll No"/>
               </Form.Item>
 
               <Form.Item
-                name="password"
-                label="Password"
+                name="dob"
+                label="Date of Birth"
                 rules={[
                   {
                     required: true,
-                    message: "Please enter your password",
+                    message: "Please select your DOB",
                   },
                 ]}
               >
-                <Input type="password" placeholder="Password"/>
+                <Input type="date" placeholder="Date of Birth"/>
               </Form.Item>
 
-              <button className=" text-white px-5 my-2 w-100">
+              <button 
+              className=" text-white px-5 my-2 w-100" 
+              onClick={() => { 
+                navigate("/students/studentresult"); 
+              }}
+              >
                 Login
               </button>
-              Not Registered ?{" "}
-              <Link to="/students/register" className="text-primary">
-                 Click Here To Register
-              </Link>
             </Form>
           </div>
         </div>
