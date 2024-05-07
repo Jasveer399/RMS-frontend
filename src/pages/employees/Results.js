@@ -139,7 +139,9 @@ function Results() {
   const onChangeTotalMarks = (index, value) => {
     setTotalMarks(value);
   };
-  useEffect(() => {}, [subject]);
+  useEffect(() => {
+    console.log(results);
+  }, [subject, results]);
   const columns = [
     {
       title: "Student Name",
