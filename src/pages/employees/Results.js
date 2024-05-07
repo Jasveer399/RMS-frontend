@@ -7,46 +7,56 @@ import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
 import SideNavBar from "./SideNavBar";
+import Form from "../../components/Form";
 
 function Results() {
   const dispatch = useDispatch();
   const [classes, setClasses] = useState([]);
   const [subjectes, setSubjectes] = useState([]);
   const [students, setStudents] = useState([]);
-  const [totalmarks, setTotalMarks] = useState({});
+  const [totalmarks, setTotalMarks] = useState("");
   const [obtainmarks, setObtainMarks] = useState({});
+  const [subject, setSubject] = useState("");
   const navigate = useNavigate();
 
   const check = (e) => {
     e.preventDefault();
+    if (!subject) {
+      toast.error("Select Subject");
+      return;
+    } else if (!totalmarks) {
+      toast.error("Enter Total Marks");
+      return;
+    }
+    console.log("Selected Subject:", subject);
     console.log("Total Marks: ", totalmarks);
-    console.log("Obtain Marks: ", obtainmarks);
   };
 
   useEffect(() => {
-    const getallclasses = async () => {
-      const response = await axios.post("/api/classes/get-all-classes");
-      const data = response.data.data;
-      setClasses(data);
+    const fetchData = async () => {
+      try {
+        const [classesResponse, subjectsResponse, studentsResponse] =
+          await Promise.all([
+            axios.post("/api/classes/get-all-classes"),
+            axios.post("/api/subjectes/get-all-subject"),
+            axios.post("/api/student/get-all-students"),
+          ]);
+
+        setClasses(classesResponse.data.data);
+        setSubjectes(subjectsResponse.data.data);
+        setStudents(studentsResponse.data.data);
+      } catch (error) {
+        toast.error("Unable to fetch data due to server error");
+      }
     };
-    const getallSubjects = async () => {
-      const response = await axios.post("/api/subjectes/get-all-subject");
-      const data = response.data.data;
-      setSubjectes(data);
-    };
-    getallSubjects();
-    getallclasses();
+
+    fetchData();
   }, []);
 
-  useEffect(() => {
-    const getallStudents = async () => {
-      const response = await axios.post("/api/student/get-all-students");
-      const data = response.data.data;
-      setStudents(data);
-    };
-    getallStudents();
-  }, []);
-
+  const onChangeTotalMarks = (index, value) => {
+    setTotalMarks(value);
+  };
+  useEffect(() => {}, [subject]);
   const columns = [
     {
       title: "Student Name",
@@ -64,20 +74,21 @@ function Results() {
       key: "semester",
     },
     {
-      title: "Total Marks",
+      title: `Total Mark of ${subject.toUpperCase()}`,
       key: "total-marks",
       render: (text, record) => (
         <div className="d-flex gap-3 h-5">
           <input
-            onChange={(e) =>
-              setTotalMarks({
-                ...totalmarks,
-                [record._id]: e.target.value,
-              })
-            }
+            // onChange={(e) =>
+            //   setTotalMarks({
+            //     ...totalmarks,
+            //     [record._id]: e.target.value,
+            //   })
+            // }
             className="w-40 rounded-md h-5"
             type="number"
-            value={totalmarks[record._id] || ""}
+            // value={totalmarks[record._id] || ""}
+            value={totalmarks}
           />
         </div>
       ),
@@ -106,7 +117,10 @@ function Results() {
       key: "action",
       render: (text, record) => (
         <div className="d-flex gap-3">
-          <button onClick={check}className="bg-blue-950 rounded-lg h-5 text-white px-2">
+          <button
+            onClick={check}
+            className="bg-blue-950 rounded-lg h-5 text-white px-2"
+          >
             Add Result
           </button>
         </div>
@@ -153,23 +167,34 @@ function Results() {
               </select>
             </div>
             <div className="flex justify-center items-center pt-3">
-              <select className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+              <select
+                className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                onChange={(e) => setSubject(e.target.value)}
+              >
                 <option value="" disabled selected>
                   Select Subject
                 </option>
                 {subjectes.map((subjecteitem, index) => (
-                  <option
-                    key={index}
-                    value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`}
-                  >
+                  <option key={index} value={`${subjecteitem.subjectName}`}>
                     {subjecteitem.subjectName}
                   </option>
                 ))}
               </select>
             </div>
+            <div className="flex justify-center items-center pt-3">
+              <Form
+                value={totalmarks}
+                onChange={onChangeTotalMarks}
+                title={`Total Mark of ${subject.toUpperCase()}`}
+                type="number"
+              />
+            </div>
           </div>
           <div className="flex items-center justify-center my-3">
-            <button className="bg-blue-950 text-white px-4 font-bold">
+            <button
+              onClick={check}
+              className="bg-blue-950 text-white px-4 font-bold"
+            >
               Confirm
             </button>
           </div>

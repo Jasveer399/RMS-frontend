@@ -125,14 +125,16 @@ function SubjectCombinations() {
   };
 
   useEffect(() => {
-    // console.log(selectedSubjectsArray);
-    // console.log(selectedClassObject);
     const getAllClassAndSubject = async () => {
-      const response = await axios.get(
-        "/api/classSubject/get-all-class-subject"
-      );
-      const data = response.data.data;
-      setClassSubject(data);
+      try {
+        const response = await axios.get(
+          "/api/classSubject/get-all-class-subject"
+        );
+        const data = response.data.data;
+        setClassSubject(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
     };
     getAllClassAndSubject();
   }, [classSubject]);
@@ -183,7 +185,7 @@ function SubjectCombinations() {
               deleteClassAndSubjects(record._id);
             }}
           ></i>
-          <i  className="ri-pencil-line"></i>
+          <i className="ri-pencil-line"></i>
         </div>
       ),
     },

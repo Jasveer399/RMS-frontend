@@ -212,9 +212,13 @@ const Students = () => {
   ];
   useEffect(() => {
     const getallStudents = async () => {
-      const response = await axios.post("/api/student/get-all-students");
-      const data = response.data.data;
-      setStudents(data);
+      try {
+        const response = await axios.post("/api/student/get-all-students");
+        const data = response.data.data;
+        setStudents(data);
+      } catch (error) {
+        toast.error(error.message);
+      }
     };
     getallStudents();
   }, [students]);
