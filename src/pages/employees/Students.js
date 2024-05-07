@@ -17,6 +17,7 @@ const Students = () => {
   const [rollNo, setRollNo] = useState("");
   const [email, setEmail] = useState("");
   const [className, setClassName] = useState("");
+  const [classes, setClasses] = useState([])
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
@@ -33,27 +34,44 @@ const Students = () => {
   const onChangeEmail = (name, value) => {
     setEmail(value);
   };
-  const onChangeClassName = (name, value) => {
-    setClassName(value);
+  const onChangeClassName = (e) => {
+    setClassName(e.target.value);
   };
-  const onChangeGender = (name, value) => {
-    setGender(value);
+  const onChangeGender = (e) => {
+    setGender(e.target.value);
   };
   const onChangePhone = (name, value) => {
     setPhone(value);
   };
-  const onChangeSemester = (name, value) => {
-    setSemester(value);
+  const onChangeSemester = (e) => {
+    setSemester(e.target.value);
   };
   const onChangeDob = (name, value) => {
     setDob(value);
   };
 
-  const checkHandler = (e) => {
-    e.preventDefault();
-    console.log(typeof phone);
-    console.log(dob, name, rollNo, email, className, gender, phone, semester);
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [classesResponse] =
+          await Promise.all([
+            axios.post("/api/classes/get-all-classes"),
+          ]);
+
+        setClasses(classesResponse.data.data);
+      } catch (error) {
+        toast.error("Unable to fetch data due to server error");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // const checkHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log("data here...........");
+  //   console.log(dob, name, rollNo, email, className, gender, phone, semester);
+  // };
 
   const addStudent = async (e) => {
     e.preventDefault();
@@ -113,7 +131,7 @@ const Students = () => {
         `/api/student/update-student/${studentId}`,
         {
           name: name,
-          // rollNo: rollNo,
+          rollNo: rollNo,
           email: email,
           className: className,
           gender: gender,
@@ -195,12 +213,13 @@ const Students = () => {
             className="ri-pencil-line"
             onClick={() => {
               setName(record.name);
-              // setRollNo(record.rollNo);
+              setRollNo(record.rollNo);
               setEmail(record.email);
               setClassName(record.className);
               setGender(record.gender);
               setPhone(record.phone);
-              setSemester(record.password);
+              setSemester(record.semester);
+              setDob(record.dob)
               setIsUpdate(true);
               setStudentId(record.rollNo);
               // navigate(/employee/students/edit/${record.rollNo});
@@ -242,18 +261,41 @@ const Students = () => {
                 type="text"
               />
 
-              <Form
+              {/* <Form
                 value={className}
                 onChange={onChangeClassName}
                 title="Class"
                 name="stuclass"
                 type="text"
-              />
+              /> */}
+
+            <div className="flex justify-center items-center pt-3">
+              <select 
+                className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
+                onChange={onChangeClassName}
+                value={className}
+                required
+              >
+                <option value="" disabled selected>
+                  Select Class
+                </option>
+                {classes.map((classItem, index) => (
+                  <option
+                    key={index}
+                    value={classItem.className}
+                  >
+                    {classItem.className}
+                  </option>
+                ))}
+              </select>
+            </div>
 
               <div class="flex justify-center items-center pt-3">
                 <select
                   class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
-                  onChange={(e) => setSemester(e.target.value)}
+                  onChange={onChangeSemester}
+                  value={semester}
+                  required
                 >
                   <option value="" disabled selected>
                     Select Semester
@@ -290,7 +332,9 @@ const Students = () => {
               <div class="flex justify-center items-center pt-3">
                 <select
                   class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
-                  onChange={(e) => setGender(e.target.value)}
+                  onChange={onChangeGender}
+                  value={gender}
+                  required
                 >
                   <option value="" disabled selected>
                     Gender
@@ -352,7 +396,7 @@ const Students = () => {
                 Add Student
               </button>
             </div>
-            <div className="flex items-center justify-center my-4">
+            {/* <div className="flex items-center justify-center my-4">
               <button
                 onClick={checkHandler}
                 type="submit"
@@ -360,7 +404,7 @@ const Students = () => {
               >
                 checker
               </button>
-            </div>
+            </div> */}
             {isupdate && (
               <div className="flex items-center justify-center my-3">
                 <button
