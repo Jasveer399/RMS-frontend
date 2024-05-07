@@ -71,7 +71,7 @@ function Results() {
   //     console.log(results); // or setTotalMarks(null)
   // };
 
-  const addResult = async (e, id) => {
+  const storeAllResult = async (e, id) => {
     e.preventDefault();
     // Check if subject and total marks are selected
     if (!subject) {
@@ -90,11 +90,13 @@ function Results() {
 
     // Check if the result already exists for this student ID
     const existingResultIndex = results.findIndex(
-      (result) => result.student_id === id
+      (result) => result.student_id === id && result.subject === subject
     );
 
     if (existingResultIndex !== -1) {
-      toast.error("Result of this Student is Already Present");
+      toast.error(
+        `Result of this Student for ${subject} subject is Already Present`
+      );
       return;
     }
 
@@ -107,12 +109,29 @@ function Results() {
     };
 
     // Add the new result to results array
-    console.log(results);
     setResults((prevResults) => [...prevResults, newResult]);
 
     // Clear obtain marks for the selected student
     setObtainMarks({ ...obtainmarks, [id]: "" });
     console.log(results);
+  };
+
+  const addResultsInDB = async (e) => {
+    e.preventDefault();
+    try {
+      if (students.length <= results.length) {
+        const response = await axios.post("/api/student/add-results", {
+          results,
+        });
+        if (response.data.success) {
+          toast.success("Results Add SuccessFully");
+        }
+      } else {
+        toast.error("Add All Student Result");
+      }
+    } catch (error) {
+      toast.error("Unable To store All Result");
+    }
   };
 
   useEffect(() => {
@@ -139,7 +158,9 @@ function Results() {
   const onChangeTotalMarks = (index, value) => {
     setTotalMarks(value);
   };
-  useEffect(() => {}, [subject]);
+  useEffect(() => {
+    console.log(results);
+  }, [subject, results]);
   const columns = [
     {
       title: "Student Name",
@@ -201,7 +222,7 @@ function Results() {
       render: (text, record) => (
         <div className="d-flex gap-3">
           <button
-            onClick={(e) => addResult(e, record._id)}
+            onClick={(e) => storeAllResult(e, record._id)}
             className="bg-blue-950 rounded-lg h-5 text-white px-2"
           >
             Add Result
@@ -273,7 +294,7 @@ function Results() {
           </div>
           <div className="flex items-center justify-center my-3">
             <button
-              onClick={addResult}
+              onClick={addResultsInDB}
               className="bg-blue-950 text-white px-4 font-bold"
             >
               Confirm
