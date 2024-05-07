@@ -19,7 +19,7 @@ function Results() {
   const [subject, setSubject] = useState("");
   const navigate = useNavigate();
 
-  const check = (e) => {
+  const addResult = (e) => {
     e.preventDefault();
     if (!subject) {
       toast.error("Select Subject");
@@ -30,6 +30,7 @@ function Results() {
     }
     console.log("Selected Subject:", subject);
     console.log("Total Marks: ", totalmarks);
+    console.log("Obtain Marks: ", obtainmarks);
   };
 
   useEffect(() => {
@@ -97,7 +98,7 @@ function Results() {
       title: "Obtain Marks",
       key: "obtain-marks",
       render: (text, record) => (
-        <div className="d-flex gap-3">
+        <div className="d-flex gap-3 h-5">
           <input
             onChange={(e) =>
               setObtainMarks({
@@ -118,7 +119,7 @@ function Results() {
       render: (text, record) => (
         <div className="d-flex gap-3">
           <button
-            onClick={check}
+            onClick={addResult}
             className="bg-blue-950 rounded-lg h-5 text-white px-2"
           >
             Add Result
@@ -192,7 +193,7 @@ function Results() {
           </div>
           <div className="flex items-center justify-center my-3">
             <button
-              onClick={check}
+              onClick={addResult}
               className="bg-blue-950 text-white px-4 font-bold"
             >
               Confirm
