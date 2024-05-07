@@ -137,7 +137,7 @@ function Results() {
         <form>
           <div className="flex items-center justify-center gap-4">
             <div className="flex justify-center items-center pt-3">
-              <select className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+              <select className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52">
                 <option value="" disabled selected>
                   Select Class
                 </option>
@@ -152,7 +152,7 @@ function Results() {
               </select>
             </div>
             <div className="flex justify-center items-center pt-3">
-              <select className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+              <select className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52">
                 <option value="" disabled selected>
                   Select Semester
                 </option>
@@ -168,7 +168,7 @@ function Results() {
             </div>
             <div className="flex justify-center items-center pt-3">
               <select
-                className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"
+                className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
                 onChange={(e) => setSubject(e.target.value)}
               >
                 <option value="" disabled selected>
@@ -181,14 +181,12 @@ function Results() {
                 ))}
               </select>
             </div>
-            <div className="flex justify-center items-center pt-3">
-              <Form
-                value={totalmarks}
-                onChange={onChangeTotalMarks}
-                title={`Total Mark of ${subject.toUpperCase()}`}
-                type="number"
-              />
-            </div>
+            <Form
+              value={totalmarks}
+              onChange={onChangeTotalMarks}
+              title={`Total Mark`}
+              type="number"
+            />
           </div>
           <div className="flex items-center justify-center my-3">
             <button
