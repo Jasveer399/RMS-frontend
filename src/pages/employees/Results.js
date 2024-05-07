@@ -6,63 +6,22 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
-import Form from "../../components/Form";
 import SideNavBar from "./SideNavBar";
 
 function Results() {
   const dispatch = useDispatch();
-  const [results, setResults] = useState([]);
   const [classes, setClasses] = useState([]);
   const [subjectes, setSubjectes] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [totalmarks, setTotalMarks] = useState({});
+  const [obtainmarks, setObtainMarks] = useState({});
   const navigate = useNavigate();
-  const getResults = async (values) => {
-    try {
-      dispatch(ShowLoading());
-      const response = await axios.post(
-        "/api/results/get-all-results",
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      dispatch(HideLoading());
-      if (response.data.success) {
-        setResults(response.data.data);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      dispatch(HideLoading());
-      toast.error(error.message);
-    }
-  };
 
-  // const deleteResult = async (resultId) => {
-  //   try {
-  //     dispatch(ShowLoading());
-  //     const response = await axios.post(
-  //       `/api/result/delete-result/${resultId}`,
-  //       {},
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     dispatch(HideLoading());
-  //     if (response.data.success) {
-  //       getResults();
-  //       toast.success(response.data.message);
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     dispatch(HideLoading());
-  //     toast.error(error.message);
-  //   }
-  // };
+  const check = (e) => {
+    e.preventDefault();
+    console.log("Total Marks: ", totalmarks);
+    console.log("Obtain Marks: ", obtainmarks);
+  };
 
   useEffect(() => {
     const getallclasses = async () => {
@@ -78,41 +37,83 @@ function Results() {
     getallSubjects();
     getallclasses();
   }, []);
+
   useEffect(() => {
-    getResults();
+    const getallStudents = async () => {
+      const response = await axios.post("/api/student/get-all-students");
+      const data = response.data.data;
+      setStudents(data);
+    };
+    getallStudents();
   }, []);
 
   const columns = [
     {
-      title: "Examination",
-      dataIndex: "examination",
-      key: "examination",
+      title: "Student Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: "Class",
-      dataIndex: "class",
-      key: "class",
+      title: "Roll No",
+      dataIndex: "rollNo",
+      key: "rollNo",
     },
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
+      title: "Student Semester",
+      dataIndex: "semester",
+      key: "semester",
+    },
+    {
+      title: "Total Marks",
+      key: "total-marks",
+      render: (text, record) => (
+        <div className="d-flex gap-3 h-5">
+          <input
+            onChange={(e) =>
+              setTotalMarks({
+                ...totalmarks,
+                [record._id]: e.target.value,
+              })
+            }
+            className="w-40 rounded-md h-5"
+            type="number"
+            value={totalmarks[record._id] || ""}
+          />
+        </div>
+      ),
+    },
+    {
+      title: "Obtain Marks",
+      key: "obtain-marks",
+      render: (text, record) => (
+        <div className="d-flex gap-3">
+          <input
+            onChange={(e) =>
+              setObtainMarks({
+                ...obtainmarks,
+                [record._id]: e.target.value,
+              })
+            }
+            className="w-40 rounded-md h-5"
+            type="number"
+            value={obtainmarks[record._id] || ""}
+          />
+        </div>
+      ),
     },
     {
       title: "Action",
       key: "action",
       render: (text, record) => (
         <div className="d-flex gap-3">
-          <i
-            className="ri-pencil-line"
-            onClick={() => {
-              navigate(`/employee/results/edit/${record._id}`);
-            }}
-          ></i>
+          <button onClick={check}className="bg-blue-950 rounded-lg h-5 text-white px-2">
+            Add Result
+          </button>
         </div>
       ),
     },
   ];
+
   return (
     <div className="flex">
       <SideNavBar />
@@ -121,8 +122,8 @@ function Results() {
         <h6 className="text-center text-xl pb-3 underline">Add Result</h6>
         <form>
           <div className="flex items-center justify-center gap-4">
-            <div class="flex justify-center items-center pt-3">
-              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+            <div className="flex justify-center items-center pt-3">
+              <select className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
                 <option value="" disabled selected>
                   Select Class
                 </option>
@@ -136,8 +137,8 @@ function Results() {
                 ))}
               </select>
             </div>
-            <div class="flex justify-center items-center pt-3">
-              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+            <div className="flex justify-center items-center pt-3">
+              <select className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
                 <option value="" disabled selected>
                   Select Semester
                 </option>
@@ -151,15 +152,15 @@ function Results() {
                 <option value="">Sem 8th</option>
               </select>
             </div>
-            <div class="flex justify-center items-center pt-3">
-              <select class="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
+            <div className="flex justify-center items-center pt-3">
+              <select className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52">
                 <option value="" disabled selected>
                   Select Subject
                 </option>
                 {subjectes.map((subjecteitem, index) => (
                   <option
                     key={index}
-                    value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`} // Combining name and code
+                    value={`${subjecteitem.subjectName}|${subjecteitem.subjectCode}`}
                   >
                     {subjecteitem.subjectName}
                   </option>
@@ -171,22 +172,16 @@ function Results() {
             <button className="bg-blue-950 text-white px-4 font-bold">
               Confirm
             </button>
-
-            <button className="bg-blue-950 text-white px-4 font-bold">
-              Confirm
-            </button>
           </div>
         </form>
-        {/* <button
-          className="primary text-white px-3"
-          onClick={() => {
-            navigate("/employee/results/add");
-          }}
-        >
-          Add Result
-        </button> */}
 
-        <Table columns={columns} dataSource={results} />
+        <Table
+          columns={columns}
+          dataSource={students.map((student) => ({
+            ...student,
+            key: student._id,
+          }))}
+        />
       </div>
     </div>
   );
