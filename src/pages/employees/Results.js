@@ -17,10 +17,63 @@ function Results() {
   const [totalmarks, setTotalMarks] = useState("");
   const [obtainmarks, setObtainMarks] = useState({});
   const [subject, setSubject] = useState("");
+  const [results, setResults] = useState([]);
   const navigate = useNavigate();
 
-  const addResult = (e) => {
+  //   const addResult = (e, id) => {
+  //     e.preventDefault();
+
+  //     // Check if subject and total marks are selected
+  //     if (!subject) {
+  //         toast.error("Select Subject");
+  //         return;
+  //     } else if (!totalmarks) {
+  //         toast.error("Enter Total Marks");
+  //         return;
+  //     }
+
+  //     // Check if obtain marks are entered for the selected student
+  //     if (!obtainmarks[id]) {
+  //         toast.error("Enter Obtain Marks");
+  //         return;
+  //     }
+
+  //     // Create a new result object
+  //     const newResult = {
+  //         student_id: id,
+  //         subject: subject,
+  //         totalmarks: totalmarks,
+  //         obtainmarks: obtainmarks[id],
+  //     };
+  //     console.log("New Result: ", newResult);
+
+  //     // Check if the result already exists for this student ID
+  //     const existingResultIndex = results.findIndex(result => result.student_id === id);
+  //     console.log("existingResultIndex= ", existingResultIndex);
+
+  //     if (existingResultIndex !== -1 && results[existingResultIndex].student_id === id) {
+  //         toast.error("Result of this Student is Already Present");
+  //         return;
+  //     }
+
+  //     // If there are no existing results, set results to an array containing only the new result
+  //     if (results.length === 0) {
+  //         setResults([newResult]);
+  //     } else {
+  //         // Otherwise, concatenate the new result with the existing results
+  //         setResults(prevResults => [...prevResults, newResult]);
+  //     }
+
+  //     // Clear obtain marks for the selected student
+  //     setObtainMarks({ ...obtainmarks, [id]: "" });
+
+  //     // Clear total marks after adding the result
+  //     console.log(results); // or setTotalMarks(null)
+  // };
+
+  const addResult = async (e, id) => {
     e.preventDefault();
+    // Check if subject and total marks are selected
     if (!subject) {
       toast.error("Select Subject");
       return;
@@ -28,9 +81,38 @@ function Results() {
       toast.error("Enter Total Marks");
       return;
     }
-    console.log("Selected Subject:", subject);
-    console.log("Total Marks: ", totalmarks);
-    console.log("Obtain Marks: ", obtainmarks);
+
+    // Check if obtain marks are entered for the selected student
+    if (!obtainmarks[id]) {
+      toast.error("Enter Obtain Marks");
+      return;
+    }
+
+    // Check if the result already exists for this student ID
+    const existingResultIndex = results.findIndex(
+      (result) => result.student_id === id
+    );
+
+    if (existingResultIndex !== -1) {
+      toast.error("Result of this Student is Already Present");
+      return;
+    }
+
+    // Create a new result object
+    const newResult = {
+      student_id: id,
+      subject: subject,
+      totalmarks: totalmarks,
+      obtainmarks: obtainmarks[id],
+    };
+
+    // Add the new result to results array
+    console.log(results);
+    setResults((prevResults) => [...prevResults, newResult]);
+
+    // Clear obtain marks for the selected student
+    setObtainMarks({ ...obtainmarks, [id]: "" });
+    console.log(results);
   };
 
   useEffect(() => {
@@ -119,7 +201,7 @@ function Results() {
       render: (text, record) => (
         <div className="d-flex gap-3">
           <button
-            onClick={addResult}
+            onClick={(e) => addResult(e, record._id)}
             className="bg-blue-950 rounded-lg h-5 text-white px-2"
           >
             Add Result
