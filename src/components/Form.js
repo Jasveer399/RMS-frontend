@@ -22,6 +22,7 @@ function Form(props) {
               value={props.value} // Set value prop
               class="border-blue-950 input px-[10px] py-[11px] text-xs bg-transparent border-2 rounded-full w-[210px] focus:outline-none placeholder:text-black/25"
               onChange={handleChange}
+              required
             />
           </div>
     </>
