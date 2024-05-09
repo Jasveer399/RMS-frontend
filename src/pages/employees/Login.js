@@ -1,17 +1,37 @@
 import { Form, Input } from "antd";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
+import axios from "axios";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [adminName, setAdminName] = useState(""); // Changed variable name to setAdminName
   const [password, setPassword] = useState("");
-  const loginadmin = () => {
-    console.log(adminName, password);
+  const loginadmin = async () => {
+    try {
+      dispatch(ShowLoading());
+      const response = await axios.post("/api/admin/login", {
+        name: adminName,
+        password: password,
+      });
+      console.log(response);
+      if (response.data.success) {
+        dispatch(HideLoading());
+        toast.success(response.data.message);
+        navigate("/employee");
+      } else {
+        dispatch(HideLoading());
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      console.log("Error Ocuring during add Login Admin");
+      toast.error(error.message);
+    }
   };
   return (
     <div className="login-page-1">
