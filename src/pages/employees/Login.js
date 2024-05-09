@@ -1,46 +1,28 @@
 import { Form, Input } from "antd";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onFinish = async (values) => {
-    try {
-      dispatch(ShowLoading());
-      const dummyAdminCredentials = {
-        employeeId: "admin",
-        password: "admin123",
-      };
-      if (
-        values.employeeId === dummyAdminCredentials.employeeId &&
-        values.password === dummyAdminCredentials.password
-      ) {
-        dispatch(HideLoading());
-        toast.success("Login successful!");
-        navigate("/employee/");
-      } else {
-        dispatch(HideLoading());
-        toast.error("Invalid credentials. Please try again.");
-      }
-    } catch (error) {
-      dispatch(HideLoading());
-      toast.error(error.message);
-    }
+  const [adminName, setAdminName] = useState(""); // Changed variable name to setAdminName
+  const [password, setPassword] = useState("");
+  const loginadmin = () => {
+    console.log(adminName, password);
   };
   return (
     <div className="login-page-1">
       <div className="row">
         <div className="col-md-6 d-flex align-items-center justify-content-center">
           <div className="text-part d-flex flex-column ">
-            <Form layout="vertical w-400 p-4" onFinish={onFinish}>
+            <Form layout="vertical w-400 p-4" onFinish={loginadmin}>
               <h1 className="text-medium">Admin-Login</h1>
               <hr />
               <Form.Item
-                name="employeeId"
+                name="adminName" // Fixed typo here
                 label="User Name"
                 rules={[
                   {
@@ -49,7 +31,11 @@ function Login() {
                   },
                 ]}
               >
-                <Input type="text" placeholder="User Name" />
+                <Input
+                  type="text"
+                  placeholder="User Name"
+                  onChange={(e) => setAdminName(e.target.value)} // Set adminName state
+                />
               </Form.Item>
 
               <Form.Item
@@ -62,7 +48,11 @@ function Login() {
                   },
                 ]}
               >
-                <Input type="password" placeholder="Password" />
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)} // Set password state
+                />
               </Form.Item>
 
               <button type="submit" className=" text-white px-5 my-2 w-100">
