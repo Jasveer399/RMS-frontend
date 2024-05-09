@@ -17,7 +17,7 @@ const Students = () => {
   const [rollNo, setRollNo] = useState("");
   const [email, setEmail] = useState("");
   const [className, setClassName] = useState("");
-  const [classes, setClasses] = useState([])
+  const [classes, setClasses] = useState([]);
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
@@ -53,10 +53,9 @@ const Students = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [classesResponse] =
-          await Promise.all([
-            axios.post("/api/classes/get-all-classes"),
-          ]);
+        const [classesResponse] = await Promise.all([
+          axios.post("/api/classes/get-all-classes"),
+        ]);
 
         setClasses(classesResponse.data.data);
       } catch (error) {
@@ -219,7 +218,7 @@ const Students = () => {
               setGender(record.gender);
               setPhone(record.phone);
               setSemester(record.semester);
-              setDob(record.dob)
+              setDob(record.dob);
               setIsUpdate(true);
               setStudentId(record.rollNo);
               // navigate(/employee/students/edit/${record.rollNo});
@@ -269,26 +268,23 @@ const Students = () => {
                 type="text"
               /> */}
 
-            <div className="flex justify-center items-center pt-3">
-              <select 
-                className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
-                onChange={onChangeClassName}
-                value={className}
-                required
-              >
-                <option value="" disabled selected>
-                  Select Class
-                </option>
-                {classes.map((classItem, index) => (
-                  <option
-                    key={index}
-                    value={classItem.className}
-                  >
-                    {classItem.className}
+              <div className="flex justify-center items-center pt-3">
+                <select
+                  className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
+                  onChange={onChangeClassName}
+                  value={className}
+                  required
+                >
+                  <option value="" disabled selected>
+                    Select Class
                   </option>
-                ))}
-              </select>
-            </div>
+                  {classes.map((classItem, index) => (
+                    <option key={index} value={classItem.className}>
+                      {classItem.className}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               <div class="flex justify-center items-center pt-3">
                 <select
@@ -301,13 +297,13 @@ const Students = () => {
                     Select Semester
                   </option>
                   <option value="Sem 1st">Sem 1st</option>
-                  <option value="Sem 2nd">Sem 2nd</option>
-                  <option value="Sem 3nd">Sem 3rd</option>
-                  <option value="Sem 4nd">Sem 4th</option>
-                  <option value="Sem 5nd">Sem 5th</option>
-                  <option value="Sem 6nd">Sem 6th</option>
-                  <option value="Sem 7nd">Sem 7th</option>
-                  <option value="Sem 8nd">Sem 8th</option>
+                  <option value="Sem 2st">Sem 2st</option>
+                  <option value="Sem 3st">Sem 3st</option>
+                  <option value="Sem 4st">Sem 4st</option>
+                  <option value="Sem 5st">Sem 5st</option>
+                  <option value="Sem 6st">Sem 6st</option>
+                  <option value="Sem 7st">Sem 7st</option>
+                  <option value="Sem 8st">Sem 8st</option>
                 </select>
               </div>
 
