@@ -143,7 +143,6 @@ function Results() {
             axios.post("/api/subjectes/get-all-subject"),
             axios.post("/api/student/get-all-students"),
           ]);
-
         setClasses(classesResponse.data.data);
         setSubjectes(subjectsResponse.data.data);
         setStudents(studentsResponse.data.data);
@@ -151,7 +150,6 @@ function Results() {
         toast.error("Unable to fetch data due to server error");
       }
     };
-
     fetchData();
   }, []);
 
