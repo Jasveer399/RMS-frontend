@@ -204,18 +204,9 @@ function Results() {
       key: "total-marks",
       render: (text, record) => (
         <div className="d-flex gap-3 h-5">
-          <input
-            // onChange={(e) =>
-            //   setTotalMarks({
-            //     ...totalmarks,
-            //     [record._id]: e.target.value,
-            //   })
-            // }
-            className="w-40 rounded-md h-5"
-            type="number"
-            // value={totalmarks[record._id] || ""}
-            value={totalmarks}
-          />
+          <h1>
+            {totalmarks}
+          </h1>
         </div>
       ),
     },
