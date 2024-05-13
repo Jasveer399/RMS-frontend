@@ -168,7 +168,7 @@ const Students = () => {
       key: "name",
     },
     {
-      title: "Roll No",
+      title: "UID",
       dataIndex: "rollNo",
       key: "rollNo",
     },
@@ -320,7 +320,7 @@ const Students = () => {
               <Form
                 value={rollNo}
                 onChange={onChangeRollNo}
-                title="Rollno"
+                title="UID"
                 name="sturollno"
                 type="number"
               />

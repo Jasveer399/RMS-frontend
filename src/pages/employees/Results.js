@@ -185,7 +185,7 @@ function Results() {
       key: "name",
     },
     {
-      title: "Roll No",
+      title: "UID",
       dataIndex: "rollNo",
       key: "rollNo",
     },

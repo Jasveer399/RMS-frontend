@@ -142,7 +142,7 @@ const Classes = () => {
       <div className="flex">
         <SideNavBar />
         <div className="w-full h-full">
-          <PageTitle title="Manage Subjects" />
+          <PageTitle title="Manage Classes" />
           <h6 className="text-center text-xl pb-3 underline">Add New Class</h6>
           {/* <ClassesForm/> */}
           <form>
