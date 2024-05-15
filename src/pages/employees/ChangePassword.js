@@ -3,7 +3,7 @@ import PageTitle from "../../components/PageTitle";
 import Form from "../../components/Form";
 import SideNavBar from "./SideNavBar";
 import axios from "axios";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -23,10 +23,18 @@ function ChangePassword() {
     e.preventDefault();
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/admin/change-password", {
-        oldpassword: oldPassword,
-        newpassword: newpassword,
-      });
+      const response = await axios.post(
+        "/api/admin/change-password",
+        {
+          oldpassword: oldPassword,
+          newpassword: newpassword,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       if (response.data.success) {
         dispatch(HideLoading());
         toast.success(response.data.message);

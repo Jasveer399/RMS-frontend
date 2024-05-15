@@ -143,9 +143,33 @@ function Results() {
       try {
         const [classesResponse, subjectsResponse, studentsResponse] =
           await Promise.all([
-            axios.post("/api/classes/get-all-classes"),
-            axios.post("/api/subjectes/get-all-subject"),
-            axios.post("/api/student/get-all-students"),
+            axios.post(
+              "/api/classes/get-all-classes",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+              }
+            ),
+            axios.post(
+              "/api/subjectes/get-all-subject",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+              }
+            ),
+            axios.post(
+              "/api/student/get-all-students",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+              }
+            ),
           ]);
         setClasses(classesResponse.data.data);
         setSubjectes(subjectsResponse.data.data);
@@ -204,9 +228,7 @@ function Results() {
       key: "total-marks",
       render: (text, record) => (
         <div className="d-flex gap-3 h-5">
-          <h1>
-            {totalmarks}
-          </h1>
+          <h1>{totalmarks}</h1>
         </div>
       ),
     },

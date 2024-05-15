@@ -20,6 +20,7 @@ function Login() {
       });
       console.log(response);
       if (response.data.success) {
+        localStorage.setItem("adminToken", response.data.token);
         dispatch(HideLoading());
         toast.success(response.data.message);
         navigate("/employee");
