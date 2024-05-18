@@ -38,11 +38,7 @@ function StudentLogin() {
               <hr />
               <Form.Item
                 name="rollNo"
-<<<<<<< HEAD
                 label="Student ID"
-=======
-                label="UID"
->>>>>>> 560084e714ba173960b8fa5b891beca828138528
                 rules={[
                   {
                     required: true,
