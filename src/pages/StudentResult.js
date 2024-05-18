@@ -94,7 +94,7 @@ function StudentResult() {
         <Form
           onChange={(name, value) => setRollNo(value)}
           value={rollNo}
-          title="Enter Your UID"
+          title="Student ID"
           name="search"
           type="search"
         />

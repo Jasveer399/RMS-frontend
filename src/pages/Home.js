@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../redux/alerts";
 import logo from "../extrafiles/RMS.png"
+import logoo from "../extrafiles/Designer-removebg.png"
 
 function Home() {
   const dispatch = useDispatch();
@@ -60,12 +61,12 @@ function Home() {
           </div>
         </div>
       </div> */}
-      <div className="flex h-screen items-center">
-        <div className="w-full h-screen items-center justify-center m-auto">
-          <img src={logo} className=" w-full h-screen items-center justify-center m-auto" />
+      <div className="">
+        <div className="justify-center mx-auto pt-4">
+          <img src={logoo} className=" w-[35%] justify-center mx-auto " />
         </div>
-        <div className="w-full items-center">
-          <h1 className="text-5xl py-4 mb-3 font-bold justify-center text-center items-center">Result Management System</h1>
+        <div className="w-full items-center mt-12">
+          {/* <h1 className="text-5xl py-4 mb-3 font-bold justify-center text-center items-center">Result Management System</h1> */}
           <div className="flex justify-center items-center gap-4">
             <button 
             className="bg-blue-950 text-white px-4 py-2 rounded-xl font-bold text-base " 

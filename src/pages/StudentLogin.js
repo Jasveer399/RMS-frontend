@@ -41,7 +41,7 @@ function StudentLogin() {
               <Form.Item
                 
                 name="rollNo"
-                label="Roll Number"
+                label="Student ID"
                 rules={[
                   {
                     required: true,
