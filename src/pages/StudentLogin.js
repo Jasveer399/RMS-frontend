@@ -11,23 +11,21 @@ function StudentLogin() {
   const navigate = useNavigate();
   const onFinish = async (values) => {
     try {
-        
-        dispatch(ShowLoading());
-        const response = await axios.post(
-          "/api/student/studentlogin", values);
-         console.log(response.data);
-        if (response.data.success) {
-            dispatch(HideLoading());
-          // localStorage.setItem("token", response.data.data);
-          toast.success(response.data.message);
-          console.log(response.data);
-          navigate("/students/home");
-        } else {
-          toast.error(response.data.message);
-        }
-      } catch (error) {
+      dispatch(ShowLoading());
+      const response = await axios.post("/api/student/studentlogin", values);
+      console.log(response.data);
+      if (response.data.success) {
         dispatch(HideLoading());
-        toast.error(error.message);  
+        // localStorage.setItem("token", response.data.data);
+        toast.success(response.data.message);
+        console.log(response.data);
+        navigate("/students/home");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      toast.error(error.message);
     }
   };
   return (
@@ -39,9 +37,8 @@ function StudentLogin() {
               <h1 className="text-medium">Student Login</h1>
               <hr />
               <Form.Item
-                
                 name="rollNo"
-                label="Roll Number"
+                label="UID"
                 rules={[
                   {
                     required: true,
@@ -49,9 +46,8 @@ function StudentLogin() {
                   },
                 ]}
               >
-                <Input type="number" placeholder="Roll No"/>
+                <Input type="number" placeholder="UID" />
               </Form.Item>
-
               <Form.Item
                 name="dob"
                 label="Date of Birth"
@@ -62,14 +58,14 @@ function StudentLogin() {
                   },
                 ]}
               >
-                <Input type="date" placeholder="Date of Birth"/>
+                <Input type="date" placeholder="Date of Birth" />
               </Form.Item>
 
-              <button 
-              className=" text-white px-5 my-2 w-100" 
-              onClick={() => { 
-                navigate("/students/studentresult"); 
-              }}
+              <button
+                className=" text-white px-5 my-2 w-100"
+                onClick={() => {
+                  navigate("/students/studentresult");
+                }}
               >
                 Login
               </button>

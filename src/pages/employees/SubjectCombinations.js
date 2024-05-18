@@ -27,7 +27,15 @@ function SubjectCombinations() {
   const dispatch = useDispatch();
   useEffect(() => {
     const getallclasses = async () => {
-      const response = await axios.post("/api/classes/get-all-classes");
+      const response = await axios.post(
+        "/api/classes/get-all-classes",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       const data = response.data.data;
       setClasses(data);
     };
@@ -90,11 +98,19 @@ function SubjectCombinations() {
         return;
       }
       dispatch(ShowLoading());
-      const response = await axios.post("/api/classSubject/add-classSubject", {
-        classCode: selectedClassObject.classCode,
-        className: selectedClassObject.className,
-        subjects: validSubjects,
-      });
+      const response = await axios.post(
+        "/api/classSubject/add-classSubject",
+        {
+          classCode: selectedClassObject.classCode,
+          className: selectedClassObject.className,
+          subjects: validSubjects,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       console.log(response.data);
       dispatch(HideLoading());
       if (response.data.success) {
@@ -112,7 +128,13 @@ function SubjectCombinations() {
     try {
       console.log(classandsubjectsId);
       const response = await axios.post(
-        `/api/classSubject/delete-class-subjects/${classandsubjectsId}`
+        `/api/classSubject/delete-class-subjects/${classandsubjectsId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
       );
       if (!response.data.success) {
         toast.error(response.data.message);

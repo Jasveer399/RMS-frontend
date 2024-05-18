@@ -52,6 +52,8 @@ const SideNavBar = () => {
 
   const logout = () => {
     toast.success("User Logout SuccessFully");
+    localStorage.removeItem('adminToken');
+    localStorage.removeItem('adminToken_setupTime');
     //  localStorage.clear();
     navigate("/login");
   };

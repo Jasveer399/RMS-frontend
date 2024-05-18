@@ -17,7 +17,15 @@ function Register() {
     const fetchClasses = async () => {
       try {
         dispatch(ShowLoading());
-        const response = await axios.post("/api/classes/get-all-classes");
+        const response = await axios.post(
+          "/api/classes/get-all-classes",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+            },
+          }
+        );
         dispatch(HideLoading());
         if (response.data.success) {
           console.log(response.data.data);

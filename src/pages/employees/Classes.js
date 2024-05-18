@@ -21,14 +21,23 @@ const Classes = () => {
   const onChangeClassCode = (name, value) => {
     setClassCode(value);
   };
-  const addclasses = async () => {
+  const addclasses = async (e) => {
+    e.preventDefault();
     try {
       dispatch(ShowLoading());
       console.log("one");
-      const response = await axios.post("/api/classes/add-class", {
-        classCode: classCode,
-        className: className,
-      });
+      const response = await axios.post(
+        "/api/classes/add-class",
+        {
+          classCode: classCode,
+          className: className,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -47,7 +56,15 @@ const Classes = () => {
 
   const deleteClass = async (classId) => {
     try {
-      const response = await axios.post(`/api/classes/delete-class/${classId}`);
+      const response = await axios.post(
+        `/api/classes/delete-class/${classId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       if (!response.data.success) {
         toast.error(response.data.message);
         return;
@@ -67,6 +84,11 @@ const Classes = () => {
         {
           classCode: classCode,
           className: className,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
         }
       );
       // console.log("2");
@@ -86,6 +108,26 @@ const Classes = () => {
       setClassId("");
       setIsUpdate(false);
     }
+  };
+
+  const getallclasses = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "/api/classes/get-all-classes",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
+      const data = response.data.data;
+      console.log("Class data", data);
+      setClasses(data);
+    } catch (error) {
+      toast.error(error.message);
+    } // Update state with the entire data array
   };
   const columns = [
     {
@@ -122,14 +164,6 @@ const Classes = () => {
       ),
     },
   ];
-  useEffect(() => {
-    const getallclasses = async () => {
-      const response = await axios.post("/api/classes/get-all-classes");
-      const data = response.data.data;
-      setClasses(data); // Update state with the entire data array
-    };
-    getallclasses();
-  }, [classes]);
 
   return (
     // <div>
@@ -161,6 +195,14 @@ const Classes = () => {
                 name="classcode"
                 type="text"
               />
+
+              <button
+                onClick={getallclasses}
+                type="submit"
+                className="bg-blue-950 text-white px-4 font-bold"
+              >
+                Get All Classes
+              </button>
             </div>
 
             {isupdate ? (
