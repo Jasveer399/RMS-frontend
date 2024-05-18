@@ -76,16 +76,24 @@ const Students = () => {
     e.preventDefault();
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/student/add-student", {
-        name: name,
-        rollNo: rollNo,
-        email: email,
-        className: className,
-        dob: dob,
-        gender: gender,
-        phone: phone,
-        semester: semester,
-      });
+      const response = await axios.post(
+        "/api/student/add-student",
+        {
+          name: name,
+          rollNo: rollNo,
+          email: email,
+          className: className,
+          dob: dob,
+          gender: gender,
+          phone: phone,
+          semester: semester,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -111,7 +119,13 @@ const Students = () => {
   const deleteStudent = async (studentId) => {
     try {
       const response = await axios.post(
-        `/api/student/delete-student/${studentId}`
+        `/api/student/delete-student/${studentId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
       );
       if (!response.data.success) {
         toast.error(response.data.message);
@@ -136,6 +150,11 @@ const Students = () => {
           gender: gender,
           phone: phone,
           semester: semester,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
         }
       );
       dispatch(HideLoading());

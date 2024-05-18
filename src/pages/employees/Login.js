@@ -1,5 +1,5 @@
 import { Form, Input } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,8 +9,24 @@ import axios from "axios";
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [adminName, setAdminName] = useState(""); // Changed variable name to setAdminName
+  const [adminName, setAdminName] = useState("");
   const [password, setPassword] = useState("");
+
+  useEffect(() => {
+    const tokenName = 'adminToken';
+    const setupTimeName = tokenName + '_setupTime';
+    const oneDay = 24 * 60 * 60 * 1000; // Time after which the token should expire (in milliseconds)
+    const now = new Date().getTime();
+    const setupTime = localStorage.getItem(setupTimeName);
+
+    if (setupTime) {
+      if (now - setupTime > oneDay) {
+        localStorage.removeItem(tokenName); // Remove the token
+        localStorage.removeItem(setupTimeName); // Remove the setup time
+      }
+    }
+  }, []);
+
   const loginadmin = async () => {
     try {
       dispatch(ShowLoading());
@@ -20,7 +36,13 @@ function Login() {
       });
       console.log(response);
       if (response.data.success) {
-        localStorage.setItem("adminToken", response.data.token);
+        const now = new Date().getTime();
+        const tokenName = 'adminToken';
+        const setupTimeName = tokenName + '_setupTime';
+
+        localStorage.setItem(tokenName, response.data.token);
+        localStorage.setItem(setupTimeName, now);
+
         dispatch(HideLoading());
         toast.success(response.data.message);
         navigate("/employee");
@@ -30,10 +52,11 @@ function Login() {
       }
     } catch (error) {
       dispatch(HideLoading());
-      console.log("Error Ocuring during add Login Admin");
+      console.log("Error occurring during admin login");
       toast.error(error.message);
     }
   };
+
   return (
     <div className="login-page-1">
       <div className="row">
@@ -43,7 +66,7 @@ function Login() {
               <h1 className="text-medium">Admin-Login</h1>
               <hr />
               <Form.Item
-                name="adminName" // Fixed typo here
+                name="adminName"
                 label="User Name"
                 rules={[
                   {
@@ -55,7 +78,7 @@ function Login() {
                 <Input
                   type="text"
                   placeholder="User Name"
-                  onChange={(e) => setAdminName(e.target.value)} // Set adminName state
+                  onChange={(e) => setAdminName(e.target.value)}
                 />
               </Form.Item>
 
@@ -72,7 +95,7 @@ function Login() {
                 <Input
                   type="password"
                   placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)} // Set password state
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Item>
 

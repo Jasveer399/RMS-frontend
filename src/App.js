@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./pages/employees/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -27,16 +27,30 @@ import ChangePassword from "./pages/employees/ChangePassword";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import SubjectCombinations from "./pages/employees/SubjectCombinations";
 import StudentResult from "./pages/StudentResult";
+import { useEffect, useState } from "react";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
+  const [isTokenPresent, setTokenPresent] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("adminToken");
+    console.log("Token :",token)
+    if (token) {
+      setTokenPresent(true);
+    }
+  }, []);
 
   return (
     <div className="App">
-      {loading ? <Spinner /> : null}
+      {loading && <Spinner />}
       <Toaster />
       <BrowserRouter>
         <Routes>
+          <Route
+            path="*"
+            element={isTokenPresent ? <Navigate to="/employee" /> : <Navigate to="/" />}
+          />
           <Route path="/" element={<Home />} />
           <Route path="/result/:resultId" element={<ResultCheck />} />
           <Route
@@ -79,7 +93,6 @@ function App() {
               </PublicRoute>
             }
           />
-          /////////////////////ProtectedRoute////////////////////
           <Route element={<ProtectedRoute />}>
             <Route path="/employee" element={<EmployeeHome />} />
             <Route path="/employee/students" element={<Students />} />
