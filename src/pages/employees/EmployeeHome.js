@@ -15,37 +15,37 @@ function EmployeeHome() {
     {
         icon: <MdDashboard className="text-red-950"/>,
         name: "Dashboard",
-        link: "/"
+        link: "/employee"
     },
     {
         icon: <MdClass />,
         name: "Classes",
-        link: "/"
+        link: "/employee/classes"
     },
     {
         icon: <FaBook />,
         name: "Subjects",
-        link: "/"
+        link: "/employee/subjects"
     },
     {
         icon: <SiBookstack />,
         name: "Subjects Combination",
-        link: "/"
+        link: "/employee/subjectscombination"
     },
     {
         icon: <PiStudentFill />,
         name: "Students",
-        link: "/"
+        link: "/employee/students"
     },
     {
         icon: <GiArchiveResearch/>,
         name: "Result",
-        link: "/"
+        link: "/employee/results"
     },
     {
         icon: <RiLockPasswordFill />,
         name: "Change Password",
-        link: "/"
+        link: "/employee/changepassword"
     },
 ]
   return (
@@ -67,6 +67,7 @@ function EmployeeHome() {
           </div>
           <div class="flex px-6 pb-8 sm:px-8">
             <Link
+              to={navigate.link}
               class="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-[#333] rounded-full nline-flex text-base font-bold"
             >
               {navigate.name}
