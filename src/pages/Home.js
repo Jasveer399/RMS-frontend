@@ -79,7 +79,7 @@ function Home() {
             <button 
             className="bg-blue-950 text-white px-4 py-2 rounded-xl font-bold text-base"
             onClick={() => { 
-              navigate("/students/studentresult"); 
+              navigate("/students/login"); 
             }}
             >
               Student Login

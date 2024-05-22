@@ -1,7 +1,7 @@
 import React from "react";
 // import '../../styles/sidebar.css'
 import { Link } from "react-router-dom";
-import { MdDashboard, MdClass } from "react-icons/md";
+import { MdDashboard, MdClass, MdEventAvailable } from "react-icons/md";
 import { FaBook } from "react-icons/fa";
 import { SiBookstack } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
@@ -44,6 +44,11 @@ const SideNavBar = () => {
       link: "/employee/results",
     },
     {
+      icon: <MdEventAvailable className="text-2xl" />,
+      name: "Teacher Availability",
+      link: "/employee/teacheravailability",
+    },
+    {
       icon: <RiLockPasswordFill className="text-2xl" />,
       name: "Change Password",
       link: "/employee/changepassword",
@@ -79,7 +84,7 @@ const SideNavBar = () => {
             <li>
               <button
                 onClick={logout}
-                className="ml-10 w-full mt-16 bg-slate-300 px-3 rounded-full font-bold  text-base hover:bg-blue-950 hover:text-white"
+                className="ml-10 w-full mt-6 bg-slate-300 px-3 rounded-full font-bold  text-base hover:bg-blue-950 hover:text-white"
               >
                 LOGOUT
               </button>

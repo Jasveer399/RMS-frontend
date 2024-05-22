@@ -46,7 +46,7 @@ function StudentLogin() {
                   },
                 ]}
               >
-                <Input type="number" placeholder="UID" />
+                <Input type="number" placeholder="Student ID" />
               </Form.Item>
               <Form.Item
                 name="dob"

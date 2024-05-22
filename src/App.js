@@ -21,13 +21,14 @@ import ResultCheck from "./pages/ResultCheck";
 import AddClass from "./pages/employees/AddClass";
 import Examination from "./pages/employees/Examination";
 import StudentLogin from "./pages/StudentLogin";
-import StudentHome from "./pages/StudentHome";
+import CheckTeacherAvailability from "./pages/CheckTeacherAvailability";
 import Subjects from "./pages/employees/Subjects";
 import ChangePassword from "./pages/employees/ChangePassword";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import SubjectCombinations from "./pages/employees/SubjectCombinations";
 import StudentResult from "./pages/StudentResult";
 import { useEffect, useState } from "react";
+import TeacherAvailability from "./pages/employees/TeacherAvailability";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -70,10 +71,10 @@ function App() {
             }
           />
           <Route
-            path="/students/home"
+            path="/students/checkteacheravailability"
             element={
               <PublicRoute>
-                <StudentHome />
+                <CheckTeacherAvailability />
               </PublicRoute>
             }
           />
@@ -94,6 +95,7 @@ function App() {
             }
           />
           <Route element={<ProtectedRoute />}>
+            <Route path="/employee/teacheravailability" element={<TeacherAvailability/>} />  {/* new added route*/}
             <Route path="/employee" element={<EmployeeHome />} />
             <Route path="/employee/students" element={<Students />} />
             <Route path="/employee/students/add" element={<AddStudent />} />

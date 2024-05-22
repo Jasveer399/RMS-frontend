@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import SideNavBar from "./SideNavBar";
-import { MdDashboard, MdClass } from "react-icons/md";
+import { MdDashboard, MdClass, MdEventAvailable } from "react-icons/md";
 import { FaBook } from "react-icons/fa";
 import { SiBookstack } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
@@ -13,7 +13,7 @@ function EmployeeHome() {
   const navigate = useNavigate();
   const nav = [
     {
-        icon: <MdDashboard className="text-red-950"/>,
+        icon: <MdDashboard className="text-green-950"/>,
         name: "Dashboard",
         link: "/employee"
     },
@@ -43,10 +43,15 @@ function EmployeeHome() {
         link: "/employee/results"
     },
     {
-        icon: <RiLockPasswordFill />,
-        name: "Change Password",
-        link: "/employee/changepassword"
+        icon: <MdEventAvailable />,
+        name: "Teacher Availability",
+        link: "/employee/teacheravailability"
     },
+    {
+      icon: <RiLockPasswordFill />,
+      name: "Change Password",
+      link: "/employee/changepassword"
+  },
 ]
   return (
     <>
