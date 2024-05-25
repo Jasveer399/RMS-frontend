@@ -348,7 +348,7 @@ const Students = () => {
               <Form
                 value={rollNo}
                 onChange={onChangeRollNo}
-                title="UID"
+                title="Student ID"
                 name="sturollno"
                 type="number"
               />

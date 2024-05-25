@@ -38,7 +38,7 @@ function StudentLogin() {
               <hr />
               <Form.Item
                 name="rollNo"
-                label="UID"
+                label="Student ID"
                 rules={[
                   {
                     required: true,
@@ -46,7 +46,7 @@ function StudentLogin() {
                   },
                 ]}
               >
-                <Input type="number" placeholder="UID" />
+                <Input type="number" placeholder="Student ID" />
               </Form.Item>
               <Form.Item
                 name="dob"
