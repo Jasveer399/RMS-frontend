@@ -11,12 +11,18 @@ import toast from "react-hot-toast";
 
 const TeacherAvailability = () => {
   const [teachers, setTeachers] = useState([]);
+  const [booked, setBooked] = useState([])
   const [teacherName, setTeacherName] = useState("");
   const [teacherAvaFrom, setTeacherAvaFrom] = useState("");
   const [teacherAvaTo, setTeacherAvaTo] = useState("");
+  const [timeFrom, setTimeFrom] = useState("");
+  const [timeTo, setTimeTo] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
   const [teacherId, setTeacherId] = useState("");
+  const [addAvaComp, setAddAvaComp] = useState(true)
+  const [bookedAppComp, setBookedAppComp] = useState(false)
   const dispatch = useDispatch();
+
 
   const onChangeTeacherName = (name, value) => {
     setTeacherName(value);
@@ -27,7 +33,12 @@ const TeacherAvailability = () => {
   const onChangeTeacherAvaTo = (name, value) => {
     setTeacherAvaTo(value);
   };
-
+  const onChangeTimeFrom = (name, value) => {
+    setTimeFrom(value)
+  }
+  const onChangeTimeTo = (name, value) => {
+    setTimeTo(value)
+  }
 
   const addSubject = async (e) => {
     e.preventDefault();
@@ -41,6 +52,8 @@ const TeacherAvailability = () => {
             teacherName: teacherName,
             teacherAvaFrom: teacherAvaFrom,
             teacherAvaTo: teacherAvaTo,
+            timeFrom: timeFrom,
+            timeTo: timeTo
         },
         {
           headers: {
@@ -52,6 +65,8 @@ const TeacherAvailability = () => {
       setTeacherName("");
       setTeacherAvaFrom("");
       setTeacherAvaTo("");
+      setTimeFrom("")
+      setTimeTo("")
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -66,6 +81,8 @@ const TeacherAvailability = () => {
         setTeacherName("");
         setTeacherAvaFrom("");
         setTeacherAvaTo("");
+        setTimeFrom("")
+        setTimeTo("")
         setIsUpdate(false);
     }
     // console.log("Submit handler");
@@ -104,6 +121,8 @@ const TeacherAvailability = () => {
             teacherName: teacherName,
             teacherAvaFrom: teacherAvaFrom,
             teacherAvaTo: teacherAvaTo,
+            timeFrom: timeFrom,
+            timeTo: timeTo
         },
         {},
         {
@@ -128,6 +147,8 @@ const TeacherAvailability = () => {
       setTeacherName("");
     setTeacherAvaFrom("");
     setTeacherAvaTo("");
+    setTimeFrom("")
+        setTimeTo("")
       setTeacherId("");
     }
   };
@@ -141,6 +162,7 @@ const TeacherAvailability = () => {
 //     getallSubjects();
 //   }, [teachers]);
 
+  //to display teachers data
   const columns = [
     {
       title: "Teacher Name",
@@ -153,10 +175,20 @@ const TeacherAvailability = () => {
       key: "teacherAvaFrom",
     },
     {
-        title: "Available To",
-        dataIndex: "teacherAvaTo",
-        key: "teacherAvaTo",
-      },
+      title: "Available To",
+      dataIndex: "teacherAvaTo",
+      key: "teacherAvaTo",
+    },
+    {
+      title: "Time From",
+      dataIndex: "timeFrom",
+      key: "timeFrom",
+    },
+    {
+      title: "Time To",
+      dataIndex: "timeTo",
+      key: "timeTo",
+    },
     {
       title: "Action",
       key: "action",
@@ -173,6 +205,8 @@ const TeacherAvailability = () => {
               setTeacherName(record.teacherName); // Set the subjectName when edit is clicked
               setTeacherAvaFrom(record.teacherAvaFrom); // Set the subjectCode when edit is clicked
               setTeacherAvaTo(record.teacherAvaTo); // Set the subjectCode when edit is clicked
+              setTimeFrom(record.timeFrom)
+              setTimeTo(record.timeTo)
               setIsUpdate(true);
               setTeacherId(record._id);
             }}
@@ -182,15 +216,66 @@ const TeacherAvailability = () => {
       ),
     },
   ];
+
+  // to display booked appointment data
+  const bookedColumn = [
+    {
+      title: "Teacher Name",
+      dataIndex: "teacherName",
+      key: "teacherName",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Time From",
+      dataIndex: "timeFrom",
+      key: "timeFrom",
+    },
+    {
+      title: "Time To",
+      dataIndex: "timeTo",
+      key: "timeTo",
+    },
+    {
+      title: "Student Name",
+      dataIndex: "stuId",
+      key: "stuId",
+    },
+  ];
+
+  const checkBookedHandler = (e) => {
+    e.preventDefault()
+    setAddAvaComp(false)
+    setBookedAppComp(true)
+  }
+
+  const addAvaHandler = (e) => {
+    e.preventDefault()
+    setAddAvaComp(true)
+    setBookedAppComp(false)
+  }
   return (
     <>
       <div className="flex">
         <SideNavBar />
         <div className="w-full h-full">
           <PageTitle title="Teacher Availability" />
-          <h6 className="text-center text-xl pb-3 underline">
-            Add Teacher Availability
-          </h6>
+          {addAvaComp &&
+          <>
+          <div className="flex justify-center">
+            <h6 className="text-center text-xl mb-4 mt-2 underline">
+              Add Teacher Availability
+            </h6>
+            <button 
+            className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
+            onClick={checkBookedHandler}
+            >
+              Check Booked Appointment
+            </button>
+          </div>
           <form>
             <div className="flex justify-center gap-4">
               <Form
@@ -213,6 +298,22 @@ const TeacherAvailability = () => {
                 title="Teacher Available To"
                 name="avato"
                 type="date"
+              />
+            </div>
+            <div className="flex justify-center gap-4">
+              <Form
+                value={timeFrom}
+                onChange={onChangeTimeFrom}
+                title="Time From"
+                name="timefrom"
+                type="time"
+              />
+              <Form
+                value={timeTo}
+                onChange={onChangeTimeTo}
+                title="Time To"
+                name="timeto"
+                type="time"
               />
             </div>
 
@@ -239,6 +340,24 @@ const TeacherAvailability = () => {
             )}
           </form>
           <Table columns={columns} dataSource={teachers} />
+          </>
+          }
+          {bookedAppComp && 
+          <>
+          <div className="flex justify-center">
+            <h6 className="text-center text-xl mb-4 mt-2 underline">
+              Booked Appointment
+            </h6>
+            <button 
+            className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
+            onClick={addAvaHandler}
+            >
+              Add Teacher Availability
+            </button>
+          </div>
+          <Table columns={bookedColumn} dataSource={booked} />
+          </>
+          }
         </div>
       </div>
     </>

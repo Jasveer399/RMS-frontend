@@ -17,24 +17,34 @@ const CheckTeacherAvailability = () => {
       key: "teacherAvaFrom",
     },
     {
-        title: "Available To",
-        dataIndex: "teacherAvaTo",
-        key: "teacherAvaTo",
-      },
-      {
-        title: "Action",
-        key: "action",
-        render: (text, record) => (
-          <div className="d-flex gap-3">
-            <button
-              // onClick={(e) => storeAllResult(e, record._id)}
-              className="bg-blue-950 rounded-lg h-5 text-white px-2"
-            >
-              Book
-            </button>
-          </div>
-        ),
-      },
+      title: "Available To",
+      dataIndex: "teacherAvaTo",
+      key: "teacherAvaTo",
+    },
+    {
+      title: "Time From",
+      dataIndex: "timeFrom",
+      key: "timeFrom",
+    },
+    {
+      title: "Time To",
+      dataIndex: "timeTo",
+      key: "timeTo",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <div className="d-flex gap-3">
+          <button
+            // onClick={(e) => storeAllResult(e, record._id)}
+            className="bg-blue-950 rounded-lg h-5 text-white px-2"
+          >
+            Book
+          </button>
+        </div>
+      ),
+    },
   ];
 
   return (
