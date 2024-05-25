@@ -54,7 +54,15 @@ const Students = () => {
     const fetchData = async () => {
       try {
         const [classesResponse] = await Promise.all([
-          axios.post("/api/classes/get-all-classes"),
+          axios.post(
+            "/api/classes/get-all-classes",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+              },
+            }
+          ),
         ]);
 
         setClasses(classesResponse.data.data);
@@ -137,7 +145,8 @@ const Students = () => {
     }
   };
 
-  const updateStudent = async (studentId) => {
+  const updateStudent = async (e,studentId) => {
+    e.preventDefault();
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
@@ -423,8 +432,8 @@ const Students = () => {
             {isupdate && (
               <div className="flex items-center justify-center my-3">
                 <button
-                  onClick={() => {
-                    updateStudent(studentId);
+                  onClick={(e) => {
+                    updateStudent(e,studentId);
                   }}
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
@@ -433,6 +442,7 @@ const Students = () => {
               </div>
             )}
           </form>
+          
           <Table columns={columns} dataSource={students} />
         </div>
       </div>
