@@ -40,14 +40,14 @@ const TeacherAvailability = () => {
     setTimeTo(value)
   }
 
-  const addSubject = async (e) => {
+  const addTeacherAvailability = async (e) => {
     e.preventDefault();
     console.log("1");
     try {
       dispatch(ShowLoading());
       console.log("2");
       const response = await axios.post(
-        "/api/subjectes/add-subject",
+        "/api/teacheravl/add-teacheravl",
         {
             teacherName: teacherName,
             teacherAvaFrom: teacherAvaFrom,
@@ -331,7 +331,7 @@ const TeacherAvailability = () => {
             ) : (
               <div className="flex items-center justify-center my-3">
                 <button
-                  onClick={addSubject}
+                  onClick={addTeacherAvailability}
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
                   Add Teacher Availability

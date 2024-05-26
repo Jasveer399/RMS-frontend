@@ -13,6 +13,7 @@ function Home() {
   const dispatch = useDispatch();
   const [results, setResults] = React.useState([]);
   const navigate = useNavigate();
+  const admintoken = localStorage.getItem("adminToken")
   // const getResults = async (values) => {
   //   try {
   //     dispatch(ShowLoading());
@@ -73,7 +74,7 @@ function Home() {
             <button 
             className="bg-blue-950 text-white px-4 py-2 rounded-full font-bold text-base " 
             onClick={() => { 
-              navigate("/login"); 
+              admintoken ? navigate("/employee"):navigate("/login"); 
             }}
             >
               Admin Login
