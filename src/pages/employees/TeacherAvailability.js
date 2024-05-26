@@ -11,18 +11,17 @@ import toast from "react-hot-toast";
 
 const TeacherAvailability = () => {
   const [teachers, setTeachers] = useState([]);
-  const [booked, setBooked] = useState([])
+  const [bookedTeachers, setBookedTeachers] = useState([]);
   const [teacherName, setTeacherName] = useState("");
   const [teacherAvaFrom, setTeacherAvaFrom] = useState("");
   const [teacherAvaTo, setTeacherAvaTo] = useState("");
   const [timeFrom, setTimeFrom] = useState("");
   const [timeTo, setTimeTo] = useState("");
-  const [isupdate, setIsUpdate] = useState(false);
+  const [isUpdate, setIsUpdate] = useState(false);
   const [teacherId, setTeacherId] = useState("");
-  const [addAvaComp, setAddAvaComp] = useState(true)
-  const [bookedAppComp, setBookedAppComp] = useState(false)
+  const [addAvaComp, setAddAvaComp] = useState(true);
+  const [bookedAppComp, setBookedAppComp] = useState(false);
   const dispatch = useDispatch();
-
 
   const onChangeTeacherName = (name, value) => {
     setTeacherName(value);
@@ -34,26 +33,24 @@ const TeacherAvailability = () => {
     setTeacherAvaTo(value);
   };
   const onChangeTimeFrom = (name, value) => {
-    setTimeFrom(value)
-  }
+    setTimeFrom(value);
+  };
   const onChangeTimeTo = (name, value) => {
-    setTimeTo(value)
-  }
+    setTimeTo(value);
+  };
 
   const addTeacherAvailability = async (e) => {
     e.preventDefault();
-    console.log("1");
     try {
       dispatch(ShowLoading());
-      console.log("2");
       const response = await axios.post(
         "/api/teacheravl/add-teacheravl",
         {
-            teacherName: teacherName,
-            teacherAvaFrom: teacherAvaFrom,
-            teacherAvaTo: teacherAvaTo,
-            timeFrom: timeFrom,
-            timeTo: timeTo
+          teacherName,
+          teacherAvaFrom,
+          teacherAvaTo,
+          timeFrom,
+          timeTo,
         },
         {
           headers: {
@@ -61,39 +58,35 @@ const TeacherAvailability = () => {
           },
         }
       );
-      // console.log("2");
       setTeacherName("");
       setTeacherAvaFrom("");
       setTeacherAvaTo("");
-      setTimeFrom("")
-      setTimeTo("")
+      setTimeFrom("");
+      setTimeTo("");
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
+        getAllTeacherAvailable();
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       dispatch(HideLoading());
-      console.log("Error Ocuring during add New Subject");
       toast.error(error.message);
     } finally {
-        setTeacherName("");
-        setTeacherAvaFrom("");
-        setTeacherAvaTo("");
-        setTimeFrom("")
-        setTimeTo("")
-        setIsUpdate(false);
+      setTeacherName("");
+      setTeacherAvaFrom("");
+      setTeacherAvaTo("");
+      setTimeFrom("");
+      setTimeTo("");
+      setIsUpdate(false);
     }
-    // console.log("Submit handler");
-    // console.log("sunjectName : " + subjectName);
-    // console.log("sunjectCode : " + subjectCode);
   };
 
-  const deleteSubject = async (teacherId) => {
+  const deleteSubject = async (id) => {
     try {
       const response = await axios.post(
-        `/api/subjectes/delete-subject/${teacherId}`,
+        `/api/teacheravl/delete-Teacher/${id}`,
         {},
         {
           headers: {
@@ -106,63 +99,104 @@ const TeacherAvailability = () => {
         return;
       }
       toast.success(response.data.message);
+      getAllTeacherAvailable();
     } catch (error) {
       toast.error(error.message);
     }
   };
 
-  const updateSubject = async (teacherId) => {
+  const updateSubject = async (e, id) => {
+    e.preventDefault();
     try {
+      console.log(id);
       dispatch(ShowLoading());
-      console.log("2");
       const response = await axios.post(
-        `/api/subjectes/update-subject/${teacherId}`,
+        `/api/teacheravl/update-teacher`,
         {
-            teacherName: teacherName,
-            teacherAvaFrom: teacherAvaFrom,
-            teacherAvaTo: teacherAvaTo,
-            timeFrom: timeFrom,
-            timeTo: timeTo
+          teacherName: teacherName,
+          teacherAvaFrom: teacherAvaFrom,
+          teacherAvaTo: teacherAvaTo,
+          timeFrom: timeFrom,
+          timeTo: timeTo,
+          id: id,
         },
-        {},
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
           },
         }
       );
-      // console.log("2");;
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
+        getAllTeacherAvailable();
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       dispatch(HideLoading());
-      console.log("Error Ocuring during add Updating Subject");
       toast.error(error.message);
     } finally {
       setIsUpdate(false);
       setTeacherName("");
-    setTeacherAvaFrom("");
-    setTeacherAvaTo("");
-    setTimeFrom("")
-        setTimeTo("")
+      setTeacherAvaFrom("");
+      setTeacherAvaTo("");
+      setTimeFrom("");
+      setTimeTo("");
       setTeacherId("");
     }
   };
 
-//   useEffect(() => {
-//     const getallSubjects = async () => {
-//       const response = await axios.post("/api/subjectes/get-all-subject");
-//       const data = response.data.data;
-//       setTeachers(data); // Update state with the entire data array
-//     };
-//     getallSubjects();
-//   }, [teachers]);
+  const getAllTeacherAvailable = async () => {
+    try {
+      const response = await axios.get(
+        "/api/teacheravl/get-all-availablesTeacher"
+      );
+      setTeachers(response.data.data);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
-  //to display teachers data
+  useEffect(() => {
+    getAllTeacherAvailable();
+  }, []);
+
+  const checkBookedHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get("/api/teacheravl/get-all-bookedTeacher");
+      console.log(response.data.data);
+      setBookedTeachers(response.data.data);
+      setAddAvaComp(false);
+      setBookedAppComp(true);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const unBookTeacher = async (e,id) => {
+    try {
+      const response = await axios.post("/api/teacheravl/unbookedTeacher", {
+        id: id,
+      });
+      if (!response.data.success) {
+        toast.error(response.data.message);
+        return;
+      }
+      toast.success(response.data.message);
+      checkBookedHandler(e);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const addAvaHandler = (e) => {
+    e.preventDefault();
+    setAddAvaComp(true);
+    setBookedAppComp(false);
+  };
+
   const columns = [
     {
       title: "Teacher Name",
@@ -202,11 +236,11 @@ const TeacherAvailability = () => {
           ></i>
           <i
             onClick={() => {
-              setTeacherName(record.teacherName); // Set the subjectName when edit is clicked
-              setTeacherAvaFrom(record.teacherAvaFrom); // Set the subjectCode when edit is clicked
-              setTeacherAvaTo(record.teacherAvaTo); // Set the subjectCode when edit is clicked
-              setTimeFrom(record.timeFrom)
-              setTimeTo(record.timeTo)
+              setTeacherName(record.teacherName);
+              setTeacherAvaFrom(record.teacherAvaFrom);
+              setTeacherAvaTo(record.teacherAvaTo);
+              setTimeFrom(record.timeFrom);
+              setTimeTo(record.timeTo);
               setIsUpdate(true);
               setTeacherId(record._id);
             }}
@@ -217,7 +251,6 @@ const TeacherAvailability = () => {
     },
   ];
 
-  // to display booked appointment data
   const bookedColumn = [
     {
       title: "Teacher Name",
@@ -226,8 +259,8 @@ const TeacherAvailability = () => {
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "bookedDate",
+      key: "bookedDate",
     },
     {
       title: "Time From",
@@ -241,123 +274,126 @@ const TeacherAvailability = () => {
     },
     {
       title: "Student Name",
-      dataIndex: "stuId",
-      key: "stuId",
+      dataIndex: "bookedBy",
+      key: "bookedBy",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <div className="d-flex gap-3">
+          <button
+            onClick={(e) => unBookTeacher(e,record._id)}
+            className="bg-blue-950 rounded-lg h-5 text-white px-2" // Disable the button if already booked
+          >
+            UnBooked
+          </button>
+        </div>
+      ),
     },
   ];
 
-  const checkBookedHandler = (e) => {
-    e.preventDefault()
-    setAddAvaComp(false)
-    setBookedAppComp(true)
-  }
-
-  const addAvaHandler = (e) => {
-    e.preventDefault()
-    setAddAvaComp(true)
-    setBookedAppComp(false)
-  }
   return (
     <>
       <div className="flex">
         <SideNavBar />
         <div className="w-full h-full">
           <PageTitle title="Teacher Availability" />
-          {addAvaComp &&
-          <>
-          <div className="flex justify-center">
-            <h6 className="text-center text-xl mb-4 mt-2 underline">
-              Add Teacher Availability
-            </h6>
-            <button 
-            className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
-            onClick={checkBookedHandler}
-            >
-              Check Booked Appointment
-            </button>
-          </div>
-          <form>
-            <div className="flex justify-center gap-4">
-              <Form
-                value={teacherName}
-                onChange={onChangeTeacherName}
-                title="Teacher Name"
-                name="teachername"
-                type="text"
-              />
-              <Form
-                value={teacherAvaFrom}
-                onChange={onChangeTeacherAvaFrom}
-                title="Teacher Available From"
-                name="avafrom"
-                type="date"
-              />
-              <Form
-                value={teacherAvaTo}
-                onChange={onChangeTeacherAvaTo}
-                title="Teacher Available To"
-                name="avato"
-                type="date"
-              />
-            </div>
-            <div className="flex justify-center gap-4">
-              <Form
-                value={timeFrom}
-                onChange={onChangeTimeFrom}
-                title="Time From"
-                name="timefrom"
-                type="time"
-              />
-              <Form
-                value={timeTo}
-                onChange={onChangeTimeTo}
-                title="Time To"
-                name="timeto"
-                type="time"
-              />
-            </div>
-
-            {isupdate ? (
-              <div className="flex items-center justify-center my-3">
+          {addAvaComp && (
+            <>
+              <div className="flex justify-center">
+                <h6 className="text-center text-xl mb-4 mt-2 underline">
+                  Add Teacher Availability
+                </h6>
                 <button
-                  onClick={() => {
-                    updateSubject(teacherId);
-                  }}
-                  className="bg-blue-950 text-white px-4 font-bold"
+                  className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
+                  onClick={checkBookedHandler}
                 >
-                  Update Teacher Availability
+                  Check Booked Appointment
                 </button>
               </div>
-            ) : (
-              <div className="flex items-center justify-center my-3">
+              <form>
+                <div className="flex justify-center gap-4">
+                  <Form
+                    value={teacherName}
+                    onChange={onChangeTeacherName}
+                    title="Teacher Name"
+                    name="teachername"
+                    type="text"
+                  />
+                  <Form
+                    value={teacherAvaFrom}
+                    onChange={onChangeTeacherAvaFrom}
+                    title="Teacher Available From"
+                    name="avafrom"
+                    type="date"
+                  />
+                  <Form
+                    value={teacherAvaTo}
+                    onChange={onChangeTeacherAvaTo}
+                    title="Teacher Available To"
+                    name="avato"
+                    type="date"
+                  />
+                </div>
+                <div className="flex justify-center gap-4">
+                  <Form
+                    value={timeFrom}
+                    onChange={onChangeTimeFrom}
+                    title="Time From"
+                    name="timefrom"
+                    type="time"
+                  />
+                  <Form
+                    value={timeTo}
+                    onChange={onChangeTimeTo}
+                    title="Time To"
+                    name="timeto"
+                    type="time"
+                  />
+                </div>
+
+                {isUpdate ? (
+                  <div className="flex items-center justify-center my-3">
+                    <button
+                      onClick={(e) => {
+                        updateSubject(e, teacherId);
+                      }}
+                      className="bg-blue-950 text-white px-4 font-bold"
+                    >
+                      Update Teacher Availability
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center my-3">
+                    <button
+                      onClick={addTeacherAvailability}
+                      className="bg-blue-950 text-white px-4 font-bold"
+                    >
+                      Add Teacher Availability
+                    </button>
+                  </div>
+                )}
+              </form>
+              <Table columns={columns} dataSource={teachers} />
+            </>
+          )}
+          {bookedAppComp && (
+            <>
+              <div className="flex justify-center">
+                <h6 className="text-center text-xl mb-4 mt-2 underline">
+                  Booked Appointment
+                </h6>
                 <button
-                  onClick={addTeacherAvailability}
-                  className="bg-blue-950 text-white px-4 font-bold"
+                  className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
+                  onClick={addAvaHandler}
                 >
                   Add Teacher Availability
                 </button>
               </div>
-            )}
-          </form>
-          <Table columns={columns} dataSource={teachers} />
-          </>
-          }
-          {bookedAppComp && 
-          <>
-          <div className="flex justify-center">
-            <h6 className="text-center text-xl mb-4 mt-2 underline">
-              Booked Appointment
-            </h6>
-            <button 
-            className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
-            onClick={addAvaHandler}
-            >
-              Add Teacher Availability
-            </button>
-          </div>
-          <Table columns={bookedColumn} dataSource={booked} />
-          </>
-          }
+              <Table columns={bookedColumn} dataSource={bookedTeachers} />
+            </>
+          )}
         </div>
       </div>
     </>

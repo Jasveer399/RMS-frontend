@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { Table } from "antd"; // Import Ant Design Table
 import { useReactToPrint } from "react-to-print";
+import { useSelector } from "react-redux";
 
 function StudentResult() {
   const [allStudents, setAllStudents] = useState([]);
@@ -13,6 +14,8 @@ function StudentResult() {
   const [notFound, setNotFound] = useState(false);
   const [result, setResult] = useState([]);
   const [resultTable, setResultTable] = useState(false)
+  const loginStudent = useSelector((state) => state.student.student);
+
 
   const printRef = useRef()
 
@@ -22,6 +25,7 @@ function StudentResult() {
   })
 
   useEffect(() => {
+    console.log("loginStudent :",loginStudent)
     const fetchData = async () => {
       try {
         const studentsResponse = await axios.post(

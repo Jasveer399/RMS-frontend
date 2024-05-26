@@ -12,20 +12,8 @@ function Login() {
   const [adminName, setAdminName] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    const tokenName = 'adminToken';
-    const setupTimeName = tokenName + '_setupTime';
-    const oneDay = 24 * 60 * 60 * 1000; // Time after which the token should expire (in milliseconds)
-    const now = new Date().getTime();
-    const setupTime = localStorage.getItem(setupTimeName);
-
-    if (setupTime) {
-      if (now - setupTime > oneDay) {
-        localStorage.removeItem(tokenName); // Remove the token
-        localStorage.removeItem(setupTimeName); // Remove the setup time
-      }
-    }
-  }, []);
+ 
+  
 
   const loginadmin = async () => {
     try {

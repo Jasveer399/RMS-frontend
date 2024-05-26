@@ -43,6 +43,20 @@ function Home() {
   //     getResults();
   //   }
   // }, []);
+  useEffect(() => {
+    const tokenName = 'adminToken';
+    const setupTimeName = tokenName + '_setupTime';
+    const oneMinute = 3 * 60 * 60 * 1000; // Time after which the token should expire (in milliseconds)
+    const now = new Date().getTime();
+    const setupTime = localStorage.getItem(setupTimeName);
+  
+    if (setupTime) {
+      if (now - setupTime > oneMinute) {
+        localStorage.removeItem(tokenName); // Remove the token
+        localStorage.removeItem(setupTimeName); // Remove the setup time
+      }
+    }
+  }, []);
 
   return (
     <div className="layout">
