@@ -15,7 +15,7 @@ function Navbar() {
       <div className="flex items-center justify-around bg-blue-950 py-3">
         <div className="items-center">
           <p className="text-xl my-auto font-bold uppercase text-slate-300">
-            Students Result
+            {location.pathname !== "/students/checkteacheravailability" ? "Student Result" : "Check Teacher Availability"}
           </p>
         </div>
         <div className="gap-2">
