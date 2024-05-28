@@ -221,13 +221,13 @@ function SubjectCombinations() {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full">
+        <div className="w-full border-l-2 border-blue-950">
           <div>
-            <PageTitle title="Subjects Combination" />
+            <PageTitle title="Subjects Enrollment" />
             <div className="flex w-full">
               <div className="w-[50%] pr-10">
                 <h6 className=" text-right text-xl pb-3 underline">
-                  Subject Combinations
+                  Subject Enrollment
                 </h6>
               </div>
               <div className="w-[50%] text-right pr-6">

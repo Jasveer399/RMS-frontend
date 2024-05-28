@@ -7,7 +7,7 @@ function Navbar() {
 
   const logOut = () => {
     localStorage.removeItem("loginStudent");
-    navigate("/students/login");
+    navigate("/");
   };
 
   return (

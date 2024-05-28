@@ -209,7 +209,7 @@ function Results() {
       key: "name",
     },
     {
-      title: "UID",
+      title: "Student ID",
       dataIndex: "rollNo",
       key: "rollNo",
     },
@@ -270,7 +270,7 @@ function Results() {
   return (
     <div className="flex">
       <SideNavBar />
-      <div className="w-full h-full">
+      <div className="w-full border-l-2 border-blue-950">
         <PageTitle title="Results" />
         <h6 className="text-center text-xl pb-3 underline">Add Result</h6>
         <form>
