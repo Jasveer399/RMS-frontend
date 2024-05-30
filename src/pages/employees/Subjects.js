@@ -29,10 +29,18 @@ const Subjects = () => {
     try {
       dispatch(ShowLoading());
       console.log("2");
-      const response = await axios.post("/api/subjectes/add-subject", {
-        subjectName: subjectName,
-        subjectCode: subjectCode,
-      });
+      const response = await axios.post(
+        "/api/subjectes/add-subject",
+        {
+          subjectName: subjectName,
+          subjectCode: subjectCode,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       // console.log("2");
       setSubjectName("");
       setSubjectCode("");
@@ -59,7 +67,13 @@ const Subjects = () => {
   const deleteSubject = async (subjectId) => {
     try {
       const response = await axios.post(
-        `/api/subjectes/delete-subject/${subjectId}`
+        `/api/subjectes/delete-subject/${subjectId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
       );
       if (!response.data.success) {
         toast.error(response.data.message);
@@ -80,6 +94,12 @@ const Subjects = () => {
         {
           subjectName: subjectName,
           subjectCode: subjectCode,
+        },
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
         }
       );
       // console.log("2");;
@@ -149,7 +169,7 @@ const Subjects = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full h-full">
+        <div className="w-full border-l-2 border-blue-950">
           <PageTitle title="Manage Subjects" />
           <h6 className="text-center text-xl pb-3 underline">
             Add New Subject

@@ -8,6 +8,7 @@ import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
 import SideNavBar from "./SideNavBar";
 import Form from "../../components/Form";
+import { render } from "@testing-library/react";
 
 function Results() {
   const dispatch = useDispatch();
@@ -19,6 +20,9 @@ function Results() {
   const [subject, setSubject] = useState("");
   const [results, setResults] = useState([]);
   const navigate = useNavigate();
+  const [selectdclass, setSelectdCLass] = useState("");
+  const [selectdSem, setSelectdSem] = useState("");
+  const [selectdStudent, setSelectdStudent] = useState([]);
 
   //   const addResult = (e, id) => {
   //     e.preventDefault();
@@ -71,7 +75,7 @@ function Results() {
   //     console.log(results); // or setTotalMarks(null)
   // };
 
-  const addResult = async (e, id) => {
+  const storeAllResult = async (e, id) => {
     e.preventDefault();
     // Check if subject and total marks are selected
     if (!subject) {
@@ -90,11 +94,13 @@ function Results() {
 
     // Check if the result already exists for this student ID
     const existingResultIndex = results.findIndex(
-      (result) => result.student_id === id
+      (result) => result.student_id === id && result.subject === subject
     );
 
     if (existingResultIndex !== -1) {
-      toast.error("Result of this Student is Already Present");
+      toast.error(
+        `Result of this Student for ${subject} subject is Already Present`
+      );
       return;
     }
 
@@ -107,7 +113,6 @@ function Results() {
     };
 
     // Add the new result to results array
-    console.log(results);
     setResults((prevResults) => [...prevResults, newResult]);
 
     // Clear obtain marks for the selected student
@@ -115,16 +120,57 @@ function Results() {
     console.log(results);
   };
 
+  const addResultsInDB = async (e) => {
+    e.preventDefault();
+    try {
+      if (selectdStudent.length <= results.length) {
+        const response = await axios.post("/api/student/add-results", {
+          results,
+        });
+        if (response.data.success) {
+          toast.success("Results Add SuccessFully");
+        }
+      } else {
+        toast.error("Add All Student Result");
+      }
+    } catch (error) {
+      toast.error("Unable To store All Result");
+    }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [classesResponse, subjectsResponse, studentsResponse] =
           await Promise.all([
-            axios.post("/api/classes/get-all-classes"),
-            axios.post("/api/subjectes/get-all-subject"),
-            axios.post("/api/student/get-all-students"),
+            axios.post(
+              "/api/classes/get-all-classes",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+              }
+            ),
+            axios.post(
+              "/api/subjectes/get-all-subject",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+              }
+            ),
+            axios.post(
+              "/api/student/get-all-students",
+              {},
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+                },
+              }
+            ),
           ]);
-
         setClasses(classesResponse.data.data);
         setSubjectes(subjectsResponse.data.data);
         setStudents(studentsResponse.data.data);
@@ -132,7 +178,6 @@ function Results() {
         toast.error("Unable to fetch data due to server error");
       }
     };
-
     fetchData();
   }, []);
 
@@ -141,7 +186,26 @@ function Results() {
   };
   useEffect(() => {
     console.log(results);
+<<<<<<< HEAD
   }, [subject, results]);
+=======
+    console.log(selectdStudent);
+  }, [subject, results, selectdStudent]);
+
+  const getSelectedStudents = (e) => {
+    e.preventDefault();
+    if (!selectdSem && !selectdclass) {
+      toast.error("Select Class and Semester Both");
+      return;
+    }
+    const selectedStudents = students.filter(
+      (student) =>
+        student.className === selectdclass && student.semester === selectdSem
+    );
+    setSelectdStudent(selectedStudents);
+  };
+
+>>>>>>> 04fc7cb4106a7461a8496601b63c82b4e4bef453
   const columns = [
     {
       title: "Student Name",
@@ -149,7 +213,7 @@ function Results() {
       key: "name",
     },
     {
-      title: "Roll No",
+      title: "Student ID",
       dataIndex: "rollNo",
       key: "rollNo",
     },
@@ -159,22 +223,16 @@ function Results() {
       key: "semester",
     },
     {
+      title: "Class",
+      dataIndex: "className",
+      key: "class",
+    },
+    {
       title: `Total Mark of ${subject.toUpperCase()}`,
       key: "total-marks",
       render: (text, record) => (
         <div className="d-flex gap-3 h-5">
-          <input
-            // onChange={(e) =>
-            //   setTotalMarks({
-            //     ...totalmarks,
-            //     [record._id]: e.target.value,
-            //   })
-            // }
-            className="w-40 rounded-md h-5"
-            type="number"
-            // value={totalmarks[record._id] || ""}
-            value={totalmarks}
-          />
+          <h1>{totalmarks}</h1>
         </div>
       ),
     },
@@ -203,10 +261,10 @@ function Results() {
       render: (text, record) => (
         <div className="d-flex gap-3">
           <button
-            onClick={(e) => addResult(e, record._id)}
+            onClick={(e) => storeAllResult(e, record._id)}
             className="bg-blue-950 rounded-lg h-5 text-white px-2"
           >
-            Add Result
+            Lock Result
           </button>
         </div>
       ),
@@ -216,39 +274,42 @@ function Results() {
   return (
     <div className="flex">
       <SideNavBar />
-      <div className="w-full h-full">
+      <div className="w-full border-l-2 border-blue-950">
         <PageTitle title="Results" />
         <h6 className="text-center text-xl pb-3 underline">Add Result</h6>
         <form>
           <div className="flex items-center justify-center gap-4">
             <div className="flex justify-center items-center pt-3">
-              <select className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52">
+              <select
+                className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
+                onChange={(e) => setSelectdCLass(e.target.value)}
+              >
                 <option value="" disabled selected>
                   Select Class
                 </option>
                 {classes.map((classItem, index) => (
-                  <option
-                    key={index}
-                    value={`${classItem.className}|${classItem.classCode}`}
-                  >
+                  <option key={index} value={`${classItem.className}`}>
                     {classItem.className}
                   </option>
                 ))}
               </select>
             </div>
             <div className="flex justify-center items-center pt-3">
-              <select className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52">
+              <select
+                className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
+                onChange={(e) => setSelectdSem(e.target.value)}
+              >
                 <option value="" disabled selected>
                   Select Semester
                 </option>
-                <option value="">Sem 1st</option>
-                <option value="">Sem 2nd</option>
-                <option value="">Sem 3rd</option>
-                <option value="">Sem 4th</option>
-                <option value="">Sem 5th</option>
-                <option value="">Sem 6th</option>
-                <option value="">Sem 7th</option>
-                <option value="">Sem 8th</option>
+                <option value="Sem 1st">Sem 1st</option>
+                  <option value="Sem 2st">Sem 2nd</option>
+                  <option value="Sem 3st">Sem 3rd</option>
+                  <option value="Sem 4st">Sem 4th</option>
+                  <option value="Sem 5st">Sem 5th</option>
+                  <option value="Sem 6st">Sem 6th</option>
+                  <option value="Sem 7st">Sem 7th</option>
+                  <option value="Sem 8st">Sem 8th</option>
               </select>
             </div>
             <div className="flex justify-center items-center pt-3">
@@ -275,21 +336,30 @@ function Results() {
           </div>
           <div className="flex items-center justify-center my-3">
             <button
-              onClick={addResult}
-              className="bg-blue-950 text-white px-4 font-bold"
+              onClick={getSelectedStudents}
+              className="bg-blue-950 mr-52 text-white px-4 font-bold"
             >
-              Confirm
+              Get Students
             </button>
           </div>
         </form>
 
         <Table
           columns={columns}
-          dataSource={students.map((student) => ({
+          dataSource={selectdStudent.map((student) => ({
             ...student,
             key: student._id,
           }))}
         />
+
+        <div className="flex items-center justify-center my-3">
+          <button
+            onClick={addResultsInDB}
+            className="bg-blue-950 text-white px-4 font-bold"
+          >
+            Add All Results
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../redux/alerts.js";
 import { SetEmployee } from "../redux/employees.js";
 import { SetStudent } from "../redux/students.js";
-import DefaultLayout from "../components/DefaultLayout.js";
+import DefaultLayout from "./DefaultLayout.js";
 import { useNavigate } from "react-router-dom";
 
 function ProtectedRoute({ userType, children }) {

@@ -17,12 +17,13 @@ const Students = () => {
   const [rollNo, setRollNo] = useState("");
   const [email, setEmail] = useState("");
   const [className, setClassName] = useState("");
-  const [classes, setClasses] = useState([])
+  const [classes, setClasses] = useState([]);
   const [gender, setGender] = useState("");
   const [phone, setPhone] = useState("");
   const [dob, setDob] = useState("");
   const [semester, setSemester] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
+  const [addbtn, setAddbtn] = useState(true)
   const [studentId, setStudentId] = useState("");
   const dispatch = useDispatch();
   const onChangeName = (name, value) => {
@@ -53,10 +54,17 @@ const Students = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [classesResponse] =
-          await Promise.all([
-            axios.post("/api/classes/get-all-classes"),
-          ]);
+        const [classesResponse] = await Promise.all([
+          axios.post(
+            "/api/classes/get-all-classes",
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+              },
+            }
+          ),
+        ]);
 
         setClasses(classesResponse.data.data);
       } catch (error) {
@@ -77,16 +85,24 @@ const Students = () => {
     e.preventDefault();
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/student/add-student", {
-        name: name,
-        rollNo: rollNo,
-        email: email,
-        className: className,
-        dob: dob,
-        gender: gender,
-        phone: phone,
-        semester: semester,
-      });
+      const response = await axios.post(
+        "/api/student/add-student",
+        {
+          name: name,
+          rollNo: rollNo,
+          email: email,
+          className: className,
+          dob: dob,
+          gender: gender,
+          phone: phone,
+          semester: semester,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
+      );
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
@@ -112,7 +128,13 @@ const Students = () => {
   const deleteStudent = async (studentId) => {
     try {
       const response = await axios.post(
-        `/api/student/delete-student/${studentId}`
+        `/api/student/delete-student/${studentId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
+        }
       );
       if (!response.data.success) {
         toast.error(response.data.message);
@@ -124,7 +146,8 @@ const Students = () => {
     }
   };
 
-  const updateStudent = async (studentId) => {
+  const updateStudent = async (e,studentId) => {
+    e.preventDefault();
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
@@ -137,6 +160,11 @@ const Students = () => {
           gender: gender,
           phone: phone,
           semester: semester,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          },
         }
       );
       dispatch(HideLoading());
@@ -159,6 +187,7 @@ const Students = () => {
       setSemester("");
       setStudentId("");
       setIsUpdate(false);
+      setAddbtn(true)
     }
   };
 
@@ -169,7 +198,7 @@ const Students = () => {
       key: "name",
     },
     {
-      title: "Roll No",
+      title: "Student ID",
       dataIndex: "rollNo",
       key: "rollNo",
     },
@@ -219,9 +248,10 @@ const Students = () => {
               setGender(record.gender);
               setPhone(record.phone);
               setSemester(record.semester);
-              setDob(record.dob)
+              setDob(record.dob);
               setIsUpdate(true);
               setStudentId(record.rollNo);
+              setAddbtn(false)
               // navigate(/employee/students/edit/${record.rollNo});
             }}
           ></i>
@@ -246,7 +276,7 @@ const Students = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full h-full">
+        <div className="w-full border-l-2 border-blue-950">
           <PageTitle title="Add Students" />
           <h6 className="text-center text-xl pb-3 underline">
             Student Details
@@ -269,26 +299,23 @@ const Students = () => {
                 type="text"
               /> */}
 
-            <div className="flex justify-center items-center pt-3">
-              <select 
-                className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
-                onChange={onChangeClassName}
-                value={className}
-                required
-              >
-                <option value="" disabled selected>
-                  Select Class
-                </option>
-                {classes.map((classItem, index) => (
-                  <option
-                    key={index}
-                    value={classItem.className}
-                  >
-                    {classItem.className}
+              <div className="flex justify-center items-center pt-3">
+                <select
+                  className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
+                  onChange={onChangeClassName}
+                  value={className}
+                  required
+                >
+                  <option value="" disabled selected>
+                    Select Class
                   </option>
-                ))}
-              </select>
-            </div>
+                  {classes.map((classItem, index) => (
+                    <option key={index} value={classItem.className}>
+                      {classItem.className}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               <div class="flex justify-center items-center pt-3">
                 <select
@@ -301,13 +328,13 @@ const Students = () => {
                     Select Semester
                   </option>
                   <option value="Sem 1st">Sem 1st</option>
-                  <option value="Sem 2nd">Sem 2nd</option>
-                  <option value="Sem 3nd">Sem 3rd</option>
-                  <option value="Sem 4nd">Sem 4th</option>
-                  <option value="Sem 5nd">Sem 5th</option>
-                  <option value="Sem 6nd">Sem 6th</option>
-                  <option value="Sem 7nd">Sem 7th</option>
-                  <option value="Sem 8nd">Sem 8th</option>
+                  <option value="Sem 2st">Sem 2nd</option>
+                  <option value="Sem 3st">Sem 3rd</option>
+                  <option value="Sem 4st">Sem 4th</option>
+                  <option value="Sem 5st">Sem 5th</option>
+                  <option value="Sem 6st">Sem 6th</option>
+                  <option value="Sem 7st">Sem 7th</option>
+                  <option value="Sem 8st">Sem 8th</option>
                 </select>
               </div>
 
@@ -324,7 +351,7 @@ const Students = () => {
               <Form
                 value={rollNo}
                 onChange={onChangeRollNo}
-                title="Rollno"
+                title="Student ID"
                 name="sturollno"
                 type="number"
               />
@@ -386,7 +413,7 @@ const Students = () => {
                 name="stupassword"
               /> */}
             </div>
-
+            {addbtn &&
             <div className="flex items-center justify-center my-4">
               <button
                 onClick={addStudent}
@@ -396,20 +423,12 @@ const Students = () => {
                 Add Student
               </button>
             </div>
-            {/* <div className="flex items-center justify-center my-4">
-              <button
-                onClick={checkHandler}
-                type="submit"
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                checker
-              </button>
-            </div> */}
+            }
             {isupdate && (
               <div className="flex items-center justify-center my-3">
                 <button
-                  onClick={() => {
-                    updateStudent(studentId);
+                  onClick={(e) => {
+                    updateStudent(e,studentId);
                   }}
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
@@ -418,6 +437,7 @@ const Students = () => {
               </div>
             )}
           </form>
+          
           <Table columns={columns} dataSource={students} />
         </div>
       </div>

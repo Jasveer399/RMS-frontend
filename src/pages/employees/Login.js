@@ -1,46 +1,60 @@
 import { Form, Input } from "antd";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
+import axios from "axios";
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onFinish = async (values) => {
+  const [adminName, setAdminName] = useState("");
+  const [password, setPassword] = useState("");
+
+ 
+  
+
+  const loginadmin = async () => {
     try {
       dispatch(ShowLoading());
-      const dummyAdminCredentials = {
-        employeeId: "admin",
-        password: "admin123",
-      };
-      if (
-        values.employeeId === dummyAdminCredentials.employeeId &&
-        values.password === dummyAdminCredentials.password
-      ) {
+      const response = await axios.post("/api/admin/login", {
+        name: adminName,
+        password: password,
+      });
+      console.log(response);
+      if (response.data.success) {
+        const now = new Date().getTime();
+        const tokenName = 'adminToken';
+        const setupTimeName = tokenName + '_setupTime';
+
+        localStorage.setItem(tokenName, response.data.token);
+        localStorage.setItem(setupTimeName, now);
+
         dispatch(HideLoading());
-        toast.success("Login successful!");
-        navigate("/employee/");
+        toast.success(response.data.message);
+        navigate("/employee");
       } else {
         dispatch(HideLoading());
-        toast.error("Invalid credentials. Please try again.");
+        toast.error(response.data.message);
       }
     } catch (error) {
       dispatch(HideLoading());
+      console.log("Error occurring during admin login");
       toast.error(error.message);
     }
   };
+
   return (
     <div className="login-page-1">
       <div className="row">
         <div className="col-md-6 d-flex align-items-center justify-content-center">
           <div className="text-part d-flex flex-column ">
-            <Form layout="vertical w-400 p-4" onFinish={onFinish}>
+            <Form layout="vertical w-400 p-4" onFinish={loginadmin}>
               <h1 className="text-medium">Admin-Login</h1>
               <hr />
               <Form.Item
-                name="employeeId"
+                name="adminName"
                 label="User Name"
                 rules={[
                   {
@@ -49,7 +63,11 @@ function Login() {
                   },
                 ]}
               >
-                <Input type="text" placeholder="User Name" />
+                <Input
+                  type="text"
+                  placeholder="User Name"
+                  onChange={(e) => setAdminName(e.target.value)}
+                />
               </Form.Item>
 
               <Form.Item
@@ -62,7 +80,11 @@ function Login() {
                   },
                 ]}
               >
-                <Input type="password" placeholder="Password" />
+                <Input
+                  type="password"
+                  placeholder="Password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Form.Item>
 
               <button type="submit" className=" text-white px-5 my-2 w-100">

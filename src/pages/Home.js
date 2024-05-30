@@ -5,12 +5,15 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../redux/alerts";
-import logo from "../extrafiles/RMS.png"
+import logo from "../extrafiles/RSM_NEW.jpg"
+import { RiAdminFill } from "react-icons/ri";
+// import logoo from "../extrafiles/Designer-removebg.png"
 
 function Home() {
   const dispatch = useDispatch();
   const [results, setResults] = React.useState([]);
   const navigate = useNavigate();
+  const admintoken = localStorage.getItem("adminToken")
   // const getResults = async (values) => {
   //   try {
   //     dispatch(ShowLoading());
@@ -40,6 +43,20 @@ function Home() {
   //     getResults();
   //   }
   // }, []);
+  useEffect(() => {
+    const tokenName = 'adminToken';
+    const setupTimeName = tokenName + '_setupTime';
+    const oneMinute = 3 * 60 * 60 * 1000; // Time after which the token should expire (in milliseconds)
+    const now = new Date().getTime();
+    const setupTime = localStorage.getItem(setupTimeName);
+  
+    if (setupTime) {
+      if (now - setupTime > oneMinute) {
+        localStorage.removeItem(tokenName); // Remove the token
+        localStorage.removeItem(setupTimeName); // Remove the setup time
+      }
+    }
+  }, []);
 
   return (
     <div className="layout">
@@ -60,23 +77,24 @@ function Home() {
           </div>
         </div>
       </div> */}
-      <div className="flex h-screen items-center">
-        <div className="w-full h-screen items-center justify-center m-auto">
-          <img src={logo} className=" w-full h-screen items-center justify-center m-auto" />
+      <div className="flex">
+        <div className="justify-center mx-auto pt-4">
+          <img src={logo} className=" w-full justify-center mx-auto " />
         </div>
-        <div className="w-full items-center">
-          <h1 className="text-5xl py-4 mb-3 font-bold justify-center text-center items-center">Result Management System</h1>
-          <div className="flex justify-center items-center gap-4">
+        <div className="w-full items-center m-auto">
+          <h1 className="text-5xl uppercase justify-center mr-3 font-thin text-gray-500 text-center items-center">Result Management System</h1>
+          {/* <h5 className="font-extrabold uppercase text-3xl mt-2 ml-2">Student Result</h5> */}
+          <div className="flex justify-center items-center gap-4 mt-4">
             <button 
-            className="bg-blue-950 text-white px-4 py-2 rounded-xl font-bold text-base " 
+            className="bg-blue-950 text-white px-4 py-2 rounded-full font-bold text-base " 
             onClick={() => { 
-              navigate("/login"); 
+              admintoken ? navigate("/employee"):navigate("/login"); 
             }}
             >
               Admin Login
             </button>
             <button 
-            className="bg-blue-950 text-white px-4 py-2 rounded-xl font-bold text-base"
+            className="bg-blue-950 text-white px-4 py-2 rounded-full font-bold text-base"
             onClick={() => { 
               navigate("/students/login"); 
             }}

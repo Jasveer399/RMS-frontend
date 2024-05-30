@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate, Link } from "react-router-dom";
 import SideNavBar from "./SideNavBar";
-import { MdDashboard, MdClass } from "react-icons/md";
+import { MdDashboard, MdClass, MdEventAvailable } from "react-icons/md";
 import { FaBook } from "react-icons/fa";
 import { SiBookstack } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
@@ -13,47 +13,52 @@ function EmployeeHome() {
   const navigate = useNavigate();
   const nav = [
     {
-        icon: <MdDashboard className="text-red-950"/>,
+        icon: <MdDashboard className="text-green-950"/>,
         name: "Dashboard",
-        link: "/"
+        link: "/employee"
     },
     {
         icon: <MdClass />,
         name: "Classes",
-        link: "/"
+        link: "/employee/classes"
     },
     {
         icon: <FaBook />,
         name: "Subjects",
-        link: "/"
+        link: "/employee/subjects"
     },
     {
         icon: <SiBookstack />,
-        name: "Subjects Combination",
-        link: "/"
+        name: "Subjects Enrollment",
+        link: "/employee/subjectscombination"
     },
     {
         icon: <PiStudentFill />,
         name: "Students",
-        link: "/"
+        link: "/employee/students"
     },
     {
         icon: <GiArchiveResearch/>,
         name: "Result",
-        link: "/"
+        link: "/employee/results"
     },
     {
-        icon: <RiLockPasswordFill />,
-        name: "Change Password",
-        link: "/"
+        icon: <MdEventAvailable />,
+        name: "Teacher Availability",
+        link: "/employee/teacheravailability"
     },
+    {
+      icon: <RiLockPasswordFill />,
+      name: "Change Password",
+      link: "/employee/changepassword"
+  },
 ]
   return (
     <>
     {/* <Navbar/> */}
     <div className="flex">
       <SideNavBar />
-      <div className="w-full h-full">
+      <div className="w-full border-l-2 border-blue-950">
         <h1 className="text-5xl uppercase text-center mt-4">Quick Links</h1>
         <div className="flex flex-wrap">
         {nav.map((navigate) => (
@@ -67,6 +72,7 @@ function EmployeeHome() {
           </div>
           <div class="flex px-6 pb-8 sm:px-8">
             <Link
+              to={navigate.link}
               class="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-[#333] rounded-full nline-flex text-base font-bold"
             >
               {navigate.name}
