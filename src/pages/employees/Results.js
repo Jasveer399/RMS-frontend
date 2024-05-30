@@ -75,7 +75,7 @@ function Results() {
   //     console.log(results); // or setTotalMarks(null)
   // };
 
-  const storeAllResult = async (e, id) => {
+  const storeAllResult = async (e, id, name) => {
     e.preventDefault();
     // Check if subject and total marks are selected
     if (!subject) {
@@ -91,6 +91,10 @@ function Results() {
       toast.error("Enter Obtain Marks");
       return;
     }
+    if (Number(obtainmarks[id]) > Number(totalmarks)) {
+      toast.error(`Obtain Marks Is More Than Total Marks ${totalmarks}`);
+      return;
+    }
 
     // Check if the result already exists for this student ID
     const existingResultIndex = results.findIndex(
@@ -99,8 +103,9 @@ function Results() {
 
     if (existingResultIndex !== -1) {
       toast.error(
-        `Result of this Student for ${subject} subject is Already Present`
+        `Result of ${name} for ${subject} subject is Already Present`
       );
+
       return;
     }
 
@@ -116,12 +121,58 @@ function Results() {
     setResults((prevResults) => [...prevResults, newResult]);
 
     // Clear obtain marks for the selected student
-    setObtainMarks({ ...obtainmarks, [id]: "" });
+    // setObtainMarks({ ...obtainmarks, [id]: "" });
+    toast.success(`Result is added for ${name}`);
     console.log(results);
+  };
+
+  const updatestoredResult = async (e, id) => {
+    e.preventDefault();
+    // Check if subject and total marks are selected
+    if (!subject) {
+      toast.error("Select Subject");
+      return;
+    } else if (!totalmarks) {
+      toast.error("Enter Total Marks");
+      return;
+    } else if (!obtainmarks[id]) {
+      toast.error("Enter Update Obtain Marks");
+      return;
+    }
+
+    const existingResultIndex = results.findIndex(
+      (result) => result.student_id === id && result.subject === subject
+    );
+
+    if (existingResultIndex === -1) {
+      toast.error("Result is Not Present. First Lock Result");
+      return;
+    } else if (Number(obtainmarks[id]) > Number(totalmarks)) {
+      toast.error(`Obtain Marks Is More Than Total Marks ${totalmarks}`);
+      console.log("Obtain Marks =>", obtainmarks[id]);
+      return;
+    } else {
+      // Update the existing result in the state
+      const updatedResults = results.map((result, index) =>
+        index === existingResultIndex
+          ? { ...result, obtainmarks: obtainmarks[id] }
+          : result
+      );
+      setResults(updatedResults);
+      toast.success("Result updated successfully");
+    }
   };
 
   const addResultsInDB = async (e) => {
     e.preventDefault();
+    const confirmAdd = window.confirm(
+      "Are you sure you want to add these results?"
+    );
+
+    if (!confirmAdd) {
+      toast.error("Add operation canceled");
+      return;
+    }
     try {
       if (selectdStudent.length <= results.length) {
         const response = await axios.post("/api/student/add-results", {
@@ -129,6 +180,8 @@ function Results() {
         });
         if (response.data.success) {
           toast.success("Results Add SuccessFully");
+          setResults([]);
+          setObtainMarks({});
         }
       } else {
         toast.error("Add All Student Result");
@@ -185,9 +238,8 @@ function Results() {
     setTotalMarks(value);
   };
   useEffect(() => {
-    console.log(results);
-    console.log(selectdStudent);
-  }, [subject, results, selectdStudent]);
+    console.log("results =>", results);
+  }, [results]);
 
   const getSelectedStudents = (e) => {
     e.preventDefault();
@@ -252,15 +304,29 @@ function Results() {
       ),
     },
     {
-      title: "Action",
+      title: "Lock Result",
       key: "action",
       render: (text, record) => (
         <div className="d-flex gap-3">
           <button
-            onClick={(e) => storeAllResult(e, record._id)}
-            className="bg-blue-950 rounded-lg h-5 text-white px-2"
+            onClick={(e) => storeAllResult(e, record._id, record.name)}
+            className="bg-blue-950 rounded-lg h-5 text-white px-2 hover:bg-blue-900"
           >
             Lock Result
+          </button>
+        </div>
+      ),
+    },
+    {
+      title: "Update Result",
+      key: "action",
+      render: (text, record) => (
+        <div className="d-flex gap-3">
+          <button
+            onClick={(e) => updatestoredResult(e, record._id)}
+            className="bg-blue-950 rounded-lg h-5 text-white px-2 hover:bg-blue-900"
+          >
+            Update Result
           </button>
         </div>
       ),
@@ -333,7 +399,7 @@ function Results() {
           <div className="flex items-center justify-center my-3">
             <button
               onClick={getSelectedStudents}
-              className="bg-blue-950 mr-52 text-white px-4 font-bold"
+              className="bg-blue-950 mr-52 text-white px-4 font-bold hover:bg-blue-900"
             >
               Get Students
             </button>
@@ -351,7 +417,7 @@ function Results() {
         <div className="flex items-center justify-center my-3">
           <button
             onClick={addResultsInDB}
-            className="bg-blue-950 text-white px-4 font-bold"
+            className="bg-blue-950 text-white px-4 font-bold hover:bg-blue-900"
           >
             Add All Results
           </button>
