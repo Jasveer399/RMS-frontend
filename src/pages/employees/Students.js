@@ -23,6 +23,7 @@ const Students = () => {
   const [dob, setDob] = useState("");
   const [semester, setSemester] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
+  const [addbtn, setAddbtn] = useState(true)
   const [studentId, setStudentId] = useState("");
   const dispatch = useDispatch();
   const onChangeName = (name, value) => {
@@ -186,6 +187,7 @@ const Students = () => {
       setSemester("");
       setStudentId("");
       setIsUpdate(false);
+      setAddbtn(true)
     }
   };
 
@@ -196,7 +198,7 @@ const Students = () => {
       key: "name",
     },
     {
-      title: "UID",
+      title: "Student ID",
       dataIndex: "rollNo",
       key: "rollNo",
     },
@@ -249,6 +251,7 @@ const Students = () => {
               setDob(record.dob);
               setIsUpdate(true);
               setStudentId(record.rollNo);
+              setAddbtn(false)
               // navigate(/employee/students/edit/${record.rollNo});
             }}
           ></i>
@@ -273,7 +276,7 @@ const Students = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full h-full">
+        <div className="w-full border-l-2 border-blue-950">
           <PageTitle title="Add Students" />
           <h6 className="text-center text-xl pb-3 underline">
             Student Details
@@ -325,13 +328,13 @@ const Students = () => {
                     Select Semester
                   </option>
                   <option value="Sem 1st">Sem 1st</option>
-                  <option value="Sem 2st">Sem 2st</option>
-                  <option value="Sem 3st">Sem 3st</option>
-                  <option value="Sem 4st">Sem 4st</option>
-                  <option value="Sem 5st">Sem 5st</option>
-                  <option value="Sem 6st">Sem 6st</option>
-                  <option value="Sem 7st">Sem 7st</option>
-                  <option value="Sem 8st">Sem 8st</option>
+                  <option value="Sem 2st">Sem 2nd</option>
+                  <option value="Sem 3st">Sem 3rd</option>
+                  <option value="Sem 4st">Sem 4th</option>
+                  <option value="Sem 5st">Sem 5th</option>
+                  <option value="Sem 6st">Sem 6th</option>
+                  <option value="Sem 7st">Sem 7th</option>
+                  <option value="Sem 8st">Sem 8th</option>
                 </select>
               </div>
 
@@ -410,7 +413,7 @@ const Students = () => {
                 name="stupassword"
               /> */}
             </div>
-
+            {addbtn &&
             <div className="flex items-center justify-center my-4">
               <button
                 onClick={addStudent}
@@ -420,15 +423,7 @@ const Students = () => {
                 Add Student
               </button>
             </div>
-            {/* <div className="flex items-center justify-center my-4">
-              <button
-                onClick={checkHandler}
-                type="submit"
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                checker
-              </button>
-            </div> */}
+            }
             {isupdate && (
               <div className="flex items-center justify-center my-3">
                 <button

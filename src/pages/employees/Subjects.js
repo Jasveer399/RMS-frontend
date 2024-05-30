@@ -169,7 +169,7 @@ const Subjects = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full h-full">
+        <div className="w-full border-l-2 border-blue-950">
           <PageTitle title="Manage Subjects" />
           <h6 className="text-center text-xl pb-3 underline">
             Add New Subject

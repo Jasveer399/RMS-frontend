@@ -30,7 +30,7 @@ const SideNavBar = () => {
     },
     {
       icon: <SiBookstack className="text-2xl" />,
-      name: "Subjects Combination",
+      name: "Subjects Enrollment",
       link: "/employee/subjectscombination",
     },
     {
@@ -60,11 +60,11 @@ const SideNavBar = () => {
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminToken_setupTime');
     //  localStorage.clear();
-    navigate("/login");
+    navigate("/");
   };
   return (
     <>
-      <div className="w-[35%] py-3 border-r-2 border-blue-950 h-screen">
+      <div className="w-[35%] py-3 h-screen">
         <div className="fixed top-0">
           <ul className="">
             <li className="justify-center text-center text-3xl pl-14 py-4 font-bold">

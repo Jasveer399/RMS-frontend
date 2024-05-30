@@ -29,7 +29,7 @@ function EmployeeHome() {
     },
     {
         icon: <SiBookstack />,
-        name: "Subjects Combination",
+        name: "Subjects Enrollment",
         link: "/employee/subjectscombination"
     },
     {
@@ -58,7 +58,7 @@ function EmployeeHome() {
     {/* <Navbar/> */}
     <div className="flex">
       <SideNavBar />
-      <div className="w-full h-full">
+      <div className="w-full border-l-2 border-blue-950">
         <h1 className="text-5xl uppercase text-center mt-4">Quick Links</h1>
         <div className="flex flex-wrap">
         {nav.map((navigate) => (

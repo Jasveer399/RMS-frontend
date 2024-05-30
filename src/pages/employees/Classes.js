@@ -175,7 +175,7 @@ const Classes = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full h-full">
+        <div className="w-full border-l-2 border-blue-950">
           <PageTitle title="Manage Classes" />
           <h6 className="text-center text-xl pb-3 underline">Add New Class</h6>
           {/* <ClassesForm/> */}
