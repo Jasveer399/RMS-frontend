@@ -261,7 +261,7 @@ function Results() {
       key: "name",
     },
     {
-      title: "UID",
+      title: "Student ID",
       dataIndex: "rollNo",
       key: "rollNo",
     },
@@ -365,13 +365,13 @@ function Results() {
                   Select Semester
                 </option>
                 <option value="Sem 1st">Sem 1st</option>
-                <option value="Sem 2st">Sem 2nd</option>
-                <option value="Sem 3st">Sem 3rd</option>
-                <option value="Sem 4st">Sem 4th</option>
-                <option value="Sem 5st">Sem 5th</option>
-                <option value="Sem 6st">Sem 6th</option>
-                <option value="Sem 7st">Sem 7th</option>
-                <option value="Sem 8st">Sem 8th</option>
+                <option value="Sem 2nd">Sem 2nd</option>
+                <option value="Sem 3rd">Sem 3rd</option>
+                <option value="Sem 4th">Sem 4th</option>
+                <option value="Sem 5th">Sem 5th</option>
+                <option value="Sem 6th">Sem 6th</option>
+                <option value="Sem 7th">Sem 7th</option>
+                <option value="Sem 8th">Sem 8th</option>
               </select>
             </div>
             <div className="flex justify-center items-center pt-3">

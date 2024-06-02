@@ -124,7 +124,7 @@ function StudentResult() {
               <div className="flex justify-around">
                 <div className="">
                   <ShowStudentData title="Name:-" data={student.name} />
-                  <ShowStudentData title="Roll No:-" data={student.rollNo} />
+                  <ShowStudentData title="Student ID:-" data={student.rollNo} />
                 </div>
                 <div className="">
                   <ShowStudentData
