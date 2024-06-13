@@ -8,7 +8,7 @@ import PageTitle from "../../components/PageTitle";
 import { HideLoading, ShowLoading } from "../../redux/alerts";
 import SideNavBar from "./SideNavBar";
 import Form from "../../components/Form";
-import { render } from "@testing-library/react";
+import ConfirmDialog from "../../components/confirmDialog";
 
 function Results() {
   const dispatch = useDispatch();
@@ -23,6 +23,8 @@ function Results() {
   const [selectdclass, setSelectdCLass] = useState("");
   const [selectdSem, setSelectdSem] = useState("");
   const [selectdStudent, setSelectdStudent] = useState([]);
+  const [open, setOpen] = useState(false);
+  // const [confirmAdd, setConfirmAdd] = useState(false);
 
   //   const addResult = (e, id) => {
   //     e.preventDefault();
@@ -165,14 +167,14 @@ function Results() {
 
   const addResultsInDB = async (e) => {
     e.preventDefault();
-    const confirmAdd = window.confirm(
-      "Are you sure you want to add these results?"
-    );
-
-    if (!confirmAdd) {
-      toast.error("Add operation canceled");
-      return;
-    }
+    // const confirmAdd = window.confirm(
+    //   "Are you sure you want to add these results?"
+    // );
+    // if (!confirmAdd) {
+    //   toast.error("Add operation canceled");
+    //   return;
+    // }
+    setOpen(false)
     try {
       if (selectdStudent.length <= results.length) {
         const response = await axios.post("/api/student/add-results", {
@@ -416,11 +418,37 @@ function Results() {
 
         <div className="flex items-center justify-center my-3">
           <button
-            onClick={addResultsInDB}
+            onClick={() => setOpen(true)}
             className="bg-blue-950 text-white px-4 font-bold hover:bg-blue-900"
           >
             Add All Results
           </button>
+          <ConfirmDialog open={open} onClose={() => setOpen(false)}>
+            <div className="text-center w-56">
+              <div className="mx-auto my-4 w-48">
+                <h3 className="text-lg font-black text-gray-800">
+                  Confirm to Add Results
+                </h3>
+                <p className="text-sm text-gray-500">
+                  Are you sure you want to Add Resuts?
+                </p>
+              </div>
+              <div className="flex gap-4">
+                <button
+                  className="btn btn-success w-full"
+                  onClick={addResultsInDB}
+                >
+                  Add Results
+                </button>
+                <button
+                  className="btn btn-danger w-full"
+                  onClick={() => setOpen(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </ConfirmDialog>
         </div>
       </div>
     </div>
