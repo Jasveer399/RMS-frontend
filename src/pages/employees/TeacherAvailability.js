@@ -44,7 +44,7 @@ const TeacherAvailability = () => {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/teacheravl/add-teacheravl",
+        "https://rms-backend-1rd9.onrender.com/api/teacheravl/add-teacheravl",
         {
           teacherName,
           teacherAvaFrom,
@@ -86,7 +86,7 @@ const TeacherAvailability = () => {
   const deleteSubject = async (id) => {
     try {
       const response = await axios.post(
-        `/api/teacheravl/delete-Teacher/${id}`,
+        `https://rms-backend-1rd9.onrender.com/api/teacheravl/delete-Teacher/${id}`,
         {},
         {
           headers: {
@@ -111,7 +111,7 @@ const TeacherAvailability = () => {
       console.log(id);
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/teacheravl/update-teacher`,
+        `https://rms-backend-1rd9.onrender.com/api/teacheravl/update-teacher`,
         {
           teacherName: teacherName,
           teacherAvaFrom: teacherAvaFrom,
@@ -150,7 +150,7 @@ const TeacherAvailability = () => {
   const getAllTeacherAvailable = async () => {
     try {
       const response = await axios.get(
-        "/api/teacheravl/get-all-availablesTeacher"
+        "https://rms-backend-1rd9.onrender.com/api/teacheravl/get-all-availablesTeacher"
       );
       setTeachers(response.data.data);
     } catch (error) {
@@ -165,7 +165,7 @@ const TeacherAvailability = () => {
   const checkBookedHandler = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get("/api/teacheravl/get-all-bookedTeacher");
+      const response = await axios.get("https://rms-backend-1rd9.onrender.com/api/teacheravl/get-all-bookedTeacher");
       console.log(response.data.data);
       setBookedTeachers(response.data.data);
       setAddAvaComp(false);
@@ -177,7 +177,7 @@ const TeacherAvailability = () => {
 
   const unBookTeacher = async (e,id) => {
     try {
-      const response = await axios.post("/api/teacheravl/unbookedTeacher", {
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/teacheravl/unbookedTeacher", {
         id: id,
       });
       if (!response.data.success) {

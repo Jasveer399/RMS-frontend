@@ -24,7 +24,7 @@ function ChangePassword() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/admin/change-password",
+        "https://rms-backend-1rd9.onrender.com/api/admin/change-password",
         {
           oldpassword: oldPassword,
           newpassword: newpassword,

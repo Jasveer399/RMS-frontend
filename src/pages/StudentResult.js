@@ -29,7 +29,7 @@ function StudentResult() {
     const fetchData = async () => {
       try {
         const studentsResponse = await axios.post(
-          "/api/student/get-all-students"
+          "https://rms-backend-1rd9.onrender.com/api/student/get-all-students"
         );
         setAllStudents(studentsResponse.data.data);
       } catch (error) {

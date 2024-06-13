@@ -23,10 +23,10 @@ function ProtectedRoute({ userType, children }) {
       
       // Determine endpoint and action based on user type
       if (userType === "employee") {
-        endpoint = "/api/employee/get-employee-by-id";
+        endpoint = "https://rms-backend-1rd9.onrender.com/api/employee/get-employee-by-id";
         setUserDataAction = SetEmployee;
       } else if (userType === "student") {
-        endpoint = "/api/student/get-student-by-id";
+        endpoint = "https://rms-backend-1rd9.onrender.com/api/student/get-student-by-id";
         setUserDataAction = SetStudent;
       }
       

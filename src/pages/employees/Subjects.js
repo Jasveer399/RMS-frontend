@@ -30,7 +30,7 @@ const Subjects = () => {
       dispatch(ShowLoading());
       console.log("2");
       const response = await axios.post(
-        "/api/subjectes/add-subject",
+        "https://rms-backend-1rd9.onrender.com/api/subjectes/add-subject",
         {
           subjectName: subjectName,
           subjectCode: subjectCode,
@@ -67,7 +67,7 @@ const Subjects = () => {
   const deleteSubject = async (subjectId) => {
     try {
       const response = await axios.post(
-        `/api/subjectes/delete-subject/${subjectId}`,
+        `https://rms-backend-1rd9.onrender.com/api/subjectes/delete-subject/${subjectId}`,
         {},
         {
           headers: {
@@ -90,7 +90,7 @@ const Subjects = () => {
       dispatch(ShowLoading());
       console.log("2");
       const response = await axios.post(
-        `/api/subjectes/update-subject/${subjectID}`,
+        `https://rms-backend-1rd9.onrender.com/api/subjectes/update-subject/${subjectID}`,
         {
           subjectName: subjectName,
           subjectCode: subjectCode,
@@ -123,7 +123,7 @@ const Subjects = () => {
 
   useEffect(() => {
     const getallSubjects = async () => {
-      const response = await axios.post("/api/subjectes/get-all-subject");
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/subjectes/get-all-subject");
       const data = response.data.data;
       setSubjectes(data); // Update state with the entire data array
     };

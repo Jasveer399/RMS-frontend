@@ -22,7 +22,7 @@ function ResultInfo() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/results/get-result/${params.resultId}`,
+        `https://rms-backend-1rd9.onrender.com/api/results/get-result/${params.resultId}`,
         {},
         {
           headers: {
@@ -51,7 +51,7 @@ function ResultInfo() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/student/get-all-students",
+        "https://rms-backend-1rd9.onrender.com/api/student/get-all-students",
         {
           class: result.class,
         },
@@ -89,7 +89,7 @@ function ResultInfo() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/results/save-student-result",
+        "https://rms-backend-1rd9.onrender.com/api/results/save-student-result",
         {
           resultId: params.resultId,
           examination: result.examination,

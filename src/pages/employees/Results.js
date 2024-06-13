@@ -177,7 +177,7 @@ function Results() {
     setOpen(false)
     try {
       if (selectdStudent.length <= results.length) {
-        const response = await axios.post("/api/student/add-results", {
+        const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/student/add-results", {
           results,
         });
         if (response.data.success) {
@@ -199,7 +199,7 @@ function Results() {
         const [classesResponse, subjectsResponse, studentsResponse] =
           await Promise.all([
             axios.post(
-              "/api/classes/get-all-classes",
+              "https://rms-backend-1rd9.onrender.com/api/classes/get-all-classes",
               {},
               {
                 headers: {
@@ -208,7 +208,7 @@ function Results() {
               }
             ),
             axios.post(
-              "/api/subjectes/get-all-subject",
+              "https://rms-backend-1rd9.onrender.com/api/subjectes/get-all-subject",
               {},
               {
                 headers: {
@@ -217,7 +217,7 @@ function Results() {
               }
             ),
             axios.post(
-              "/api/student/get-all-students",
+              "https://rms-backend-1rd9.onrender.com/api/student/get-all-students",
               {},
               {
                 headers: {

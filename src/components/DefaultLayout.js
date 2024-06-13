@@ -22,7 +22,7 @@
     };
     const handlePasswordChange = async() => {
       try{
-        const response = await axios.post('/api/employee/changepass', {  newPassword: newPassword,
+        const response = await axios.post('https://rms-backend-1rd9.onrender.com/api/employee/changepass', {  newPassword: newPassword,
         }); 
         if (response.data.success) {
           message.success(response.data.message);

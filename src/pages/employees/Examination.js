@@ -15,7 +15,7 @@ function Examination() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/results/get-all-results",
+        "https://rms-backend-1rd9.onrender.com/api/results/get-all-results",
         {},
         {
           headers: {
@@ -39,7 +39,7 @@ function Examination() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/results/delete-result/${resultId}`,
+        `https://rms-backend-1rd9.onrender.com/api/results/delete-result/${resultId}`,
         {},
         {
           headers: {

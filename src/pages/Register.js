@@ -18,7 +18,7 @@ function Register() {
       try {
         dispatch(ShowLoading());
         const response = await axios.post(
-          "/api/classes/get-all-classes",
+          "https://rms-backend-1rd9.onrender.com/api/classes/get-all-classes",
           {},
           {
             headers: {
@@ -46,7 +46,7 @@ function Register() {
     try {
       dispatch(ShowLoading());
       console.log(values);
-      const response = await axios.post("/api/student/add-student", values);
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/student/add-student", values);
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);

@@ -17,7 +17,7 @@ function StudentLogin() {
     console.log(rollNo, dob);
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/student/login-student", {
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/student/login-student", {
         rollNo: rollNo,
         dob: dob,
       });

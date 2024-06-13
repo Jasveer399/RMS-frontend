@@ -27,7 +27,7 @@ const Classes = () => {
       dispatch(ShowLoading());
       console.log("one");
       const response = await axios.post(
-        "/api/classes/add-class",
+        "https://rms-backend-1rd9.onrender.com/api/classes/add-class",
         {
           classCode: classCode,
           className: className,
@@ -57,7 +57,7 @@ const Classes = () => {
   const deleteClass = async (classId) => {
     try {
       const response = await axios.post(
-        `/api/classes/delete-class/${classId}`,
+        `https://rms-backend-1rd9.onrender.com/api/classes/delete-class/${classId}`,
         {},
         {
           headers: {
@@ -80,7 +80,7 @@ const Classes = () => {
       dispatch(ShowLoading());
       console.log("2");
       const response = await axios.post(
-        `/api/classes/update-class/${classID}`,
+        `https://rms-backend-1rd9.onrender.com/api/classes/update-class/${classID}`,
         {
           classCode: classCode,
           className: className,
@@ -114,7 +114,7 @@ const Classes = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "/api/classes/get-all-classes",
+        "https://rms-backend-1rd9.onrender.com/api/classes/get-all-classes",
         {},
         {
           headers: {

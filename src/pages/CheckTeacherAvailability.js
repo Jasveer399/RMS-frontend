@@ -13,7 +13,7 @@ const CheckTeacherAvailability = () => {
     const getAllTeacherAvailable = async () => {
       try {
         const response = await axios.get(
-          "/api/teacheravl/get-all-availablesTeacher"
+          "https://rms-backend-1rd9.onrender.com/api/teacheravl/get-all-availablesTeacher"
         );
         const data = response.data.data;
         setTeachers(data);
@@ -30,7 +30,7 @@ const CheckTeacherAvailability = () => {
       console.log("Teacher ID => ", id);
       const date = new Date();
       const nowdate = date.toISOString().split("T")[0]; // This will give you the date part in YYYY-MM-DD format
-      const response = await axios.post("/api/teacheravl/bookTeacher", {
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/teacheravl/bookTeacher", {
         id: id,
         bookedBy: loginStudent.name,
         bookedDate: nowdate,

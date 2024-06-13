@@ -28,7 +28,7 @@ function SubjectCombinations() {
   useEffect(() => {
     const getallclasses = async () => {
       const response = await axios.post(
-        "/api/classes/get-all-classes",
+        "https://rms-backend-1rd9.onrender.com/api/classes/get-all-classes",
         {},
         {
           headers: {
@@ -40,7 +40,7 @@ function SubjectCombinations() {
       setClasses(data);
     };
     const getallSubjects = async () => {
-      const response = await axios.post("/api/subjectes/get-all-subject");
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/subjectes/get-all-subject");
       const data = response.data.data;
       setSubjectes(data);
     };
@@ -99,7 +99,7 @@ function SubjectCombinations() {
       }
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/classSubject/add-classSubject",
+        "https://rms-backend-1rd9.onrender.com/api/classSubject/add-classSubject",
         {
           classCode: selectedClassObject.classCode,
           className: selectedClassObject.className,
@@ -128,7 +128,7 @@ function SubjectCombinations() {
     try {
       console.log(classandsubjectsId);
       const response = await axios.post(
-        `/api/classSubject/delete-class-subjects/${classandsubjectsId}`,
+        `https://rms-backend-1rd9.onrender.com/api/classSubject/delete-class-subjects/${classandsubjectsId}`,
         {},
         {
           headers: {
@@ -150,7 +150,7 @@ function SubjectCombinations() {
     const getAllClassAndSubject = async () => {
       try {
         const response = await axios.get(
-          "/api/classSubject/get-all-class-subject"
+          "https://rms-backend-1rd9.onrender.com/api/classSubject/get-all-class-subject"
         );
         const data = response.data.data;
         setClassSubject(data);

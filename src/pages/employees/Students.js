@@ -56,7 +56,7 @@ const Students = () => {
       try {
         const [classesResponse] = await Promise.all([
           axios.post(
-            "/api/classes/get-all-classes",
+            "https://rms-backend-1rd9.onrender.com/api/classes/get-all-classes",
             {},
             {
               headers: {
@@ -86,7 +86,7 @@ const Students = () => {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        "/api/student/add-student",
+        "https://rms-backend-1rd9.onrender.com/api/student/add-student",
         {
           name: name,
           rollNo: rollNo,
@@ -128,7 +128,7 @@ const Students = () => {
   const deleteStudent = async (studentId) => {
     try {
       const response = await axios.post(
-        `/api/student/delete-student/${studentId}`,
+        `https://rms-backend-1rd9.onrender.com/api/student/delete-student/${studentId}`,
         {},
         {
           headers: {
@@ -151,7 +151,7 @@ const Students = () => {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/student/update-student/${studentId}`,
+        `https://rms-backend-1rd9.onrender.com/api/student/update-student/${studentId}`,
         {
           name: name,
           rollNo: rollNo,

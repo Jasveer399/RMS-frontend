@@ -18,7 +18,7 @@ function Login() {
   const loginadmin = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post("/api/admin/login", {
+      const response = await axios.post("https://rms-backend-1rd9.onrender.com/api/admin/login", {
         name: adminName,
         password: password,
       });

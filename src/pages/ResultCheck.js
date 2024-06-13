@@ -16,7 +16,7 @@ function ResultCheck() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/results/get-result/${params.resultId}`,
+        `https://rms-backend-1rd9.onrender.com/api/results/get-result/${params.resultId}`,
         {},
         {
           headers: {
@@ -40,7 +40,7 @@ function ResultCheck() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/results/get-student-result`,
+        `https://rms-backend-1rd9.onrender.com/api/results/get-student-result`,
         {
           rollNo: rollNo,
           resultId: params.resultId,
@@ -71,7 +71,7 @@ function ResultCheck() {
     try {
       dispatch(ShowLoading());
       const response = await axios.post(
-        `/api/students/login`,
+        `https://rms-backend-1rd9.onrender.com/api/students/login`,
         { rollNo, password }, // Pass rollNo and password to the backend
         {
           headers: {
