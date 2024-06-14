@@ -23,7 +23,7 @@ const Students = () => {
   const [dob, setDob] = useState("");
   const [semester, setSemester] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
-  const [addbtn, setAddbtn] = useState(true)
+  const [addbtn, setAddbtn] = useState(true);
   const [studentId, setStudentId] = useState("");
   const dispatch = useDispatch();
   const onChangeName = (name, value) => {
@@ -146,7 +146,7 @@ const Students = () => {
     }
   };
 
-  const updateStudent = async (e,studentId) => {
+  const updateStudent = async (e, studentId) => {
     e.preventDefault();
     try {
       dispatch(ShowLoading());
@@ -187,7 +187,7 @@ const Students = () => {
       setSemester("");
       setStudentId("");
       setIsUpdate(false);
-      setAddbtn(true)
+      setAddbtn(true);
     }
   };
 
@@ -251,7 +251,7 @@ const Students = () => {
               setDob(record.dob);
               setIsUpdate(true);
               setStudentId(record.rollNo);
-              setAddbtn(false)
+              setAddbtn(false);
               // navigate(/employee/students/edit/${record.rollNo});
             }}
           ></i>
@@ -262,7 +262,9 @@ const Students = () => {
   useEffect(() => {
     const getallStudents = async () => {
       try {
-        const response = await axios.post("/api/student/get-all-students");
+        const response = await axios.post(
+          "https://rms-backend-1rd9.onrender.com/api/student/get-all-students"
+        );
         const data = response.data.data;
         setStudents(data);
       } catch (error) {
@@ -413,22 +415,22 @@ const Students = () => {
                 name="stupassword"
               /> */}
             </div>
-            {addbtn &&
-            <div className="flex items-center justify-center my-4">
-              <button
-                onClick={addStudent}
-                type="submit"
-                className="bg-blue-950 text-white px-4 font-bold"
-              >
-                Add Student
-              </button>
-            </div>
-            }
+            {addbtn && (
+              <div className="flex items-center justify-center my-4">
+                <button
+                  onClick={addStudent}
+                  type="submit"
+                  className="bg-blue-950 text-white px-4 font-bold"
+                >
+                  Add Student
+                </button>
+              </div>
+            )}
             {isupdate && (
               <div className="flex items-center justify-center my-3">
                 <button
                   onClick={(e) => {
-                    updateStudent(e,studentId);
+                    updateStudent(e, studentId);
                   }}
                   className="bg-blue-950 text-white px-4 font-bold"
                 >
@@ -437,7 +439,7 @@ const Students = () => {
               </div>
             )}
           </form>
-          
+
           <Table columns={columns} dataSource={students} />
         </div>
       </div>
