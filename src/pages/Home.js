@@ -84,15 +84,15 @@ function Home() {
           </div>
         </div>
       </div> */}
-      <div className="flex flex-wrap">
+      <div className="flex md:flex-wrap md:flex-row flex-col">
         {/* <div className="justify-center mx-auto pt-4"> */}
-        <div className="w-1/2">
+        <div className="md:w-1/2 w-full">
           <Carousel images={images} />
         </div>
           {/* <img src={logo} className=" w-full justify-center mx-auto " /> */}
         {/* </div> */}
-        <div className="w-1/2 flex flex-col h-screen justify-center items-center">
-          <h1 className="text-5xl uppercase justify-center mr-3 font-thin text-gray-500 text-center items-center">Result Management System</h1>
+        <div className="md:w-1/2 md:mt-0 mt-[400px] w-full flex flex-col h-full md:h-screen justify-center items-center">
+          <h1 className="md:text-5xl text-3xl uppercase justify-center md:mr-3 font-thin text-gray-500 text-center items-center">Result Management System</h1>
           {/* <h5 className="font-extrabold uppercase text-3xl mt-2 ml-2">Student Result</h5> */}
           <div className="flex justify-center items-center gap-4 mt-4">
             <button 

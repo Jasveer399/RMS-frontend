@@ -15,13 +15,13 @@ const Carousel = ({ images }) => {
   }, [current, images.length]);
 
   return (
-    <div className="relative">
+    <div className="md:relative">
       {images.map((image, index) => (
         <img
           key={index}
           src={image}
           alt={`Slide ${index}`}
-          className={`absolute transition-opacity duration-500 ease-in-out ${index === current ? 'opacity-100' : 'opacity-0'}`}
+          className={`md:absolute transition-opacity duration-500 ease-in-out ${index === current ? 'opacity-100' : 'opacity-0'}`}
         />
       ))}
       <button onClick={() => setCurrent(current === 0 ? images.length - 1 : current - 1)} className=" hidden absolute left-0 z-10">
