@@ -14,6 +14,7 @@ const Classes = () => {
   const [className, setClassName] = useState();
   const [classId, setClassId] = useState("");
   const [isupdate, setIsUpdate] = useState(false);
+  const [loadMessage, setLoadMessage] = useState("")
   const dispatch = useDispatch();
   const onChangeClassName = (name, value) => {
     setClassName(value);
@@ -112,6 +113,7 @@ const Classes = () => {
 
   const getallclasses = async (e) => {
     e.preventDefault();
+    setLoadMessage("Please Wait...")
     try {
       const response = await axios.post(
         "https://rms-backend-1rd9.onrender.com/api/classes/get-all-classes",
@@ -125,6 +127,7 @@ const Classes = () => {
       const data = response.data.data;
       console.log("Class data", data);
       setClasses(data);
+      setLoadMessage("")
     } catch (error) {
       toast.error(error.message);
     } // Update state with the entire data array
@@ -173,14 +176,14 @@ const Classes = () => {
     //   <Table className="px-20" columns={columns} dataSource={classes} />
     // </div>
     <>
-      <div className="flex">
+      <div className="flex ">
         <SideNavBar />
         <div className="w-full border-l-2 border-blue-950">
           <PageTitle title="Manage Classes" />
           <h6 className="text-center text-xl pb-3 underline">Add New Class</h6>
           {/* <ClassesForm/> */}
           <form>
-            <div className="flex justify-center gap-4">
+            <div className="flex md:flex-row flex-col justify-center items-center gap-4">
               <Form
                 value={className}
                 onChange={onChangeClassName}
@@ -204,6 +207,7 @@ const Classes = () => {
                 Get All Classes
               </button>
             </div>
+            
 
             {isupdate ? (
               <div className="flex items-center justify-center my-3">
@@ -227,6 +231,7 @@ const Classes = () => {
                 </button>
               </div>
             )}
+            <p className="text-center text-xs font-bold">{loadMessage}</p>
           </form>
           <Table columns={columns} dataSource={classes} />
         </div>

@@ -284,7 +284,7 @@ const Students = () => {
             Student Details
           </h6>
           <form>
-            <div className="flex justify-center gap-4">
+            <div className="flex md:flex-row flex-col items-center justify-center gap-4">
               <Form
                 value={name}
                 onChange={onChangeName}
@@ -301,7 +301,7 @@ const Students = () => {
                 type="text"
               /> */}
 
-              <div className="flex justify-center items-center pt-3">
+              <div className="flex md:flex-row flex-col justify-center items-center pt-3">
                 <select
                   className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
                   onChange={onChangeClassName}
@@ -319,7 +319,7 @@ const Students = () => {
                 </select>
               </div>
 
-              <div class="flex justify-center items-center pt-3">
+              <div class="flex md:flex-row flex-col justify-center items-center pt-3">
                 <select
                   class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
                   onChange={onChangeSemester}
@@ -349,7 +349,7 @@ const Students = () => {
               /> */}
             </div>
 
-            <div className="flex justify-center gap-4 mt-5">
+            <div className="flex md:flex-row flex-col items-center  justify-center gap-4 mt-5">
               <Form
                 value={rollNo}
                 onChange={onChangeRollNo}
@@ -358,7 +358,7 @@ const Students = () => {
                 type="number"
               />
 
-              <div class="flex justify-center items-center pt-3">
+              <div class="flex md:flex-row flex-col  justify-center items-center pt-3">
                 <select
                   class="border-2 border-blue-950 px-2 py-[9px] bg-white rounded-3xl w-52"
                   onChange={onChangeGender}
@@ -391,7 +391,7 @@ const Students = () => {
               />
             </div>
 
-            <div className="flex justify-center gap-4 mt-5">
+            <div className="flex md:flex-row flex-col items-center  justify-center gap-4 mt-5">
               <Form
                 title="Email"
                 value={email}
@@ -416,7 +416,7 @@ const Students = () => {
               /> */}
             </div>
             {addbtn && (
-              <div className="flex items-center justify-center my-4">
+              <div className="flex md:flex-row flex-col items-center justify-center my-4">
                 <button
                   onClick={addStudent}
                   type="submit"

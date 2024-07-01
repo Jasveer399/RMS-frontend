@@ -12,7 +12,7 @@ function Navbar() {
 
   return (
     <>
-      <div className="flex items-center justify-around bg-blue-950 py-3">
+      <div className="flex md:flex-row flex-col items-center justify-around bg-blue-950 py-3">
         <div className="items-center">
           <p className="text-xl my-auto font-bold uppercase text-slate-300">
             {location.pathname !== "/students/checkteacheravailability" ? "Student Result" : "Check Teacher Availability"}

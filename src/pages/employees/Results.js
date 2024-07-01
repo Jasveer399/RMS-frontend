@@ -338,11 +338,11 @@ function Results() {
   return (
     <div className="flex">
       <SideNavBar />
-      <div className="w-full h-full">
+      <div className="w-full md:h-full">
         <PageTitle title="Results" />
         <h6 className="text-center text-xl pb-3 underline">Add Result</h6>
         <form>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex md:flex-row flex-col items-center text-center justify-center gap-4">
             <div className="flex justify-center items-center pt-3">
               <select
                 className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
@@ -358,7 +358,7 @@ function Results() {
                 ))}
               </select>
             </div>
-            <div className="flex justify-center items-center pt-3">
+            <div className="flex md:flex-row flex-col justify-center items-center pt-3">
               <select
                 className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
                 onChange={(e) => setSelectdSem(e.target.value)}
@@ -376,7 +376,7 @@ function Results() {
                 <option value="Sem 8th">Sem 8th</option>
               </select>
             </div>
-            <div className="flex justify-center items-center pt-3">
+            <div className="flex md:flex-row flex-col justify-center items-center pt-3">
               <select
                 className="border-2 border-blue-950 px-2 py-[10px] bg-white rounded-3xl w-52"
                 onChange={(e) => setSubject(e.target.value)}
@@ -398,10 +398,10 @@ function Results() {
               type="number"
             />
           </div>
-          <div className="flex items-center justify-center my-3">
+          <div className="flex text-center items-center justify-center my-3">
             <button
               onClick={getSelectedStudents}
-              className="bg-blue-950 mr-52 text-white px-4 font-bold hover:bg-blue-900"
+              className="bg-blue-950 md:mr-52 m-0 text-white px-4 font-bold hover:bg-blue-900"
             >
               Get Students
             </button>

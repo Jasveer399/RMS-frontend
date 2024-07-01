@@ -301,19 +301,19 @@ const TeacherAvailability = () => {
           <PageTitle title="Teacher Availability" />
           {addAvaComp && (
             <>
-              <div className="flex justify-center">
+              <div className="flex md:flex-row flex-col items-center justify-center">
                 <h6 className="text-center text-xl mb-4 mt-2 underline">
                   Add Teacher Availability
                 </h6>
                 <button
-                  className="absolute right-2 bg-blue-950 text-white px-4 font-bold"
+                  className="md:absolute md:right-2 mb-4 md:mb-0 bg-blue-950 text-white px-4 font-bold"
                   onClick={checkBookedHandler}
                 >
                   Check Booked Appointment
                 </button>
               </div>
               <form>
-                <div className="flex justify-center gap-4">
+                <div className="flex md:flex-row flex-col items-center justify-center md:gap-4">
                   <Form
                     value={teacherName}
                     onChange={onChangeTeacherName}
@@ -336,7 +336,7 @@ const TeacherAvailability = () => {
                     type="date"
                   />
                 </div>
-                <div className="flex justify-center gap-4">
+                <div className="flex md:flex-row flex-col items-center justify-center md:gap-4">
                   <Form
                     value={timeFrom}
                     onChange={onChangeTimeFrom}
@@ -354,7 +354,7 @@ const TeacherAvailability = () => {
                 </div>
 
                 {isUpdate ? (
-                  <div className="flex items-center justify-center my-3">
+                  <div className="flex md:flex-row flex-col items-center justify-center my-3">
                     <button
                       onClick={(e) => {
                         updateSubject(e, teacherId);
@@ -365,7 +365,7 @@ const TeacherAvailability = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="flex items-center justify-center my-3">
+                  <div className="flex md:flex-row flex-col items-center justify-center my-3">
                     <button
                       onClick={addTeacherAvailability}
                       className="bg-blue-950 text-white px-4 font-bold"
@@ -380,7 +380,7 @@ const TeacherAvailability = () => {
           )}
           {bookedAppComp && (
             <>
-              <div className="flex justify-center">
+              <div className="flex md:flex-row flex-col items-center justify-center">
                 <h6 className="text-center text-xl mb-4 mt-2 underline">
                   Booked Appointment
                 </h6>

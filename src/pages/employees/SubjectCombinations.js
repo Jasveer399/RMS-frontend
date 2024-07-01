@@ -224,9 +224,9 @@ function SubjectCombinations() {
         <div className="w-full border-l-2 border-blue-950">
           <div>
             <PageTitle title="Subjects Enrollment" />
-            <div className="flex w-full">
-              <div className="w-[50%] pr-10">
-                <h6 className=" text-right text-xl pb-3 underline">
+            <div className="flex items-center w-full">
+              <div className="w-[50%] md:pr-10">
+                <h6 className=" text-right text-xl md:pb-3 underline">
                   Subject Enrollment
                 </h6>
               </div>
@@ -241,7 +241,7 @@ function SubjectCombinations() {
               </div>
             </div>
             {dataAdd && (
-              <div className="flex justify-center gap-5 max-h-10">
+              <div className="flex md:flex-row flex-col mt-5 md:mt-0 md:items-start items-center justify-center gap-5 md:max-h-10">
                 <div className="flex justify-center">
                   <select
                     className="border-2 border-blue-950 p-2 bg-white rounded-3xl w-52"

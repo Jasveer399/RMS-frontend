@@ -60,7 +60,7 @@ function ChangePassword() {
           </h6>
 
           <form>
-            <div className="flex justify-center gap-4 mt-2">
+            <div className="flex md:flex-row flex-col items-center justify-center gap-4 mt-2">
               <Form
                 onChange={onchangeOldPassword}
                 title="Enter Old Password"

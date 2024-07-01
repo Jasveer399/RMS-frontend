@@ -175,7 +175,7 @@ const Subjects = () => {
             Add New Subject
           </h6>
           <form>
-            <div className="flex justify-center gap-4">
+            <div className="flex md:flex-row flex-col justify-center items-center gap-4">
               <Form
                 value={subjectName}
                 onChange={onChangeClassName}

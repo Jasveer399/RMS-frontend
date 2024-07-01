@@ -7,6 +7,7 @@ import { SiBookstack } from "react-icons/si";
 import { PiStudentFill } from "react-icons/pi";
 import { GiArchiveResearch } from "react-icons/gi";
 import { RiLockPasswordFill } from "react-icons/ri";
+import { CiLogout } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -64,18 +65,18 @@ const SideNavBar = () => {
   };
   return (
     <>
-      <div className="w-[35%] py-3 h-screen">
+      <div className="md:w-[35%] w-[12%] py-3 h-screen">
         <div className="fixed top-0">
           <ul className="">
-            <li className="justify-center text-center text-3xl pl-14 py-4 font-bold">
+            <li className="hidden md:block justify-center text-center text-3xl pl-14 py-4 font-bold">
               Result Management <br /> System
             </li>
             <hr className=" text-center justify-center ml-12 pb-2" />
             {nav.map((navigate) => (
-              <li className="hover:bg-slate-300 cursor-pointer ml-10 px-2 py-3 rounded-lg">
+              <li className="hover:bg-slate-300 cursor-pointer md:ml-10 px-2 py-3 rounded-lg">
                 <Link to={navigate.link} className="flex items-center gap-2">
                   <span>{navigate.icon}</span>
-                  <span className="font-bold text-base uppercase text-blue-950">
+                  <span className="hidden md:block font-bold text-base uppercase text-blue-950">
                     {navigate.name}
                   </span>
                 </Link>
@@ -84,9 +85,10 @@ const SideNavBar = () => {
             <li>
               <button
                 onClick={logout}
-                className="ml-10 w-full mt-6 bg-slate-300 px-3 rounded-full font-bold  text-base hover:bg-blue-950 hover:text-white"
+                className="md:ml-10 ml-[2px] md:w-full mt-6 bg-slate-300 md:px-3 px-1 py-2 rounded-full font-bold  text-base hover:bg-blue-950 hover:text-white"
               >
-                LOGOUT
+                <span className="hidden md:block">LOGOUT</span>
+                <CiLogout className="block md:hidden font-bold"/>
               </button>
             </li>
           </ul>

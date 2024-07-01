@@ -60,7 +60,7 @@ function EmployeeHome() {
       <SideNavBar />
       <div className="w-full border-l-2 border-blue-950">
         <h1 className="text-5xl uppercase text-center mt-4">Quick Links</h1>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap justify-center">
         {nav.map((navigate) => (
         <div class="flex flex-col md:w-1/3 bg-white rounded-3xl">
           <div class="px-6 py-8 sm:p-10 sm:pb-6">
