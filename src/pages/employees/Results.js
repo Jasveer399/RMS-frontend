@@ -338,7 +338,7 @@ function Results() {
   return (
     <div className="flex">
       <SideNavBar />
-      <div className="w-full md:h-full">
+      <div className="md:w-full w-[89%] border-l-2 border-blue-950 md:h-full">
         <PageTitle title="Results" />
         <h6 className="text-center text-xl pb-3 underline">Add Result</h6>
         <form>

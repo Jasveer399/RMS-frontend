@@ -278,7 +278,7 @@ const Students = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full border-l-2 border-blue-950">
+        <div className="md:w-full w-[89%] border-l-2 border-blue-950">
           <PageTitle title="Add Students" />
           <h6 className="text-center text-xl pb-3 underline">
             Student Details

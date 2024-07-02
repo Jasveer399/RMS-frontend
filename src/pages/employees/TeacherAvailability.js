@@ -297,7 +297,7 @@ const TeacherAvailability = () => {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full border-l-2 border-blue-950">
+        <div className="md:w-full w-[89%] border-l-2 border-blue-950">
           <PageTitle title="Teacher Availability" />
           {addAvaComp && (
             <>
