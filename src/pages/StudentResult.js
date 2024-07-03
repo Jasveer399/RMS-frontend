@@ -120,7 +120,7 @@ function StudentResult() {
         <div className="my-5">
           <h2 className="text-center text-2xl font-bold mb-3">Result</h2>
           <div ref={printRef}>
-            <div className="container w-[60%] bg-blue-950 flex flex-col p-2 rounded-lg">
+            <div className="container w-[60%] bg-blue-950 flex flex-col p-2 rounded-lg overflow-x-auto">
               <div className="flex justify-around">
                 <div className="">
                   <ShowStudentData title="Name:-" data={student.name} />

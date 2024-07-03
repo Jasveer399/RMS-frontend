@@ -375,7 +375,9 @@ const TeacherAvailability = () => {
                   </div>
                 )}
               </form>
-              <Table columns={columns} dataSource={teachers} />
+              <div className="overflow-x-auto">
+                <Table columns={columns} dataSource={teachers} />
+              </div>
             </>
           )}
           {bookedAppComp && (
@@ -391,7 +393,9 @@ const TeacherAvailability = () => {
                   Add Teacher Availability
                 </button>
               </div>
-              <Table columns={bookedColumn} dataSource={bookedTeachers} />
+              <div className="overflow-x-auto">
+                <Table columns={bookedColumn} dataSource={bookedTeachers} />
+              </div>
             </>
           )}
         </div>

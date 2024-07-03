@@ -439,8 +439,9 @@ const Students = () => {
               </div>
             )}
           </form>
-
-          <Table columns={columns} dataSource={students} />
+          <div className="overflow-x-auto">
+            <Table columns={columns} dataSource={students} />
+          </div>
         </div>
       </div>
     </>

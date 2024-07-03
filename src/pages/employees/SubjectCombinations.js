@@ -221,7 +221,7 @@ function SubjectCombinations() {
     <>
       <div className="flex">
         <SideNavBar />
-        <div className="w-full border-l-2 border-blue-950">
+        <div className="md:w-full w-[89%] border-l-2 border-blue-950">
           <div>
             <PageTitle title="Subjects Enrollment" />
             <div className="flex items-center w-full">
@@ -311,7 +311,11 @@ function SubjectCombinations() {
               </div>
             )}
           </div>
-          {shownData && <Table columns={columns} dataSource={classSubject} />}
+          {shownData && 
+          <div className="overflow-x-auto">
+            <Table columns={columns} dataSource={classSubject} />
+          </div>
+          }
         </div>
       </div>
     </>

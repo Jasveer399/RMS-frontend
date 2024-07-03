@@ -168,7 +168,7 @@ function ResultCheck() {
       </div>
 
       {studentResult && (
-        <div className="card p-3">
+        <div className="card p-3 overflow-x-auto">
           <div>
             <h1 className="text-medium ">
               <b>

@@ -407,14 +407,15 @@ function Results() {
             </button>
           </div>
         </form>
-
-        <Table
-          columns={columns}
-          dataSource={selectdStudent.map((student) => ({
-            ...student,
-            key: student._id,
-          }))}
-        />
+        <div className="overflow-x-auto">   
+          <Table
+            columns={columns}
+            dataSource={selectdStudent.map((student) => ({
+              ...student,
+              key: student._id,
+            }))}
+          />
+        </div>  
 
         <div className="flex items-center justify-center my-3">
           <button
