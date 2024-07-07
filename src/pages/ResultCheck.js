@@ -36,32 +36,6 @@ function ResultCheck() {
     }
   };
 
-  const getStudentResult = async (values) => {
-    try {
-      dispatch(ShowLoading());
-      const response = await axios.post(
-        `https://rms-backend-1rd9.onrender.com/api/results/get-student-result`,
-        {
-          rollNo: rollNo,
-          resultId: params.resultId,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      dispatch(HideLoading());
-      if (response.data.success) {
-        setStudentResult(response.data.data);
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      dispatch(HideLoading());
-      toast.error(error.message);
-    }
-  };
   useEffect(() => {
     if (!result) {
       getResult();
